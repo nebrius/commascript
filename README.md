@@ -1,7 +1,7 @@
-CommaType
+CommaScript
 =========
 
-Localized strong typing in JavaScript that works in existing JavaScript engines
+CommaScript is a dialect of JavaScript that provides localized strong typing in JavaScript that works in existing JavaScript engines
 
 Types are specified at variable/function declaration time by specifying a tuple of values using the comma operator. The possible types are the basic JavaScript types (undefined, boolean, string, number, and object) plus array:
 
@@ -25,7 +25,7 @@ var z = ('string', ['int'], function (arg) {
 });
 ```
 
-CommaType code is local to the current scope and works just like strict mode with a "use commatype" directive.
+CommaScript code is local to the current scope and works just like strict mode with a "use commascript" directive.
 
 License
 =======
