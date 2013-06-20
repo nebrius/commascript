@@ -17,8 +17,10 @@
 	"dependencies": {
 		"uglify-js": "2.3.x",
 		"commander": "1.1.x",
-		"transport-logger": "0.1.x"
+		"transport-logger": "0.1.x",
+		"wrench": "1.5.x"
 	},
+	"engine": "node >= 0.8.0",
 	"main": "bin/commatype.js",
 	"author": "Bryan Hughes <bryan@theoreticalideations.com>",
 	"license": "MIT",
