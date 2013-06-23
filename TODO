@@ -1,0 +1,18 @@
+Make API definition mechanism very generic, and use for built-in types
+* Built-in prototype functions and properties should use this, e.g. "number" will have an API definition
+* Types are now generic strings in a lookup table, that is pre-populated with primitives
+* Objects, functions, and arrays will require an inheritence-based mechanism
+* So yeah, along those lines, implement support for inheritence
+
+Add mechanisms for defining API interface, but leaving interior untyped
+* Should be separate file
+* Necessary for using libraries not written in commascript
+* Tool to create it from JSDoc
+
+Create macro/preprocess/loader/whatever construct
+* CommonJS and RequireJS, where return value varies, type system instrospects a little further
+
+Compilation Phase
+* Validates code
+* Strips out type annotations (do minifiers already do this?), OR:
+* Sends it through LLVM connected to asm.js/emscripten
