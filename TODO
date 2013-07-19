@@ -16,3 +16,7 @@ Compilation Phase
 * Validates code
 * Strips out type annotations (do minifiers already do this?), OR:
 * Sends it through LLVM connected to asm.js/emscripten
+
+Integrate with other products
+* Custom/forked version of RequireJS that runs compilation before evaling script
+	* Ability to enable/disable?
