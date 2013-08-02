@@ -22,24 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js'),
-	state = require('../state');
+var exec = require('child_process').exec,
+	spawn = require('child_process').spawn;
 
-uglify.AST_SymbolRef.prototype.ruleName = 'AST_SymbolRef';
-
-uglify.AST_SymbolRef.prototype.validate = function validate() {
-	var type,
-		name = this.name;
-	if (state.isContextCommascript()) {
-		if (name === 'NaN' || name === 'Infinity') {
-			return state.lookupType('number');
-		} else {
-			type = state.lookupSymbolType(name);
-			if(!type) {
-				state.handleError(this, 'Undeclared symbol "' + this.name + '"');
-			} else {
-				return type;
-			}
-		}
+exec('jasmine-node', function (error, stderr) {
+	if (!stderr.match('^USAGE:')) {
+		console.error('It appears that jasmine-node is not installed. Please install it using "npm install -g jasmine-node"');
+	} else {
+		spawn('jasmine-node', [__dirname], {
+			stdio: 'inherit'
+		});
 	}
-};
+});

@@ -15,7 +15,5 @@ var num = ('number', 10),
 	bool = ('boolean', true),
 	obj = ('foo', {
 		'bar': 'hello world',
-		'baz': 10
+		'baz': false
 	});
-
-num = bool;
