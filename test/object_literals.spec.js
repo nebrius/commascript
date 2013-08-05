@@ -59,43 +59,24 @@ function runTest(source, expectedStdout, expectedStderr) {
 	});
 }
 
-describe('Primitive Tests', function() {
+describe('Object Tests', function() {
 
-	it('Boolean - Boolean assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '1-boolean.js'), '', '');
+	it('Object - Object literal', function() {
+		runTest(path.join(__dirname, 'tests', 'object-literals', '1-object_literal.js'), '', '');
+
 	});
 
-	it('Boolean - Number assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '2-boolean_typeerror.js'), '',
-			'Cannot cast "number" as "boolean" ' +
-			path.join(__dirname, 'tests', 'primitives', '2-boolean_typeerror.js:28:6') + '\n');
+	it('Object - Object infer type error', function() {
+		runTest(path.join(__dirname, 'tests', 'object-literals', '2-infer_type_error.js'), '',
+			'Inferred type has mismatched type for "baz" ' +
+			path.join(__dirname, 'tests', 'object-literals', '2-infer_type_error.js:35:6\n'));
 	});
 
-	it('Number - Number assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '3-number.js'), '', '');
-	});
-
-	it('Number - String assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '4-number_typeerror.js'), '',
-			'Cannot cast "string" as "number" ' +
-			path.join(__dirname, 'tests', 'primitives', '4-number_typeerror.js:28:6') + '\n');
-	});
-
-	it('Number - NaN assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '5-number_nan.js'), '', '');
-	});
-
-	it('Number - Infinity assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '6-number_infinity.js'), '', '');
-	});
-
-	it('String - String assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '7-string.js'), '', '');
-	});
-
-	it('String - Number assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '8-string_typeerror.js'), '',
+	it('Object - Object property type error', function() {
+		runTest(path.join(__dirname, 'tests', 'object-literals', '3-property_type_error.js'), '',
 			'Cannot cast "number" as "string" ' +
-			path.join(__dirname, 'tests', 'primitives', '8-string_typeerror.js:28:6') + '\n');
+			path.join(__dirname, 'tests', 'object-literals', '3-property_type_error.js:39:10\n') +
+			'Cannot cast "string" as "number" ' +
+			path.join(__dirname, 'tests', 'object-literals', '3-property_type_error.js:40:10\n'));
 	});
 });

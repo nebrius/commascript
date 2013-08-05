@@ -22,9 +22,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js');
+'use commascript';
 
-uglify.AST_Node.prototype.ruleName = 'AST_Node';
+('define(foo)', {
+	properties: {
+		'bar': 'string',
+		'baz': 'number'
+	}
+});
 
-uglify.AST_Node.prototype.validate = function validate() {
+var obj = ('cast(foo)', null);
+obj = {
+	'bar': 'hello world',
+	'baz': 10
 };
+obj.bar = 10;
+obj.baz = 'bad';

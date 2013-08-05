@@ -22,10 +22,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js');
+'use commascript';
 
-uglify.AST_ForIn.prototype.ruleName = 'AST_ForIn';
+('define(foo)', {
+	properties: {
+		'bar': 'string',
+		'baz': 'number'
+	}
+});
 
-uglify.AST_ForIn.prototype.analyze = function analyze() {
-	throw new Error('Not Implemented');
+var obj = ('cast(foo)', null);
+obj = {
+	'bar': 'hello world',
+	'baz': 10
 };
+obj.bar = 'goodbye';
+obj.baz = 20;
