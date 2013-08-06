@@ -22,23 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js'),
-	state = require('../state'),
-	type = require('../type');
+'use commascript';
 
-uglify.AST_Assign.prototype.ruleName = 'AST_Assign';
-
-uglify.AST_Assign.prototype.getType = function getType(operation) {
-	var left = this.left.getType(),
-		right = type.castIncompleteType(left && left.name, operation, this.right);
-	if (state.isContextCommascript()) {
-		if (!left || !right) {
-			return;
-		}
-		if (!type.compareTypes(left, right)) {
-			state.handleError(this, 'Mismatched assignment: right hand side type "' + right.name +
-				'" cannot be assigned to left hand side type "' + left.name + '"');
-		}
-		return left;
+('define(foo)', {
+	properties: {
+		'bar': 'string',
+		'baz': 'number'
 	}
+});
+
+var obj = ('cast(foo)', null);
+obj = {
+	'bar': 'hello world',
+	'baz': 10
 };
+obj.foo = 1;
