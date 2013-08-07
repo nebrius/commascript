@@ -10,7 +10,6 @@ Note: This is a work in progress!
 * [Design Goals](#design-goals)
 * [Compilation](#compilation)
 * [Examples](#examples)
-* [Specification](#specification)
 * [Future Goals](#future-goals)
 
 ## Design Goals
