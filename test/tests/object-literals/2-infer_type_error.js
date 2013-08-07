@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 'use commascript';
 
-('object.define(foo)', {
+('define(object,foo)', {
 	properties: {
 		'bar': 'string',
 		'baz': 'number'
