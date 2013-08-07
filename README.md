@@ -148,6 +148,7 @@ An object's prototype can also be specified to allow inheritence:
 	}
 	prototype: 'foo'
 });
+```
 
 Coming soon: the ability to specify objects using function + prototypes!
 
