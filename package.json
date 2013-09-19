@@ -1,17 +1,13 @@
 {
-	"name": "typejs",
-	"version": "0.0.0",
-	"description": "Localized strong typing in JavaScript that works in existing JavaScript engines",
-	"main": "examples.js",
-	"scripts": {
-		"test": "node test/test.js"
-	},
+	"name": "commascript",
+	"version": "0.1.0",
+	"description": "CommaScript is a backwards compatible dialect of JavaScript that provides localized static typing in JavaScript while still feeling like JavaScript.",
 	"repository": {
 		"type": "git",
-		"url": "http://github.com/bryan-m-hughes/typejs"
+		"url": "http://github.com/bryan-m-hughes/commascript"
 	},
 	"keywords": [
-		"Typed",
+		"Static Typing",
 		"JavaScript"
 	],
 	"dependencies": {
@@ -20,8 +16,8 @@
 		"transport-logger": "0.1.x",
 		"wrench": "1.5.x"
 	},
-	"engine": "node >= 0.8.0",
-	"main": "bin/commatype.js",
+	"engine": "node >= 0.10.0",
+	"bin": "bin/commascript.js",
 	"author": "Bryan Hughes <bryan@theoreticalideations.com>",
 	"license": "MIT",
 	"scripts": {
