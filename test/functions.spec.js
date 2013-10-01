@@ -59,29 +59,33 @@ function runTest(source, expectedStdout, expectedStderr) {
 	});
 }
 
-describe('Object Tests', function() {
+describe('Function Tests', function() {
 
-	it('Object literal - Object literal', function() {
-		runTest(path.join(__dirname, 'tests', 'object-literals', '1-object_literal.js'), '', '');
+	it('Function - void function', function() {
+		runTest(path.join(__dirname, 'tests', 'functions', '1-void_function.js'), '', '');
 	});
 
-	it('Object literal - Object infer type error', function() {
-		runTest(path.join(__dirname, 'tests', 'object-literals', '2-infer_type_error.js'), '',
-			'Inferred type has mismatched type for "baz" ' +
-			path.join(__dirname, 'tests', 'object-literals', '2-infer_type_error.js:35:6\n'));
+	it('Function - void function definition', function() {
+		runTest(path.join(__dirname, 'tests', 'functions', '2-void_function_definition.js'), '', '');
 	});
 
-	it('Object literal - Object property type error', function() {
-		runTest(path.join(__dirname, 'tests', 'object-literals', '3-property_type_error.js'), '',
-			'Cannot cast "number" as "string" ' +
-			path.join(__dirname, 'tests', 'object-literals', '3-property_type_error.js:39:10\n') +
-			'Cannot cast "string" as "number" ' +
-			path.join(__dirname, 'tests', 'object-literals', '3-property_type_error.js:40:10\n'));
+	it('Function - void function with arguments', function() {
+		runTest(path.join(__dirname, 'tests', 'functions', '3-void_function_with_arguments.js'), '', '');
 	});
 
-	it('Object literal - Assignment to undeclared property', function() {
-		runTest(path.join(__dirname, 'tests', 'object-literals', '4-undeclared_property.js'), '',
-			'Unknown property "foo" ' +
-			path.join(__dirname, 'tests', 'object-literals', '4-undeclared_property.js:39:0\n'));
+	it('Function - void function with arguments mismatch', function() {
+		runTest(path.join(__dirname, 'tests', 'functions', '4-void_function_with_arguments_mismatch.js'), '',
+			'Mismatched number of arguments ' +
+			path.join(__dirname, 'tests', 'functions', '4-void_function_with_arguments_mismatch.js:31:34\n'));
+	});
+
+	it('Function - void function with arguments', function() {
+		runTest(path.join(__dirname, 'tests', 'functions', '5-void_function_definition_with_arguments.js'), '', '');
+	});
+
+	it('Function - void function with arguments mismatch', function() {
+		runTest(path.join(__dirname, 'tests', 'functions', '6-void_function_definition_with_arguments_mismatch.js'), '',
+			'Mismatched number of arguments ' +
+			path.join(__dirname, 'tests', 'functions', '6-void_function_definition_with_arguments_mismatch.js:31:13\n'));
 	});
 });

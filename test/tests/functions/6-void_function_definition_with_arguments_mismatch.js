@@ -22,29 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js'),
-	state = require('../state'),
-	type = require('../type');
+'use commascript';
 
-uglify.AST_Defun.prototype.ruleName = 'AST_Defun';
+('define(function,foo)', {
+	argumentTypes: ['string', 'number']
+});
 
-uglify.AST_Defun.prototype.analyze = function analyze() {
-	state.enterContext();
-	var i, len,
-		castType = type.lookupType(this.name.name),
-		argumentTypes = castType && castType.argumentTypes,
-		context = state.getCurrentContext();
-	if (!castType) {
-		state.handleError(this.name, 'Type "' + this.name.name + '" is not defined');
-		return;
-	}
-	if (this.argnames.length !== argumentTypes.length) {
-		state.handleError(this.argnames[0], 'Mismatched number of arguments');
-		return;
-	}
-	for (i = 0, len = this.argnames.length; i < len; i++) {
-		context.symbolTable[this.argnames[i].name] = argumentTypes[i];
-	}
-	state.processBlock(this.body);
-	state.exitContext();
-};
+function foo(a) {}
