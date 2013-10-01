@@ -88,4 +88,10 @@ describe('Function Tests', function() {
 			'Mismatched number of arguments ' +
 			path.join(__dirname, 'tests', 'functions', '6-void_function_definition_with_arguments_mismatch.js:31:13\n'));
 	});
+
+	it('Function - void function with arguments mismatch', function() {
+		runTest(path.join(__dirname, 'tests', 'functions', '7-void_function_definition_without_type.js'), '',
+			'Type "foo" is not defined ' +
+			path.join(__dirname, 'tests', 'functions', '7-void_function_definition_without_type.js:27:9\n'));
+	});
 });
