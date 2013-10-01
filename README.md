@@ -166,8 +166,18 @@ Functions are declared similarly to objects:
 ```
 
 Once defined, functions can be assigned to a variable and used
+
 ```JavaScript
 var myfunc = ('cast(myfunctype)', function (num, obj) {
+	// Do stuff
+	return 'hi';
+}
+```
+
+Function definitions can also be used, as long as the function name matches the type name
+
+```JavaScript
+function myfunctype(num, obj) {
 	// Do stuff
 	return 'hi';
 }
