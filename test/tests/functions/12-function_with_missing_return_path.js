@@ -25,12 +25,11 @@ THE SOFTWARE.
 'use commascript';
 
 ('define(function,foo)', {
-	argumentTypes: ['string', 'number']
+	returnType: 'string'
 });
 
-function foo(a, b) {
-	var x = 'str',
-		y = 10;
-	x = a;
-	y = b;
+function foo() {
+	if (true) {
+		return 'hi';
+	}
 }

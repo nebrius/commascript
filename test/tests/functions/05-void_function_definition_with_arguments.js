@@ -28,4 +28,9 @@ THE SOFTWARE.
 	argumentTypes: ['string', 'number']
 });
 
-function foo(a) {}
+function foo(a, b) {
+	var x = 'str',
+		y = 10;
+	x = a;
+	y = b;
+}

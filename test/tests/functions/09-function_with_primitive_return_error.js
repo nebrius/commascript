@@ -24,4 +24,10 @@ THE SOFTWARE.
 
 'use commascript';
 
-function foo() {}
+('define(function,foo)', {
+	returnType: 'string'
+});
+
+function foo() {
+	return 10;
+}

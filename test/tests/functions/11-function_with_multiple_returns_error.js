@@ -24,6 +24,14 @@ THE SOFTWARE.
 
 'use commascript';
 
-('define(function,foo)', {});
+('define(function,foo)', {
+	returnType: 'string'
+});
 
-var foo = ('cast(foo)', function () {});
+function foo() {
+	if (true) {
+		return 10;
+	} else {
+		return 'world';
+	}
+}

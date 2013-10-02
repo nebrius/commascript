@@ -28,4 +28,9 @@ THE SOFTWARE.
 	argumentTypes: ['string', 'number']
 });
 
-var foo = ('cast(foo)', function (a) {});
+var foo = ('cast(foo)', function (a, b) {
+	var x = 'str',
+		y = 10;
+	x = a;
+	y = b;
+});
