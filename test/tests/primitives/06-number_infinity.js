@@ -24,5 +24,5 @@ THE SOFTWARE.
 
 'use commascript';
 
-var foo = 'hello';
-foo = 'world';
+var foo = 10;
+foo = Infinity;

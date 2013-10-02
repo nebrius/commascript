@@ -62,36 +62,36 @@ function runTest(source, expectedStdout, expectedStderr) {
 describe('Function Tests', function() {
 
 	it('Function - void function', function() {
-		runTest(path.join(__dirname, 'tests', 'functions', '1-void_function.js'), '', '');
+		runTest(path.join(__dirname, 'tests', 'functions', '01-void_function.js'), '', '');
 	});
 
 	it('Function - void function definition', function() {
-		runTest(path.join(__dirname, 'tests', 'functions', '2-void_function_definition.js'), '', '');
+		runTest(path.join(__dirname, 'tests', 'functions', '02-void_function_definition.js'), '', '');
 	});
 
 	it('Function - void function with arguments', function() {
-		runTest(path.join(__dirname, 'tests', 'functions', '3-void_function_with_arguments.js'), '', '');
+		runTest(path.join(__dirname, 'tests', 'functions', '03-void_function_with_arguments.js'), '', '');
 	});
 
 	it('Function - void function with arguments mismatch', function() {
-		runTest(path.join(__dirname, 'tests', 'functions', '4-void_function_with_arguments_mismatch.js'), '',
+		runTest(path.join(__dirname, 'tests', 'functions', '04-void_function_with_arguments_mismatch.js'), '',
 			'Mismatched number of arguments ' +
-			path.join(__dirname, 'tests', 'functions', '4-void_function_with_arguments_mismatch.js:31:34\n'));
+			path.join(__dirname, 'tests', 'functions', '04-void_function_with_arguments_mismatch.js:31:34\n'));
 	});
 
 	it('Function - void function with arguments', function() {
-		runTest(path.join(__dirname, 'tests', 'functions', '5-void_function_definition_with_arguments.js'), '', '');
+		runTest(path.join(__dirname, 'tests', 'functions', '05-void_function_definition_with_arguments.js'), '', '');
 	});
 
 	it('Function - void function with arguments mismatch', function() {
-		runTest(path.join(__dirname, 'tests', 'functions', '6-void_function_definition_with_arguments_mismatch.js'), '',
+		runTest(path.join(__dirname, 'tests', 'functions', '06-void_function_definition_with_arguments_mismatch.js'), '',
 			'Mismatched number of arguments ' +
-			path.join(__dirname, 'tests', 'functions', '6-void_function_definition_with_arguments_mismatch.js:31:13\n'));
+			path.join(__dirname, 'tests', 'functions', '06-void_function_definition_with_arguments_mismatch.js:31:13\n'));
 	});
 
 	it('Function - void function with arguments mismatch', function() {
-		runTest(path.join(__dirname, 'tests', 'functions', '7-void_function_definition_without_type.js'), '',
+		runTest(path.join(__dirname, 'tests', 'functions', '07-void_function_definition_without_type.js'), '',
 			'Type "foo" is not defined ' +
-			path.join(__dirname, 'tests', 'functions', '7-void_function_definition_without_type.js:27:9\n'));
+			path.join(__dirname, 'tests', 'functions', '07-void_function_definition_without_type.js:27:9\n'));
 	});
 });

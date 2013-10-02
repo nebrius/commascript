@@ -24,5 +24,5 @@ THE SOFTWARE.
 
 'use commascript';
 
-var foo = 10;
-foo = NaN;
+var foo = 'hello';
+foo = 'world';

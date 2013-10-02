@@ -24,5 +24,5 @@ THE SOFTWARE.
 
 'use commascript';
 
-var foo = true;
-foo = 10;
+var foo = 10;
+foo = 'I\'m a string';
