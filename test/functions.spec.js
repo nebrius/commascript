@@ -94,4 +94,29 @@ describe('Function Tests', function() {
 			'Type "foo" is not defined ' +
 			path.join(__dirname, 'tests', 'functions', '07-void_function_definition_without_type.js:27:9\n'));
 	});
+
+	it('Function - function with primitive return', function () {
+		throw new Error('Not Implemented');
+		runTest(path.join(__dirname, 'tests', 'functions', '08-function_with_primitive_return.js'), '', '');
+	});
+
+	it('Function - function with primitive return error', function () {
+		throw new Error('Not Implemented');
+		runTest(path.join(__dirname, 'tests', 'functions', '09-function_with_primitive_return_error.js'), '', '');
+	});
+
+	it('Function - function with multiple returns', function () {
+		throw new Error('Not Implemented');
+		runTest(path.join(__dirname, 'tests', 'functions', '10-function_with_multiple_returns.js'), '', '');
+	});
+
+	it('Function - function with multiple returns error', function () {
+		throw new Error('Not Implemented');
+		runTest(path.join(__dirname, 'tests', 'functions', '11-function_with_multiple_returns_error.js'), '', '');
+	});
+
+	it('Function - function with missing return path', function () {
+		throw new Error('Not Implemented');
+		runTest(path.join(__dirname, 'tests', 'functions', '12-function_with_missing_return_path.js'), '', '');
+	});
 });
