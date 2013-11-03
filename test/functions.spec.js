@@ -110,10 +110,14 @@ describe('Function Tests', function() {
 	});
 
 	it('Function - function with multiple returns error', function () {
-		runTest(path.join(__dirname, 'tests', 'functions', '11-function_with_multiple_returns_error.js'), '', '');
+		runTest(path.join(__dirname, 'tests', 'functions', '11-function_with_multiple_returns_error.js'), '',
+			'Mismatched return type ' +
+			path.join(__dirname, 'tests', 'functions', '11-function_with_multiple_returns_error.js:33:2\n'));
 	});
 
 	it('Function - function with missing return path', function () {
-		runTest(path.join(__dirname, 'tests', 'functions', '12-function_with_missing_return_path.js'), '', '');
+		runTest(path.join(__dirname, 'tests', 'functions', '12-function_with_missing_return_path.js'), '',
+			'Not all code paths return a value ' +
+			path.join(__dirname, 'tests', 'functions', '12-function_with_missing_return_path.js:31:0\n'));
 	});
 });
