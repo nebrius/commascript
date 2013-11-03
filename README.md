@@ -213,7 +213,7 @@ Once the basic compiler is implemented and the spec solidifed, there are a few o
 goals for the project:
 * Implement an LLVM frontend for CommaScript that will allow it to be compiled to
 native code, or to asm.js
-* Implement commascript definitions for a few well known libraries and APIs, such
+* Implement CommaScript definitions for a few well known libraries and APIs, such
 as node.js and the browser DOM
 	* These definitions will most likely be proper subsets of the full APIs
 * Implement customized versions of CommonJS and RequireJS that can perform validation
