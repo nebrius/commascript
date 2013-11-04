@@ -22,36 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js');
+'use commascript';
 
-uglify.AST_For.prototype.ruleName = 'AST_For';
+var y = 1;
 
-uglify.AST_For.prototype.analyze = function analyze() {
-
-	if (this.init) {
-		if (this.init instanceof uglify.AST_Statement) {
-			this.init.analyze();
-		} else {
-			this.init.getType();
-		}
-	}
-	if (this.condition) {
-		if (this.condition instanceof uglify.AST_Statement) {
-			this.condition.analyze();
-		} else {
-			this.condition.getType();
-		}
-	}
-	if (this.step) {
-		if (this.step instanceof uglify.AST_Statement) {
-			this.step.analyze();
-		} else {
-			this.step.getType();
-		}
-	}
-	this.body && this.body.analyze();
-
-	return {
-		result: 'normal'
-	};
-};
+for (;;x = 0) {
+	y = 2;
+}
