@@ -22,37 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js'),
-	state = require('../state'),
-	type = require('../type');
+'use commascript';
 
-uglify.AST_ForIn.prototype.ruleName = 'AST_ForIn';
+var y = 1;
 
-uglify.AST_ForIn.prototype.analyze = function analyze() {
-	var name,
-		context = state.getCurrentContext();
-	if (this.init instanceof uglify.AST_Var) {
-		if (state.isContextCommaScript()) {
-			name = this.init.definitions[0].name.name;
-			if (context.symbolTable[name]) {
-				state.handleError(this.init.definitions[0], 'Redefinition of variable "' + name + '"');
-			} else {
-				context.symbolTable[name] = type.lookupType('string');
-			}
-		}
-	} else if (this.init instanceof uglify.AST_SymbolRef) {
-		if (state.isContextCommaScript()) {
-			name = this.init.name;
-			if (name == 'NaN' || name == 'Infinity' ||
-					!type.compareTypes(state.lookupSymbolType(name), type.lookupType('string'))) {
-				state.handleError(this, 'For loop iteration variables must be of type string');
-			}
-		}
-	} else {
-		state.handleError(this.init, 'For...in loops must have a variable declaration or symbol reference as the iteration variable');
-	}
-	this.body.analyze();
-	return {
-		result: 'normal'
-	};
-};
+for (var y in {}) {
+	y = 1;
+}

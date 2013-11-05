@@ -79,27 +79,53 @@ describe('Branch Tests', function() {
 			path.join(__dirname, 'tests', 'branches', '03-if_statement_alternate_error.js:32:1\n'));
 	});
 
+	it('Branch - for loop', function() {
+		runTest(path.join(__dirname, 'tests', 'branches', '04-for_loop.js'), '', '');
+	});
+
 	it('Branch - for loop init error', function() {
-		runTest(path.join(__dirname, 'tests', 'branches', '04-for_loop_init_error.js'), '',
+		runTest(path.join(__dirname, 'tests', 'branches', '05-for_loop_init_error.js'), '',
 			'Undeclared symbol "x" ' +
-			path.join(__dirname, 'tests', 'branches', '04-for_loop_init_error.js:29:5\n'));
+			path.join(__dirname, 'tests', 'branches', '05-for_loop_init_error.js:29:5\n'));
 	});
 
 	it('Branch - for loop conditional error', function() {
-		runTest(path.join(__dirname, 'tests', 'branches', '05-for_loop_conditional_error.js'), '',
+		runTest(path.join(__dirname, 'tests', 'branches', '06-for_loop_conditional_error.js'), '',
 			'Undeclared symbol "x" ' +
-			path.join(__dirname, 'tests', 'branches', '05-for_loop_conditional_error.js:29:6\n'));
+			path.join(__dirname, 'tests', 'branches', '06-for_loop_conditional_error.js:29:6\n'));
 	});
 
 	it('Branch - for loop iteration error', function() {
-		runTest(path.join(__dirname, 'tests', 'branches', '06-for_loop_iteration_error.js'), '',
+		runTest(path.join(__dirname, 'tests', 'branches', '07-for_loop_iteration_error.js'), '',
 			'Undeclared symbol "x" ' +
-			path.join(__dirname, 'tests', 'branches', '06-for_loop_iteration_error.js:29:7\n'));
+			path.join(__dirname, 'tests', 'branches', '07-for_loop_iteration_error.js:29:7\n'));
 	});
 
 	it('Branch - for loop body error', function() {
-		runTest(path.join(__dirname, 'tests', 'branches', '07-for_loop_body_error.js'), '',
+		runTest(path.join(__dirname, 'tests', 'branches', '08-for_loop_body_error.js'), '',
 			'Undeclared symbol "x" ' +
-			path.join(__dirname, 'tests', 'branches', '07-for_loop_body_error.js:30:1\n'));
+			path.join(__dirname, 'tests', 'branches', '08-for_loop_body_error.js:30:1\n'));
+	});
+
+	it('Branch - for in loop body', function() {
+		runTest(path.join(__dirname, 'tests', 'branches', '09-for_in_loop.js'), '', '');
+	});
+
+	it('Branch - for in loop body error', function() {
+		runTest(path.join(__dirname, 'tests', 'branches', '10-for_in_loop_body_error.js'), '',
+			'Cannot cast "number" as "string" ' +
+			path.join(__dirname, 'tests', 'branches', '10-for_in_loop_body_error.js:28:5\n'));
+	});
+
+	it('Branch - for in loop init redefinition error', function() {
+		runTest(path.join(__dirname, 'tests', 'branches', '11-for_in_loop_init_redefinition_error.js'), '',
+			'Redefinition of variable "y" ' +
+			path.join(__dirname, 'tests', 'branches', '11-for_in_loop_init_redefinition_error.js:29:9\n'));
+	});
+
+	it('Branch - for in loop init error', function() {
+		runTest(path.join(__dirname, 'tests', 'branches', '12-for_in_loop_init_error.js'), '',
+			'For loop iteration variables must be of type string ' +
+			path.join(__dirname, 'tests', 'branches', '12-for_in_loop_init_error.js:29:0\n'));
 	});
 });
