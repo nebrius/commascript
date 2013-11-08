@@ -22,28 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js'),
-	state = require('../state');
+'use commascript';
 
-uglify.AST_Dot.prototype.ruleName = 'AST_Dot';
+var y = '';
 
-uglify.AST_Dot.prototype.getType = function getType(operation) {
-	var lhs = this.expression.getType(operation),
-		propertyType;
-	switch(lhs.baseType) {
-		case 'object':
-			propertyType = lhs.properties[this.property];
-			if (!propertyType && state.isContextCommaScript()) {
-				state.handleError(this, 'Unknown property "' + this.property + '"');
-			}
-			return propertyType;
-		case 'array':
-			throw new Error('Not Implemented');
-		case 'string':
-			throw new Error('Not Implemented');
-		case 'function':
-			throw new Error('Not Implemented');
-		default:
-			throw new Error('Internal error: unsupported dot type "' + lhs.baseType + '"');
-	}
-};
+do {
+	x = 'hi';
+} while(y);

@@ -107,7 +107,7 @@ describe('Branch Tests', function() {
 			path.join(__dirname, 'tests', 'branches', '08-for_loop_body_error.js:30:1\n'));
 	});
 
-	it('Branch - for in loop body', function() {
+	it('Branch - for in loop', function() {
 		runTest(path.join(__dirname, 'tests', 'branches', '09-for_in_loop.js'), '', '');
 	});
 
@@ -127,5 +127,21 @@ describe('Branch Tests', function() {
 		runTest(path.join(__dirname, 'tests', 'branches', '12-for_in_loop_init_error.js'), '',
 			'For loop iteration variables must be of type string ' +
 			path.join(__dirname, 'tests', 'branches', '12-for_in_loop_init_error.js:29:0\n'));
+	});
+
+	it('Branch - do while loop', function() {
+		runTest(path.join(__dirname, 'tests', 'branches', '13-do_while_loop.js'), '', '');
+	});
+
+	it('Branch - do while loop condition error', function() {
+		runTest(path.join(__dirname, 'tests', 'branches', '14-do_while_loop_condition_error.js'), '',
+			'Undeclared symbol "x" ' +
+			path.join(__dirname, 'tests', 'branches', '14-do_while_loop_condition_error.js:31:8\n'));
+	});
+
+	it('Branch - do while loop body error', function() {
+		runTest(path.join(__dirname, 'tests', 'branches', '15-do_while_loop_body_error.js'), '',
+			'Undeclared symbol "x" ' +
+			path.join(__dirname, 'tests', 'branches', '15-do_while_loop_body_error.js:30:1\n'));
 	});
 });
