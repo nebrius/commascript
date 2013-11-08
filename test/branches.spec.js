@@ -144,4 +144,20 @@ describe('Branch Tests', function() {
 			'Undeclared symbol "x" ' +
 			path.join(__dirname, 'tests', 'branches', '15-do_while_loop_body_error.js:30:1\n'));
 	});
+
+	it('Branch - while loop', function() {
+		runTest(path.join(__dirname, 'tests', 'branches', '16-while_loop.js'), '', '');
+	});
+
+	it('Branch - while loop condition error', function() {
+		runTest(path.join(__dirname, 'tests', 'branches', '17-while_loop_condition_error.js'), '',
+			'Undeclared symbol "x" ' +
+			path.join(__dirname, 'tests', 'branches', '17-while_loop_condition_error.js:29:6\n'));
+	});
+
+	it('Branch - while loop body error', function() {
+		runTest(path.join(__dirname, 'tests', 'branches', '18-while_loop_body_error.js'), '',
+			'Undeclared symbol "x" ' +
+			path.join(__dirname, 'tests', 'branches', '18-while_loop_body_error.js:30:1\n'));
+	});
 });
