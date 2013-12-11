@@ -21,6 +21,7 @@
 	"author": "Bryan Hughes <bryan@theoreticalideations.com>",
 	"license": "MIT",
 	"scripts": {
-		"test": "node test/bootstrap.js"
+		"test": "node test/bootstrap.js",
+		"install": "echo \"WARNING: This software is PRE-ALPHA and will most likely crash\""
 	}
 }
