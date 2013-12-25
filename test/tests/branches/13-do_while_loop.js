@@ -27,5 +27,5 @@ THE SOFTWARE.
 var y = '';
 
 do {
-	y = 'hi';
+  y = 'hi';
 } while(y);

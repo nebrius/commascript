@@ -25,9 +25,9 @@ THE SOFTWARE.
 'use commascript';
 
 ('define(function,foo)', {
-	returnType: 'string'
+  returnType: 'string'
 });
 
 function foo() {
-	return 10;
+  return 10;
 }

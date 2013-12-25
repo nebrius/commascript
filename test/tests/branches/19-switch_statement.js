@@ -22,10 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js');
+'use commascript';
 
-uglify.AST_LabeledStatement.prototype.ruleName = 'AST_LabeledStatement';
+var x = 0;
 
-uglify.AST_LabeledStatement.prototype.analyze = function analyze() {
-  return this.body.analyze();
-};
+switch(x) {
+  case 1:
+  case 2:
+    break;
+  default:
+    break;
+}

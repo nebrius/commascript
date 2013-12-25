@@ -25,11 +25,11 @@ THE SOFTWARE.
 'use commascript';
 
 ('define(function,foo)', {
-	returnType: 'string'
+  returnType: 'string'
 });
 
 function foo() {
-	if (true) {
-		return 'hi';
-	}
+  if (true) {
+    return 'hi';
+  }
 }

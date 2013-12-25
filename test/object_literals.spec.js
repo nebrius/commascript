@@ -31,57 +31,57 @@ waitsFor
 */
 
 var path = require('path'),
-	exec = require('child_process').exec,
-	commascriptBinary = path.join(__dirname, '..', 'bin', 'commascript.js');
+    exec = require('child_process').exec,
+    commascriptBinary = path.join(__dirname, '..', 'bin', 'commascript.js');
 
 function runTest(source, expectedStdout, expectedStderr) {
-	var finished = false,
-		output;
-	runs(function () {
-		exec('node ' + commascriptBinary + ' ' + source, {
-			cwd: __dirname
-		}, function (error, stdout, stderr) {
-			finished = true;
-			output = {
-				stdout: stdout.replace('\n\r', '\n'),
-				stderr: stderr.replace('\n\r', '\n'),
-				error: error
-			};
-		});
-	});
-	waitsFor(function () {
-		return finished;
-	});
-	runs(function () {
-		expect(output.stdout).toEqual(expectedStdout);
-		expect(output.stderr).toEqual(expectedStderr);
-		expect(output.error).toBeNull();
-	});
+  var finished = false,
+      output;
+  runs(function () {
+    exec('node ' + commascriptBinary + ' ' + source, {
+      cwd: __dirname
+    }, function (error, stdout, stderr) {
+      finished = true;
+      output = {
+        stdout: stdout.replace('\n\r', '\n'),
+        stderr: stderr.replace('\n\r', '\n'),
+        error: error
+      };
+    });
+  });
+  waitsFor(function () {
+    return finished;
+  });
+  runs(function () {
+    expect(output.stdout).toEqual(expectedStdout);
+    expect(output.stderr).toEqual(expectedStderr);
+    expect(output.error).toBeNull();
+  });
 }
 
 describe('Object Tests', function() {
 
-	it('Object literal - Object literal', function() {
-		runTest(path.join(__dirname, 'tests', 'object-literals', '01-object_literal.js'), '', '');
-	});
+  it('Object literal - Object literal', function() {
+    runTest(path.join(__dirname, 'tests', 'object-literals', '01-object_literal.js'), '', '');
+  });
 
-	it('Object literal - Object infer type error', function() {
-		runTest(path.join(__dirname, 'tests', 'object-literals', '02-infer_type_error.js'), '',
-			'Inferred type has mismatched type for "baz" ' +
-			path.join(__dirname, 'tests', 'object-literals', '02-infer_type_error.js:35:6\n'));
-	});
+  it('Object literal - Object infer type error', function() {
+    runTest(path.join(__dirname, 'tests', 'object-literals', '02-infer_type_error.js'), '',
+      'Inferred type has mismatched type for "baz" ' +
+      path.join(__dirname, 'tests', 'object-literals', '02-infer_type_error.js:35:6\n'));
+  });
 
-	it('Object literal - Object property type error', function() {
-		runTest(path.join(__dirname, 'tests', 'object-literals', '03-property_type_error.js'), '',
-			'Cannot cast "number" as "string" ' +
-			path.join(__dirname, 'tests', 'object-literals', '03-property_type_error.js:39:10\n') +
-			'Cannot cast "string" as "number" ' +
-			path.join(__dirname, 'tests', 'object-literals', '03-property_type_error.js:40:10\n'));
-	});
+  it('Object literal - Object property type error', function() {
+    runTest(path.join(__dirname, 'tests', 'object-literals', '03-property_type_error.js'), '',
+      'Cannot cast "number" as "string" ' +
+      path.join(__dirname, 'tests', 'object-literals', '03-property_type_error.js:39:10\n') +
+      'Cannot cast "string" as "number" ' +
+      path.join(__dirname, 'tests', 'object-literals', '03-property_type_error.js:40:10\n'));
+  });
 
-	it('Object literal - Assignment to undeclared property', function() {
-		runTest(path.join(__dirname, 'tests', 'object-literals', '04-undeclared_property.js'), '',
-			'Unknown property "foo" ' +
-			path.join(__dirname, 'tests', 'object-literals', '04-undeclared_property.js:39:0\n'));
-	});
+  it('Object literal - Assignment to undeclared property', function() {
+    runTest(path.join(__dirname, 'tests', 'object-literals', '04-undeclared_property.js'), '',
+      'Unknown property "foo" ' +
+      path.join(__dirname, 'tests', 'object-literals', '04-undeclared_property.js:39:0\n'));
+  });
 });

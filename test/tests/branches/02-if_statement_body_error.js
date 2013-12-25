@@ -27,5 +27,5 @@ THE SOFTWARE.
 var y = 1;
 
 if (y) {
-	x = 2;
+  x = 2;
 }

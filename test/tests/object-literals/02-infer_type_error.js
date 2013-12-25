@@ -25,14 +25,14 @@ THE SOFTWARE.
 'use commascript';
 
 ('define(object,foo)', {
-	properties: {
-		'bar': 'string',
-		'baz': 'number'
-	}
+  properties: {
+    'bar': 'string',
+    'baz': 'number'
+  }
 });
 
 var obj = ('cast(foo)', null);
 obj = {
-	'bar': 'hello world',
-	'baz': false
+  'bar': 'hello world',
+  'baz': false
 };

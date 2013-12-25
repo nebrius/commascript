@@ -31,71 +31,71 @@ waitsFor
 */
 
 var path = require('path'),
-	exec = require('child_process').exec,
-	commascriptBinary = path.join(__dirname, '..', 'bin', 'commascript.js');
+    exec = require('child_process').exec,
+    commascriptBinary = path.join(__dirname, '..', 'bin', 'commascript.js');
 
 function runTest(source, expectedStdout, expectedStderr) {
-	var finished = false,
-		output;
-	runs(function () {
-		exec('node ' + commascriptBinary + ' ' + source, {
-			cwd: __dirname
-		}, function (error, stdout, stderr) {
-			finished = true;
-			output = {
-				stdout: stdout.replace('\n\r', '\n'),
-				stderr: stderr.replace('\n\r', '\n'),
-				error: error
-			};
-		});
-	});
-	waitsFor(function () {
-		return finished;
-	});
-	runs(function () {
-		expect(output.stdout).toEqual(expectedStdout);
-		expect(output.stderr).toEqual(expectedStderr);
-		expect(output.error).toBeNull();
-	});
+  var finished = false,
+      output;
+  runs(function () {
+    exec('node ' + commascriptBinary + ' ' + source, {
+      cwd: __dirname
+    }, function (error, stdout, stderr) {
+      finished = true;
+      output = {
+        stdout: stdout.replace('\n\r', '\n'),
+        stderr: stderr.replace('\n\r', '\n'),
+        error: error
+      };
+    });
+  });
+  waitsFor(function () {
+    return finished;
+  });
+  runs(function () {
+    expect(output.stdout).toEqual(expectedStdout);
+    expect(output.stderr).toEqual(expectedStderr);
+    expect(output.error).toBeNull();
+  });
 }
 
 describe('Primitive Tests', function() {
 
-	it('Boolean - Boolean assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '01-boolean.js'), '', '');
-	});
+  it('Boolean - Boolean assigned', function() {
+    runTest(path.join(__dirname, 'tests', 'primitives', '01-boolean.js'), '', '');
+  });
 
-	it('Boolean - Number assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '02-boolean_typeerror.js'), '',
-			'Cannot cast "number" as "boolean" ' +
-			path.join(__dirname, 'tests', 'primitives', '02-boolean_typeerror.js:28:6') + '\n');
-	});
+  it('Boolean - Number assigned', function() {
+    runTest(path.join(__dirname, 'tests', 'primitives', '02-boolean_typeerror.js'), '',
+      'Cannot cast "number" as "boolean" ' +
+      path.join(__dirname, 'tests', 'primitives', '02-boolean_typeerror.js:28:6') + '\n');
+  });
 
-	it('Number - Number assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '03-number.js'), '', '');
-	});
+  it('Number - Number assigned', function() {
+    runTest(path.join(__dirname, 'tests', 'primitives', '03-number.js'), '', '');
+  });
 
-	it('Number - String assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '04-number_typeerror.js'), '',
-			'Cannot cast "string" as "number" ' +
-			path.join(__dirname, 'tests', 'primitives', '04-number_typeerror.js:28:6') + '\n');
-	});
+  it('Number - String assigned', function() {
+    runTest(path.join(__dirname, 'tests', 'primitives', '04-number_typeerror.js'), '',
+      'Cannot cast "string" as "number" ' +
+      path.join(__dirname, 'tests', 'primitives', '04-number_typeerror.js:28:6') + '\n');
+  });
 
-	it('Number - NaN assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '05-number_nan.js'), '', '');
-	});
+  it('Number - NaN assigned', function() {
+    runTest(path.join(__dirname, 'tests', 'primitives', '05-number_nan.js'), '', '');
+  });
 
-	it('Number - Infinity assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '06-number_infinity.js'), '', '');
-	});
+  it('Number - Infinity assigned', function() {
+    runTest(path.join(__dirname, 'tests', 'primitives', '06-number_infinity.js'), '', '');
+  });
 
-	it('String - String assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '07-string.js'), '', '');
-	});
+  it('String - String assigned', function() {
+    runTest(path.join(__dirname, 'tests', 'primitives', '07-string.js'), '', '');
+  });
 
-	it('String - Number assigned', function() {
-		runTest(path.join(__dirname, 'tests', 'primitives', '08-string_typeerror.js'), '',
-			'Cannot cast "number" as "string" ' +
-			path.join(__dirname, 'tests', 'primitives', '08-string_typeerror.js:28:6') + '\n');
-	});
+  it('String - Number assigned', function() {
+    runTest(path.join(__dirname, 'tests', 'primitives', '08-string_typeerror.js'), '',
+      'Cannot cast "number" as "string" ' +
+      path.join(__dirname, 'tests', 'primitives', '08-string_typeerror.js:28:6') + '\n');
+  });
 });

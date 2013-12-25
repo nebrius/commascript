@@ -25,5 +25,5 @@ THE SOFTWARE.
 'use commascript';
 
 for (var y in {}) {
-	y = 0;
+  y = 0;
 }

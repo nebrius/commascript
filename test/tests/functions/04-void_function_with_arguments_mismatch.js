@@ -25,7 +25,7 @@ THE SOFTWARE.
 'use commascript';
 
 ('define(function,foo)', {
-	argumentTypes: ['string', 'number']
+  argumentTypes: ['string', 'number']
 });
 
 var foo = ('cast(foo)', function (a) {});
