@@ -22,15 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js');
+'use commascript';
 
-uglify.AST_Break.prototype.ruleName = 'AST_Break';
+('define(function,foo)', {
+  returnType: 'string'
+});
 
-uglify.AST_Break.prototype.analyze = function analyze() {
-
-  // Do nothing
-
-  return {
-    result: 'break'
-  };
-};
+function foo() {
+  switch(0) {
+    case 1:
+    case 2:
+      return 'hello';
+    default:
+      return 10;
+  }
+}

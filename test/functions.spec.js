@@ -102,7 +102,7 @@ describe('Function Tests', function() {
   it('Function - function with primitive return error', function () {
     runTest(path.join(__dirname, 'tests', 'functions', '09-function_with_primitive_return_error.js'), '',
       'Mismatched return type ' +
-      path.join(__dirname, 'tests', 'functions', '09-function_with_primitive_return_error.js:32:1\n'));
+      path.join(__dirname, 'tests', 'functions', '09-function_with_primitive_return_error.js:32:2\n'));
   });
 
   it('Function - function with multiple returns', function () {
@@ -112,7 +112,7 @@ describe('Function Tests', function() {
   it('Function - function with multiple returns error', function () {
     runTest(path.join(__dirname, 'tests', 'functions', '11-function_with_multiple_returns_error.js'), '',
       'Mismatched return type ' +
-      path.join(__dirname, 'tests', 'functions', '11-function_with_multiple_returns_error.js:33:2\n'));
+      path.join(__dirname, 'tests', 'functions', '11-function_with_multiple_returns_error.js:33:4\n'));
   });
 
   it('Function - function with missing return path', function () {
@@ -122,27 +122,32 @@ describe('Function Tests', function() {
   });
 
   it('Function - function with switch', function () {
-    throw new Error('Not Implemented');
     runTest(path.join(__dirname, 'tests', 'functions', '13-function_with_switch.js'), '', '');
   });
 
   it('Function - function with switch returns', function () {
-    throw new Error('Not Implemented');
     runTest(path.join(__dirname, 'tests', 'functions', '14-function_with_switch_returns.js'), '', '');
   });
 
   it('Function - function with switch missing return path', function () {
-    throw new Error('Not Implemented');
-    runTest(path.join(__dirname, 'tests', 'functions', '15-function_with_switch_missing_return_path.js'), '', '');
+    runTest(path.join(__dirname, 'tests', 'functions', '15-function_with_switch_missing_return_path.js'), '',
+      'Not all code paths return a value ' +
+      path.join(__dirname, 'tests', 'functions', '15-function_with_switch_missing_return_path.js:31:0\n'));
   });
 
   it('Function - function with switch fallthrough', function () {
-    throw new Error('Not Implemented');
     runTest(path.join(__dirname, 'tests', 'functions', '16-function_with_switch_fallthrough.js'), '', '');
   });
 
+  it('Function - function with switch fallthrough', function () {
+    runTest(path.join(__dirname, 'tests', 'functions', '17-function_with_switch_fallthrough_error.js'), '',
+      'Mismatched return type ' +
+      path.join(__dirname, 'tests', 'functions', '17-function_with_switch_fallthrough_error.js:37:6\n'));
+  });
+
   it('Function - function with switch missing default', function () {
-    throw new Error('Not Implemented');
-    runTest(path.join(__dirname, 'tests', 'functions', '17-function_with_switch_missing_default.js'), '', '');
+    runTest(path.join(__dirname, 'tests', 'functions', '18-function_with_switch_missing_default.js'), '',
+      'Not all code paths return a value ' +
+      path.join(__dirname, 'tests', 'functions', '18-function_with_switch_missing_default.js:31:0\n'));
   });
 });

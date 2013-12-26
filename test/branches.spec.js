@@ -70,13 +70,13 @@ describe('Branch Tests', function() {
   it('Branch - if statement body error', function() {
     runTest(path.join(__dirname, 'tests', 'branches', '02-if_statement_body_error.js'), '',
       'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '02-if_statement_body_error.js:30:1\n'));
+      path.join(__dirname, 'tests', 'branches', '02-if_statement_body_error.js:30:2\n'));
   });
 
   it('Branch - if statement alternate error', function() {
     runTest(path.join(__dirname, 'tests', 'branches', '03-if_statement_alternate_error.js'), '',
       'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '03-if_statement_alternate_error.js:32:1\n'));
+      path.join(__dirname, 'tests', 'branches', '03-if_statement_alternate_error.js:32:2\n'));
   });
 
   it('Branch - for loop', function() {
@@ -104,7 +104,7 @@ describe('Branch Tests', function() {
   it('Branch - for loop body error', function() {
     runTest(path.join(__dirname, 'tests', 'branches', '08-for_loop_body_error.js'), '',
       'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '08-for_loop_body_error.js:30:1\n'));
+      path.join(__dirname, 'tests', 'branches', '08-for_loop_body_error.js:30:2\n'));
   });
 
   it('Branch - for in loop', function() {
@@ -114,7 +114,7 @@ describe('Branch Tests', function() {
   it('Branch - for in loop body error', function() {
     runTest(path.join(__dirname, 'tests', 'branches', '10-for_in_loop_body_error.js'), '',
       'Cannot cast "number" as "string" ' +
-      path.join(__dirname, 'tests', 'branches', '10-for_in_loop_body_error.js:28:5\n'));
+      path.join(__dirname, 'tests', 'branches', '10-for_in_loop_body_error.js:28:6\n'));
   });
 
   it('Branch - for in loop init redefinition error', function() {
@@ -142,7 +142,7 @@ describe('Branch Tests', function() {
   it('Branch - do while loop body error', function() {
     runTest(path.join(__dirname, 'tests', 'branches', '15-do_while_loop_body_error.js'), '',
       'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '15-do_while_loop_body_error.js:30:1\n'));
+      path.join(__dirname, 'tests', 'branches', '15-do_while_loop_body_error.js:30:2\n'));
   });
 
   it('Branch - while loop', function() {
@@ -158,7 +158,7 @@ describe('Branch Tests', function() {
   it('Branch - while loop body error', function() {
     runTest(path.join(__dirname, 'tests', 'branches', '18-while_loop_body_error.js'), '',
       'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '18-while_loop_body_error.js:30:1\n'));
+      path.join(__dirname, 'tests', 'branches', '18-while_loop_body_error.js:30:2\n'));
   });
 
   it('Branch - switch statement', function() {
@@ -166,6 +166,8 @@ describe('Branch Tests', function() {
   });
 
   it('Branch - switch statement', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '20-switch_statement_with_invalid_case_type.js'), '', '');
+    runTest(path.join(__dirname, 'tests', 'branches', '20-switch_statement_with_invalid_case_type.js'), '',
+      'Mismatched case in switch: case type "string" must match the switch expression type "number" ' +
+      path.join(__dirname, 'tests', 'branches', '20-switch_statement_with_invalid_case_type.js:32:2\n'));
   });
 });
