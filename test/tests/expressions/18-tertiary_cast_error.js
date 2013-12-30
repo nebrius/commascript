@@ -22,30 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js'),
-    state = require('../state'),
-    type = require('../type');
+'use commascript';
 
-uglify.AST_Assign.prototype.ruleName = 'AST_Assign';
+var w = '',
+    x = true,
+    y = 10,
+    z = 20;
 
-uglify.AST_Assign.prototype.getType = function getType() {
-  var left = this.left.getType(),
-      right;
-  right = type.castIncompleteType({
-    name: left,
-    type: 'cast'
-  }, this.right);
-  if (this.operator != '=') {
-    throw new Error('Not Implemented');
-  }
-  if (state.isContextCommaScript()) {
-    if (!left || !right) {
-      return;
-    }
-    if (!type.compareTypes(left, right)) {
-      state.handleError(this, 'Mismatched assignment: right hand side type "' + right.name +
-        '" cannot be assigned to left hand side type "' + left.name + '"');
-    }
-    return left;
-  }
-};
+w = x ? y : z;

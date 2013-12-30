@@ -68,7 +68,7 @@ describe('Expressions Tests', function() {
   it('Expressions - numeric expression type error', function() {
     runTest(path.join(__dirname, 'tests', 'expressions', '02-numeric_expression_type_error.js'), '',
       'Invalid type supplied to right-hand side of numeric operator: expected "number" but got "string" ' +
-      path.join(__dirname, 'tests', 'expressions', '02-numeric_expression_type_error.js:29:4\n'));
+      path.join(__dirname, 'tests', 'expressions', '02-numeric_expression_type_error.js:29:9\n'));
   });
 
   it('Expressions - addition', function() {
@@ -98,7 +98,7 @@ describe('Expressions Tests', function() {
   it('Expressions - numeric comparison type error', function() {
     runTest(path.join(__dirname, 'tests', 'expressions', '08-numeric_comparison_type_error.js'), '',
       'Invalid type supplied to right-hand side of numeric operator: expected "number" but got "string" ' +
-      path.join(__dirname, 'tests', 'expressions', '08-numeric_comparison_type_error.js:31:4\n'));
+      path.join(__dirname, 'tests', 'expressions', '08-numeric_comparison_type_error.js:31:8\n'));
   });
 
   it('Expressions - numeric comparison cast error', function() {
@@ -124,12 +124,34 @@ describe('Expressions Tests', function() {
   it('Expressions - boolean expression type error', function() {
     runTest(path.join(__dirname, 'tests', 'expressions', '13-boolean_expression_type_error.js'), '',
       'Invalid type supplied to right-hand side of boolean operator: expected "boolean" but got "number" ' +
-      path.join(__dirname, 'tests', 'expressions', '13-boolean_expression_type_error.js:31:4\n'));
+      path.join(__dirname, 'tests', 'expressions', '13-boolean_expression_type_error.js:31:9\n'));
   });
 
   it('Expressions - boolean expression cast error', function() {
     runTest(path.join(__dirname, 'tests', 'expressions', '14-boolean_expression_cast_error.js'), '',
       'Cannot cast "boolean" as "number" ' +
       path.join(__dirname, 'tests', 'expressions', '14-boolean_expression_cast_error.js:31:4\n'));
+  });
+
+  it('Expressions - tertiary', function() {
+    runTest(path.join(__dirname, 'tests', 'expressions', '15-tertiary.js'), '', '');
+  });
+
+  it('Expressions - tertiary alternative type error', function() {
+    runTest(path.join(__dirname, 'tests', 'expressions', '16-tertiary_alternative_type_error.js'), '',
+      'Mismatched tertiary arguments: the consequent is of type "number" but the alternative is of type "string" and must match the consequent type ' +
+      path.join(__dirname, 'tests', 'expressions', '16-tertiary_alternative_type_error.js:32:12\n'));
+  });
+
+  it('Expressions - tertiary condition type error', function() {
+    runTest(path.join(__dirname, 'tests', 'expressions', '17-tertiary_condition_type_error.js'), '',
+      'Invalid condition type: expected type "boolean" but instead saw type "number" ' +
+      path.join(__dirname, 'tests', 'expressions', '17-tertiary_condition_type_error.js:32:4\n'));
+  });
+
+  it('Expressions - tertiary cast error', function() {
+    runTest(path.join(__dirname, 'tests', 'expressions', '18-tertiary_cast_error.js'), '',
+      'Cannot cast "number" as "string" ' +
+      path.join(__dirname, 'tests', 'expressions', '18-tertiary_cast_error.js:32:4\n'));
   });
 });
