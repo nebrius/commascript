@@ -133,25 +133,25 @@ describe('Expressions Tests', function() {
       path.join(__dirname, 'tests', 'expressions', '14-boolean_expression_cast_error.js:31:4\n'));
   });
 
-  it('Expressions - tertiary', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '15-tertiary.js'), '', '');
+  it('Expressions - ternary', function() {
+    runTest(path.join(__dirname, 'tests', 'expressions', '15-ternary.js'), '', '');
   });
 
-  it('Expressions - tertiary alternative type error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '16-tertiary_alternative_type_error.js'), '',
-      'Mismatched tertiary arguments: the consequent is of type "number" but the alternative is of type "string" and must match the consequent type ' +
-      path.join(__dirname, 'tests', 'expressions', '16-tertiary_alternative_type_error.js:32:12\n'));
+  it('Expressions - ternary alternative type error', function() {
+    runTest(path.join(__dirname, 'tests', 'expressions', '16-ternary_alternative_type_error.js'), '',
+      'Mismatched ternary arguments: the consequent is of type "number" but the alternative is of type "string" and must match the consequent type ' +
+      path.join(__dirname, 'tests', 'expressions', '16-ternary_alternative_type_error.js:32:12\n'));
   });
 
-  it('Expressions - tertiary condition type error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '17-tertiary_condition_type_error.js'), '',
+  it('Expressions - ternary condition type error', function() {
+    runTest(path.join(__dirname, 'tests', 'expressions', '17-ternary_condition_type_error.js'), '',
       'Invalid condition type: expected type "boolean" but instead saw type "number" ' +
-      path.join(__dirname, 'tests', 'expressions', '17-tertiary_condition_type_error.js:32:4\n'));
+      path.join(__dirname, 'tests', 'expressions', '17-ternary_condition_type_error.js:32:4\n'));
   });
 
-  it('Expressions - tertiary cast error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '18-tertiary_cast_error.js'), '',
+  it('Expressions - ternary cast error', function() {
+    runTest(path.join(__dirname, 'tests', 'expressions', '18-ternary_cast_error.js'), '',
       'Cannot cast "number" as "string" ' +
-      path.join(__dirname, 'tests', 'expressions', '18-tertiary_cast_error.js:32:4\n'));
+      path.join(__dirname, 'tests', 'expressions', '18-ternary_cast_error.js:32:4\n'));
   });
 });
