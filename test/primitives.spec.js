@@ -98,4 +98,10 @@ describe('Primitive Tests', function() {
       'Cannot cast "number" as "string" ' +
       path.join(__dirname, 'tests', 'primitives', '08-string_typeerror.js:28:6') + '\n');
   });
+
+  it('Undefined', function() {
+    runTest(path.join(__dirname, 'tests', 'primitives', '09-undefined.js'), '',
+      'Undefined values are not allowed ' +
+      path.join(__dirname, 'tests', 'primitives', '09-undefined.js:27:10') + '\n');
+  });
 });

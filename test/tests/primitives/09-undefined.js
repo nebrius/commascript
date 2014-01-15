@@ -22,27 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js'),
-    type = require('../type'),
-    state = require('../state');
+'use commascript';
 
-uglify.AST_SymbolRef.prototype.ruleName = 'AST_SymbolRef';
-
-uglify.AST_SymbolRef.prototype.getType = function getType() {
-  var symbolType,
-      name = this.name;
-  if (state.isContextCommaScript()) {
-    if (name == 'NaN' || name == 'Infinity') {
-      return type.lookupType('number');
-    } else if (name == 'undefined') {
-      state.handleError(this, 'Undefined values are not allowed');
-    } else {
-      symbolType = state.lookupSymbolType(name);
-      if(!symbolType) {
-        state.handleError(this, 'Undeclared symbol "' + this.name + '"');
-      } else {
-        return symbolType;
-      }
-    }
-  }
-};
+var foo = undefined;
