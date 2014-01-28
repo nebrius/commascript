@@ -26,6 +26,6 @@ THE SOFTWARE.
 
 var x = 10,
     y = 'hi',
-    z = 10;
+    z = 'there';
 
 x = y == z;

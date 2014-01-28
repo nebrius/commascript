@@ -24,8 +24,9 @@ THE SOFTWARE.
 
 'use commascript';
 
-var x = true,
-    y = 'hi',
-    z = 'there';
+('define(object,foo)', {});
 
-x = y == z;
+var obj = ('cast(foo)', null),
+    x = true;
+
+x = 'foo' in obj;

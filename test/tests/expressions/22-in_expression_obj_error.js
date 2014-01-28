@@ -24,8 +24,6 @@ THE SOFTWARE.
 
 'use commascript';
 
-var x = true,
-    y = 'hi',
-    z = 'there';
+var x = true;
 
-x = y == z;
+x = 'foo' in 10;
