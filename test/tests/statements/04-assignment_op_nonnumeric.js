@@ -22,33 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js'),
-    state = require('../state'),
-    type = require('../type');
+'use commascript';
 
-uglify.AST_Assign.prototype.ruleName = 'AST_Assign';
-
-uglify.AST_Assign.prototype.getType = function getType() {
-  var leftType = this.left.getType(),
-      rightType = this.right,
-      numberType = type.lookupType('number');
-  if (state.isContextCommaScript()) {
-    if (this.operator != '=') {
-      rightType = this.right.getType();
-      if (!type.compareTypes(leftType, numberType)) {
-        state.handleError(this.left, 'Invalid type supplied to left-hand side of assignment: expected "number" but got "' +
-          leftType.name + '"');
-      } else if(!type.compareTypes(rightType, numberType)) {
-        state.handleError(this.right, 'Invalid type supplied to right-hand side of assignment: expected "number" but got "' +
-          rightType.name + '"');
-      }
-      return numberType;
-    } else {
-      rightType = type.castIncompleteType({
-        name: leftType,
-        type: 'cast'
-      }, this.right);
-      return leftType;
-    }
-  }
-};
+var foo = 'hi';
+foo += 'world';
