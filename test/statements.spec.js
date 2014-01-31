@@ -61,23 +61,23 @@ function runTest(source, expectedStdout, expectedStderr) {
 
 describe('Statement Tests', function() {
 
-  it('Statements - assignment', function() {
+  it('01-assignment', function() {
     runTest(path.join(__dirname, 'tests', 'statements', '01-assignment.js'), '', '');
   });
 
-  it('Statements - numeric expression type error', function() {
+  it('02-assignment_mismatch', function() {
     runTest(path.join(__dirname, 'tests', 'statements', '02-assignment_mismatch.js'), '',
-      'Cannot cast "number" as "boolean" ' +
+      'Invalid right-hand side type in assignment: expected "boolean" but got "number" ' +
       path.join(__dirname, 'tests', 'statements', '02-assignment_mismatch.js:28:6\n'));
   });
 
-  it('Statements - numeric expression type error', function() {
+  it('03-assignment_op_mismatch', function() {
     runTest(path.join(__dirname, 'tests', 'statements', '03-assignment_op_mismatch.js'), '',
       'Invalid type supplied to left-hand side of assignment: expected "number" but got "string" ' +
       path.join(__dirname, 'tests', 'statements', '03-assignment_op_mismatch.js:28:0\n'));
   });
 
-  it('Statements - numeric expression type error', function() {
+  it('04-assignment_op_nonnumeric', function() {
     runTest(path.join(__dirname, 'tests', 'statements', '04-assignment_op_nonnumeric.js'), '',
       'Invalid type supplied to left-hand side of assignment: expected "number" but got "string" ' +
       path.join(__dirname, 'tests', 'statements', '04-assignment_op_nonnumeric.js:28:0\n'));

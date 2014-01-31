@@ -61,37 +61,37 @@ function runTest(source, expectedStdout, expectedStderr) {
 
 describe('Function Call Tests', function() {
 
-  it('Function call - void function call', function() {
+  it('01-void_function_call', function() {
     runTest(path.join(__dirname, 'tests', 'function_calls', '01-void_function_call.js'), '', '');
   });
 
-  it('Function call - void function call with arguments', function() {
+  it('02-void_function_call_with_arguments', function() {
     runTest(path.join(__dirname, 'tests', 'function_calls', '02-void_function_call_with_arguments.js'), '', '');
   });
 
-  it('Function call - void function call with invalid arguments', function() {
+  it('03-void_function_call_with_invalid_arguments', function() {
     runTest(path.join(__dirname, 'tests', 'function_calls', '03-void_function_call_with_invalid_arguments.js'), '',
       'Mismatched function call argument: expected argument 0 to be of type "string" but saw argument of type "number" ' +
       path.join(__dirname, 'tests', 'function_calls', '03-void_function_call_with_invalid_arguments.js:33:0\n'));
   });
 
-  it('Function call - void function call with mismatched arguments', function() {
+  it('04-void_function_call_with_mismatched_arguments', function() {
     runTest(path.join(__dirname, 'tests', 'function_calls', '04-void_function_call_with_mismatched_arguments.js'), '',
       'Mismatched number of arguments in function call: expected 1 argument but saw 2 arguments ' +
       path.join(__dirname, 'tests', 'function_calls', '04-void_function_call_with_mismatched_arguments.js:33:0\n'));
   });
 
-  it('Function call - function call with return', function() {
+  it('05-function_call_with_return', function() {
     runTest(path.join(__dirname, 'tests', 'function_calls', '05-function_call_with_return.js'), '', '');
   });
 
-  it('Function call - function call with mismatched return', function() {
+  it('06-function_call_with_mismatched_return', function() {
     runTest(path.join(__dirname, 'tests', 'function_calls', '06-function_call_with_mismatched_return.js'), '',
-      'Cannot cast "string" as "number" ' +
+      'Invalid right-hand side type in assignment: expected "number" but got "string" ' +
       path.join(__dirname, 'tests', 'function_calls', '06-function_call_with_mismatched_return.js:37:4\n'));
   });
 
-  it('Function call - function call with no assignment', function() {
+  it('07-function_call_with_no_assignment', function() {
     runTest(path.join(__dirname, 'tests', 'function_calls', '07-function_call_with_no_assignment.js'), '', '');
   });
 });

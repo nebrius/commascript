@@ -61,45 +61,45 @@ function runTest(source, expectedStdout, expectedStderr) {
 
 describe('Primitive Tests', function() {
 
-  it('Boolean - Boolean assigned', function() {
+  it('01-boolean', function() {
     runTest(path.join(__dirname, 'tests', 'primitives', '01-boolean.js'), '', '');
   });
 
-  it('Boolean - Number assigned', function() {
+  it('02-boolean_typeerror', function() {
     runTest(path.join(__dirname, 'tests', 'primitives', '02-boolean_typeerror.js'), '',
-      'Cannot cast "number" as "boolean" ' +
+      'Invalid right-hand side type in assignment: expected "boolean" but got "number" ' +
       path.join(__dirname, 'tests', 'primitives', '02-boolean_typeerror.js:28:6') + '\n');
   });
 
-  it('Number - Number assigned', function() {
+  it('03-number', function() {
     runTest(path.join(__dirname, 'tests', 'primitives', '03-number.js'), '', '');
   });
 
-  it('Number - String assigned', function() {
+  it('04-number_typeerror', function() {
     runTest(path.join(__dirname, 'tests', 'primitives', '04-number_typeerror.js'), '',
-      'Cannot cast "string" as "number" ' +
+      'Invalid right-hand side type in assignment: expected "number" but got "string" ' +
       path.join(__dirname, 'tests', 'primitives', '04-number_typeerror.js:28:6') + '\n');
   });
 
-  it('Number - NaN assigned', function() {
+  it('05-number_nan', function() {
     runTest(path.join(__dirname, 'tests', 'primitives', '05-number_nan.js'), '', '');
   });
 
-  it('Number - Infinity assigned', function() {
+  it('06-number_infinity', function() {
     runTest(path.join(__dirname, 'tests', 'primitives', '06-number_infinity.js'), '', '');
   });
 
-  it('String - String assigned', function() {
+  it('07-string', function() {
     runTest(path.join(__dirname, 'tests', 'primitives', '07-string.js'), '', '');
   });
 
-  it('String - Number assigned', function() {
+  it('08-string_typeerror', function() {
     runTest(path.join(__dirname, 'tests', 'primitives', '08-string_typeerror.js'), '',
-      'Cannot cast "number" as "string" ' +
+      'Invalid right-hand side type in assignment: expected "string" but got "number" ' +
       path.join(__dirname, 'tests', 'primitives', '08-string_typeerror.js:28:6') + '\n');
   });
 
-  it('Undefined', function() {
+  it('09-undefined', function() {
     runTest(path.join(__dirname, 'tests', 'primitives', '09-undefined.js'), '',
       'Undefined values are not allowed ' +
       path.join(__dirname, 'tests', 'primitives', '09-undefined.js:27:10') + '\n');

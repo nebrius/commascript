@@ -61,91 +61,91 @@ function runTest(source, expectedStdout, expectedStderr) {
 
 describe('Function Tests', function() {
 
-  it('Function - void function', function() {
+  it('01-void_function', function() {
     runTest(path.join(__dirname, 'tests', 'functions', '01-void_function.js'), '', '');
   });
 
-  it('Function - void function definition', function() {
+  it('02-void_function_definition', function() {
     runTest(path.join(__dirname, 'tests', 'functions', '02-void_function_definition.js'), '', '');
   });
 
-  it('Function - void function with arguments', function() {
+  it('03-void_function_with_arguments', function() {
     runTest(path.join(__dirname, 'tests', 'functions', '03-void_function_with_arguments.js'), '', '');
   });
 
-  it('Function - void function with arguments mismatch', function() {
+  it('04-void_function_with_arguments_mismatch', function() {
     runTest(path.join(__dirname, 'tests', 'functions', '04-void_function_with_arguments_mismatch.js'), '',
       'Mismatched number of arguments ' +
       path.join(__dirname, 'tests', 'functions', '04-void_function_with_arguments_mismatch.js:31:34\n'));
   });
 
-  it('Function - void function with arguments', function() {
+  it('05-void_function_definition_with_arguments', function() {
     runTest(path.join(__dirname, 'tests', 'functions', '05-void_function_definition_with_arguments.js'), '', '');
   });
 
-  it('Function - void function with arguments mismatch', function() {
+  it('06-void_function_definition_with_arguments_mismatch', function() {
     runTest(path.join(__dirname, 'tests', 'functions', '06-void_function_definition_with_arguments_mismatch.js'), '',
       'Mismatched number of arguments ' +
       path.join(__dirname, 'tests', 'functions', '06-void_function_definition_with_arguments_mismatch.js:31:13\n'));
   });
 
-  it('Function - void function with arguments mismatch', function() {
+  it('07-void_function_definition_without_type', function() {
     runTest(path.join(__dirname, 'tests', 'functions', '07-void_function_definition_without_type.js'), '',
       'Type "foo" is not defined ' +
       path.join(__dirname, 'tests', 'functions', '07-void_function_definition_without_type.js:27:9\n'));
   });
 
-  it('Function - function with primitive return', function () {
+  it('08-function_with_primitive_return', function () {
     runTest(path.join(__dirname, 'tests', 'functions', '08-function_with_primitive_return.js'), '', '');
   });
 
-  it('Function - function with primitive return error', function () {
+  it('09-function_with_primitive_return_error', function () {
     runTest(path.join(__dirname, 'tests', 'functions', '09-function_with_primitive_return_error.js'), '',
       'Mismatched return type ' +
       path.join(__dirname, 'tests', 'functions', '09-function_with_primitive_return_error.js:32:2\n'));
   });
 
-  it('Function - function with multiple returns', function () {
+  it('10-function_with_multiple_returns', function () {
     runTest(path.join(__dirname, 'tests', 'functions', '10-function_with_multiple_returns.js'), '', '');
   });
 
-  it('Function - function with multiple returns error', function () {
+  it('11-function_with_multiple_returns_error', function () {
     runTest(path.join(__dirname, 'tests', 'functions', '11-function_with_multiple_returns_error.js'), '',
       'Mismatched return type ' +
       path.join(__dirname, 'tests', 'functions', '11-function_with_multiple_returns_error.js:33:4\n'));
   });
 
-  it('Function - function with missing return path', function () {
+  it('12-function_with_missing_return_path', function () {
     runTest(path.join(__dirname, 'tests', 'functions', '12-function_with_missing_return_path.js'), '',
       'Not all code paths return a value ' +
       path.join(__dirname, 'tests', 'functions', '12-function_with_missing_return_path.js:31:0\n'));
   });
 
-  it('Function - function with switch', function () {
+  it('13-function_with_switch', function () {
     runTest(path.join(__dirname, 'tests', 'functions', '13-function_with_switch.js'), '', '');
   });
 
-  it('Function - function with switch returns', function () {
+  it('14-function_with_switch_returns', function () {
     runTest(path.join(__dirname, 'tests', 'functions', '14-function_with_switch_returns.js'), '', '');
   });
 
-  it('Function - function with switch missing return path', function () {
+  it('15-function_with_switch_missing_return_path', function () {
     runTest(path.join(__dirname, 'tests', 'functions', '15-function_with_switch_missing_return_path.js'), '',
       'Not all code paths return a value ' +
       path.join(__dirname, 'tests', 'functions', '15-function_with_switch_missing_return_path.js:31:0\n'));
   });
 
-  it('Function - function with switch fallthrough', function () {
+  it('16-function_with_switch_fallthrough', function () {
     runTest(path.join(__dirname, 'tests', 'functions', '16-function_with_switch_fallthrough.js'), '', '');
   });
 
-  it('Function - function with switch fallthrough', function () {
+  it('17-function_with_switch_fallthrough_error', function () {
     runTest(path.join(__dirname, 'tests', 'functions', '17-function_with_switch_fallthrough_error.js'), '',
       'Mismatched return type ' +
       path.join(__dirname, 'tests', 'functions', '17-function_with_switch_fallthrough_error.js:37:6\n'));
   });
 
-  it('Function - function with switch missing default', function () {
+  it('18-function_with_switch_missing_default', function () {
     runTest(path.join(__dirname, 'tests', 'functions', '18-function_with_switch_missing_default.js'), '',
       'Not all code paths return a value ' +
       path.join(__dirname, 'tests', 'functions', '18-function_with_switch_missing_default.js:31:0\n'));

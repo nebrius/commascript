@@ -61,25 +61,25 @@ function runTest(source, expectedStdout, expectedStderr) {
 
 describe('Object Tests', function() {
 
-  it('Object literal - Object literal', function() {
+  it('01-object_literal', function() {
     runTest(path.join(__dirname, 'tests', 'object-literals', '01-object_literal.js'), '', '');
   });
 
-  it('Object literal - Object infer type error', function() {
+  it('02-infer_type_error', function() {
     runTest(path.join(__dirname, 'tests', 'object-literals', '02-infer_type_error.js'), '',
       'Inferred type has mismatched type for "baz" ' +
       path.join(__dirname, 'tests', 'object-literals', '02-infer_type_error.js:35:6\n'));
   });
 
-  it('Object literal - Object property type error', function() {
+  it('03-property_type_error', function() {
     runTest(path.join(__dirname, 'tests', 'object-literals', '03-property_type_error.js'), '',
-      'Cannot cast "number" as "string" ' +
+      'Invalid right-hand side type in assignment: expected "string" but got "number" ' +
       path.join(__dirname, 'tests', 'object-literals', '03-property_type_error.js:39:10\n') +
-      'Cannot cast "string" as "number" ' +
+      'Invalid right-hand side type in assignment: expected "number" but got "string" ' +
       path.join(__dirname, 'tests', 'object-literals', '03-property_type_error.js:40:10\n'));
   });
 
-  it('Object literal - Assignment to undeclared property', function() {
+  it('04-undeclared_property', function() {
     runTest(path.join(__dirname, 'tests', 'object-literals', '04-undeclared_property.js'), '',
       'Unknown property "foo" ' +
       path.join(__dirname, 'tests', 'object-literals', '04-undeclared_property.js:39:0\n'));
