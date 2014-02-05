@@ -23,85 +23,67 @@ THE SOFTWARE.
 */
 
 /*global
-describe,
-it,
-expect,
-runs,
-waitsFor
+describe
 */
 
-var path = require('path'),
-    exec = require('child_process').exec,
-    commascriptBinary = path.join(__dirname, '..', 'bin', 'commascript.js');
-
-function runTest(source, expectedStdout, expectedStderr) {
-  var finished = false,
-      output;
-  runs(function () {
-    exec('node ' + commascriptBinary + ' ' + source, {
-      cwd: __dirname
-    }, function (error, stdout, stderr) {
-      finished = true;
-      output = {
-        stdout: stdout.replace('\n\r', '\n'),
-        stderr: stderr.replace('\n\r', '\n'),
-        error: error
-      };
-    });
-  });
-  waitsFor(function () {
-    return finished;
-  });
-  runs(function () {
-    expect(output.stdout).toEqual(expectedStdout);
-    expect(output.stderr).toEqual(expectedStderr);
-    expect(output.error).toBeNull();
-  });
-}
+var runTest = require('./test_utils').runTest;
 
 describe('Primitive Tests', function() {
 
-  it('01-boolean', function() {
-    runTest(path.join(__dirname, 'tests', 'primitives', '01-boolean.js'), '', '');
+  runTest({
+    spec: 'primitives',
+    test: '01-boolean'
   });
 
-  it('02-boolean_typeerror', function() {
-    runTest(path.join(__dirname, 'tests', 'primitives', '02-boolean_typeerror.js'), '',
-      'Invalid right-hand side type in assignment: expected "boolean" but got "number" ' +
-      path.join(__dirname, 'tests', 'primitives', '02-boolean_typeerror.js:28:6') + '\n');
+  runTest({
+    spec: 'primitives',
+    test: '02-boolean_typeerror',
+    error: 'Invalid right-hand side type in assignment: expected "boolean" but got "number"',
+    line: 28,
+    column: 6
   });
 
-  it('03-number', function() {
-    runTest(path.join(__dirname, 'tests', 'primitives', '03-number.js'), '', '');
+  runTest({
+    spec: 'primitives',
+    test: '03-number'
   });
 
-  it('04-number_typeerror', function() {
-    runTest(path.join(__dirname, 'tests', 'primitives', '04-number_typeerror.js'), '',
-      'Invalid right-hand side type in assignment: expected "number" but got "string" ' +
-      path.join(__dirname, 'tests', 'primitives', '04-number_typeerror.js:28:6') + '\n');
+  runTest({
+    spec: 'primitives',
+    test: '04-number_typeerror',
+    error: 'Invalid right-hand side type in assignment: expected "number" but got "string"',
+    line: 28,
+    column: 6
   });
 
-  it('05-number_nan', function() {
-    runTest(path.join(__dirname, 'tests', 'primitives', '05-number_nan.js'), '', '');
+  runTest({
+    spec: 'primitives',
+    test: '05-number_nan'
   });
 
-  it('06-number_infinity', function() {
-    runTest(path.join(__dirname, 'tests', 'primitives', '06-number_infinity.js'), '', '');
+  runTest({
+    spec: 'primitives',
+    test: '06-number_infinity'
   });
 
-  it('07-string', function() {
-    runTest(path.join(__dirname, 'tests', 'primitives', '07-string.js'), '', '');
+  runTest({
+    spec: 'primitives',
+    test: '07-string'
   });
 
-  it('08-string_typeerror', function() {
-    runTest(path.join(__dirname, 'tests', 'primitives', '08-string_typeerror.js'), '',
-      'Invalid right-hand side type in assignment: expected "string" but got "number" ' +
-      path.join(__dirname, 'tests', 'primitives', '08-string_typeerror.js:28:6') + '\n');
+  runTest({
+    spec: 'primitives',
+    test: '08-string_typeerror',
+    error: 'Invalid right-hand side type in assignment: expected "string" but got "number"',
+    line: 28,
+    column: 6
   });
 
-  it('09-undefined', function() {
-    runTest(path.join(__dirname, 'tests', 'primitives', '09-undefined.js'), '',
-      'Undefined values are not allowed ' +
-      path.join(__dirname, 'tests', 'primitives', '09-undefined.js:27:10') + '\n');
+  runTest({
+    spec: 'primitives',
+    test: '09-undefined',
+    error: 'Undefined values are not allowed',
+    line: 27,
+    column: 10
   });
 });

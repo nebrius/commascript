@@ -37,4 +37,3 @@ obj = {
   'baz': 10
 };
 obj.bar = 10;
-obj.baz = 'bad';

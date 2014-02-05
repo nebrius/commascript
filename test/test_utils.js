@@ -23,39 +23,43 @@ THE SOFTWARE.
 */
 
 /*global
-describe
+expect,
+runs,
+waitsFor,
+it
 */
 
-var runTest = require('./test_utils').runTest;
+var path = require('path'),
+    exec = require('child_process').exec,
+    commascriptBinary = path.join(__dirname, '..', 'bin', 'commascript.js');
 
-describe('Statement Tests', function() {
+module.exports.runTest = function runTest(options) {
+  var finished = false,
+      testPath = path.join(__dirname, 'tests', options.spec, options.test + '.js'),
+      expectedStderr = options.error ?
+        options.error + ' ' + testPath + ':' + options.line + ':' + options.column + '\n' : '',
+      output;
 
-  runTest({
-    spec: 'statements',
-    test: '01-assignment'
+  it(options.test, function() {
+    runs(function () {
+      exec('node ' + commascriptBinary + ' ' + testPath, {
+        cwd: __dirname
+      }, function (error, stdout, stderr) {
+        finished = true;
+        output = {
+          stdout: stdout.replace('\n\r', '\n'),
+          stderr: stderr.replace('\n\r', '\n'),
+          error: error
+        };
+      });
+    });
+    waitsFor(function () {
+      return finished;
+    });
+    runs(function () {
+      expect(output.stdout).toEqual('');
+      expect(output.stderr).toEqual(expectedStderr);
+      expect(output.error).toBeNull();
+    });
   });
-
-  runTest({
-    spec: 'statements',
-    test: '02-assignment_mismatch',
-    error: 'Invalid right-hand side type in assignment: expected "boolean" but got "number"',
-    line: 28,
-    column: 6
-  });
-
-  runTest({
-    spec: 'statements',
-    test: '03-assignment_op_mismatch',
-    error: 'Invalid type supplied to left-hand side of assignment: expected "number" but got "string"',
-    line: 28,
-    column: 0
-  });
-
-  runTest({
-    spec: 'statements',
-    test: '04-assignment_op_nonnumeric',
-    error: 'Invalid type supplied to left-hand side of assignment: expected "number" but got "string"',
-    line: 28,
-    column: 0
-  });
-});
+};

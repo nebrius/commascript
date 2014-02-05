@@ -23,75 +23,54 @@ THE SOFTWARE.
 */
 
 /*global
-describe,
-it,
-expect,
-runs,
-waitsFor
+describe
 */
 
-var path = require('path'),
-    exec = require('child_process').exec,
-    commascriptBinary = path.join(__dirname, '..', 'bin', 'commascript.js');
-
-function runTest(source, expectedStdout, expectedStderr) {
-  var finished = false,
-      output;
-  runs(function () {
-    exec('node ' + commascriptBinary + ' ' + source, {
-      cwd: __dirname
-    }, function (error, stdout, stderr) {
-      finished = true;
-      output = {
-        stdout: stdout.replace('\n\r', '\n'),
-        stderr: stderr.replace('\n\r', '\n'),
-        error: error
-      };
-    });
-  });
-  waitsFor(function () {
-    return finished;
-  });
-  runs(function () {
-    expect(output.stdout).toEqual(expectedStdout);
-    expect(output.stderr).toEqual(expectedStderr);
-    expect(output.error).toBeNull();
-  });
-}
+var runTest = require('./test_utils').runTest;
 
 describe('Function Call Tests', function() {
 
-  it('01-void_function_call', function() {
-    runTest(path.join(__dirname, 'tests', 'function_calls', '01-void_function_call.js'), '', '');
+  runTest({
+    spec: 'function_calls',
+    test: '01-void_function_call'
   });
 
-  it('02-void_function_call_with_arguments', function() {
-    runTest(path.join(__dirname, 'tests', 'function_calls', '02-void_function_call_with_arguments.js'), '', '');
+  runTest({
+    spec: 'function_calls',
+    test: '02-void_function_call_with_arguments'
   });
 
-  it('03-void_function_call_with_invalid_arguments', function() {
-    runTest(path.join(__dirname, 'tests', 'function_calls', '03-void_function_call_with_invalid_arguments.js'), '',
-      'Mismatched function call argument: expected argument 0 to be of type "string" but saw argument of type "number" ' +
-      path.join(__dirname, 'tests', 'function_calls', '03-void_function_call_with_invalid_arguments.js:33:0\n'));
+  runTest({
+    spec: 'function_calls',
+    test: '03-void_function_call_with_invalid_arguments',
+    error: 'Mismatched function call argument: expected argument 0 to be of type "string" but saw argument of type "number"',
+    line: 33,
+    column: 0
   });
 
-  it('04-void_function_call_with_mismatched_arguments', function() {
-    runTest(path.join(__dirname, 'tests', 'function_calls', '04-void_function_call_with_mismatched_arguments.js'), '',
-      'Mismatched number of arguments in function call: expected 1 argument but saw 2 arguments ' +
-      path.join(__dirname, 'tests', 'function_calls', '04-void_function_call_with_mismatched_arguments.js:33:0\n'));
+  runTest({
+    spec: 'function_calls',
+    test: '04-void_function_call_with_mismatched_arguments',
+    error: 'Mismatched number of arguments in function call: expected 1 argument but saw 2 arguments',
+    line: 33,
+    column: 0
   });
 
-  it('05-function_call_with_return', function() {
-    runTest(path.join(__dirname, 'tests', 'function_calls', '05-function_call_with_return.js'), '', '');
+  runTest({
+    spec: 'function_calls',
+    test: '05-function_call_with_return'
   });
 
-  it('06-function_call_with_mismatched_return', function() {
-    runTest(path.join(__dirname, 'tests', 'function_calls', '06-function_call_with_mismatched_return.js'), '',
-      'Invalid right-hand side type in assignment: expected "number" but got "string" ' +
-      path.join(__dirname, 'tests', 'function_calls', '06-function_call_with_mismatched_return.js:37:4\n'));
+  runTest({
+    spec: 'function_calls',
+    test: '06-function_call_with_mismatched_return',
+    error: 'Invalid right-hand side type in assignment: expected "number" but got "string"',
+    line: 37,
+    column: 4
   });
 
-  it('07-function_call_with_no_assignment', function() {
-    runTest(path.join(__dirname, 'tests', 'function_calls', '07-function_call_with_no_assignment.js'), '', '');
+  runTest({
+    spec: 'function_calls',
+    test: '07-function_call_with_no_assignment'
   });
 });

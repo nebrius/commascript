@@ -23,157 +23,162 @@ THE SOFTWARE.
 */
 
 /*global
-describe,
-it,
-expect,
-runs,
-waitsFor
+describe
 */
 
-var path = require('path'),
-    exec = require('child_process').exec,
-    commascriptBinary = path.join(__dirname, '..', 'bin', 'commascript.js');
-
-function runTest(source, expectedStdout, expectedStderr) {
-  var finished = false,
-      output;
-  runs(function () {
-    exec('node ' + commascriptBinary + ' ' + source, {
-      cwd: __dirname
-    }, function (error, stdout, stderr) {
-      finished = true;
-      output = {
-        stdout: stdout.replace('\n\r', '\n'),
-        stderr: stderr.replace('\n\r', '\n'),
-        error: error
-      };
-    });
-  });
-  waitsFor(function () {
-    return finished;
-  });
-  runs(function () {
-    expect(output.stdout).toEqual(expectedStdout);
-    expect(output.stderr).toEqual(expectedStderr);
-    expect(output.error).toBeNull();
-  });
-}
+var runTest = require('./test_utils').runTest;
 
 describe('Expressions Tests', function() {
 
-  it('01-numeric_expression', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '01-numeric_expression.js'), '', '');
+  runTest({
+    spec: 'expressions',
+    test: '01-numeric_expression'
   });
 
-  it('02-numeric_expression_type_error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '02-numeric_expression_type_error.js'), '',
-      'Invalid type supplied to right-hand side of numeric operator: expected "number" but got "string" ' +
-      path.join(__dirname, 'tests', 'expressions', '02-numeric_expression_type_error.js:29:9\n'));
+  runTest({
+    spec: 'expressions',
+    test: '02-numeric_expression_type_error',
+    error: 'Invalid type supplied to right-hand side of numeric operator: expected "number" but got "string"',
+    line: 29,
+    column: 9
   });
 
-  it('03-addition', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '03-addition.js'), '', '');
+  runTest({
+    spec: 'expressions',
+    test: '03-addition'
   });
 
-  it('04-addition_type_error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '04-addition_type_error.js'), '',
-      'Invalid right-hand side type in assignment: expected "number" but got "string" ' +
-      path.join(__dirname, 'tests', 'expressions', '04-addition_type_error.js:29:4\n'));
+  runTest({
+    spec: 'expressions',
+    test: '04-addition_type_error',
+    error: 'Invalid right-hand side type in assignment: expected "number" but got "string"',
+    line: 29,
+    column: 4
   });
 
-  it('05-concatenation', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '05-concatenation.js'), '', '');
+  runTest({
+    spec: 'expressions',
+    test: '05-concatenation'
   });
 
-  it('06-concatenation_type_error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '06-concatenation_type_error.js'), '',
-      'Invalid right-hand side type in assignment: expected "string" but got "number" ' +
-      path.join(__dirname, 'tests', 'expressions', '06-concatenation_type_error.js:29:4\n'));
+  runTest({
+    spec: 'expressions',
+    test: '06-concatenation_type_error',
+    error: 'Invalid right-hand side type in assignment: expected "string" but got "number"',
+    line: 29,
+    column: 4
   });
 
-  it('07-numeric_comparison', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '07-numeric_comparison.js'), '', '');
+  runTest({
+    spec: 'expressions',
+    test: '07-numeric_comparison'
   });
 
-  it('08-numeric_comparison_type_error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '08-numeric_comparison_type_error.js'), '',
-      'Invalid type supplied to right-hand side of numeric operator: expected "number" but got "string" ' +
-      path.join(__dirname, 'tests', 'expressions', '08-numeric_comparison_type_error.js:31:8\n'));
+  runTest({
+    spec: 'expressions',
+    test: '08-numeric_comparison_type_error',
+    error: 'Invalid type supplied to right-hand side of numeric operator: expected "number" but got "string"',
+    line: 31,
+    column: 8
   });
 
-  it('09-numeric_comparison_cast_error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '09-numeric_comparison_cast_error.js'), '',
-      'Invalid right-hand side type in assignment: expected "number" but got "boolean" ' +
-      path.join(__dirname, 'tests', 'expressions', '09-numeric_comparison_cast_error.js:31:4\n'));
+  runTest({
+    spec: 'expressions',
+    test: '09-numeric_comparison_cast_error',
+    error: 'Invalid right-hand side type in assignment: expected "number" but got "boolean"',
+    line: 31,
+    column: 4
   });
 
-  it('10-generic_comparison', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '10-generic_comparison.js'), '', '');
+  runTest({
+    spec: 'expressions',
+    test: '10-generic_comparison'
   });
 
-  it('11-generic_comparison_cast_error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '11-generic_comparison_cast_error.js'), '',
-      'Invalid right-hand side type in assignment: expected "number" but got "boolean" ' +
-      path.join(__dirname, 'tests', 'expressions', '11-generic_comparison_cast_error.js:31:4\n'));
+  runTest({
+    spec: 'expressions',
+    test: '11-generic_comparison_cast_error',
+    error: 'Invalid right-hand side type in assignment: expected "number" but got "boolean"',
+    line: 31,
+    column: 4
   });
 
-  it('12-generic_mismatched_equality', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '12-generic_mismatched_equality.js'), '',
-      'Mismatched comparison: right hand side type "boolean" cannot be compared to left hand side type "number" ' +
-      path.join(__dirname, 'tests', 'expressions', '12-generic_mismatched_equality.js:30:0\n'));
+  runTest({
+    spec: 'expressions',
+    test: '12-generic_mismatched_equality',
+    error: 'Mismatched comparison: right hand side type "boolean" cannot be compared to left hand side type "number"',
+    line: 30,
+    column: 0
   });
 
-  it('13-boolean_expression', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '13-boolean_expression.js'), '', '');
+  runTest({
+    spec: 'expressions',
+    test: '13-boolean_expression'
   });
 
-  it('14-boolean_expression_type_error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '14-boolean_expression_type_error.js'), '',
-      'Invalid type supplied to right-hand side of boolean operator: expected "boolean" but got "number" ' +
-      path.join(__dirname, 'tests', 'expressions', '14-boolean_expression_type_error.js:31:9\n'));
+  runTest({
+    spec: 'expressions',
+    test: '14-boolean_expression_type_error',
+    error: 'Invalid type supplied to right-hand side of boolean operator: expected "boolean" but got "number"',
+    line: 31,
+    column: 9
   });
 
-  it('15-boolean_expression_cast_error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '15-boolean_expression_cast_error.js'), '',
-      'Invalid right-hand side type in assignment: expected "number" but got "boolean" ' +
-      path.join(__dirname, 'tests', 'expressions', '15-boolean_expression_cast_error.js:31:4\n'));
+  runTest({
+    spec: 'expressions',
+    test: '15-boolean_expression_cast_error',
+    error: 'Invalid right-hand side type in assignment: expected "number" but got "boolean"',
+    line: 31,
+    column: 4
   });
 
-  it('16-ternary', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '16-ternary.js'), '', '');
+  runTest({
+    spec: 'expressions',
+    test: '16-ternary'
   });
 
-  it('17-ternary_alternative_type_error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '17-ternary_alternative_type_error.js'), '',
-      'Mismatched ternary arguments: the consequent is of type "number" but the alternative is of type "string" and must match the consequent type ' +
-      path.join(__dirname, 'tests', 'expressions', '17-ternary_alternative_type_error.js:32:12\n'));
+  runTest({
+    spec: 'expressions',
+    test: '17-ternary_alternative_type_error',
+    error: 'Mismatched ternary arguments: the consequent is of type "number" but the alternative is of type "string" and must match the consequent type',
+    line: 32,
+    column: 12
   });
 
-  it('18-ternary_condition_type_error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '18-ternary_condition_type_error.js'), '',
-      'Invalid condition type: expected type "boolean" but instead saw type "number" ' +
-      path.join(__dirname, 'tests', 'expressions', '18-ternary_condition_type_error.js:32:4\n'));
+  runTest({
+    spec: 'expressions',
+    test: '18-ternary_condition_type_error',
+    error: 'Invalid condition type: expected type "boolean" but instead saw type "number"',
+    line: 32,
+    column: 4
   });
 
-  it('19-ternary_cast_error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '19-ternary_cast_error.js'), '',
-      'Invalid right-hand side type in assignment: expected "string" but got "number" ' +
-      path.join(__dirname, 'tests', 'expressions', '19-ternary_cast_error.js:32:4\n'));
+  runTest({
+    spec: 'expressions',
+    test: '19-ternary_cast_error',
+    error: 'Invalid right-hand side type in assignment: expected "string" but got "number"',
+    line: 32,
+    column: 4
   });
 
-  it('20-in_expression', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '20-in_expression.js'), '', '');
+  runTest({
+    spec: 'expressions',
+    test: '20-in_expression'
   });
 
-  it('21-in_expression_prop_error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '21-in_expression_prop_error.js'), '',
-      'Invalid type supplied to left-hand side of "in" operator: expected "string" but got "boolean" ' +
-      path.join(__dirname, 'tests', 'expressions', '21-in_expression_prop_error.js:32:4\n'));
+  runTest({
+    spec: 'expressions',
+    test: '21-in_expression_prop_error',
+    error: 'Invalid type supplied to left-hand side of "in" operator: expected "string" but got "boolean"',
+    line: 32,
+    column: 4
   });
 
-  it('22-in_expression_obj_error', function() {
-    runTest(path.join(__dirname, 'tests', 'expressions', '22-in_expression_obj_error.js'), '',
-      'Invalid type supplied to right-hand side of "in" operator: expected an object but got "number" ' +
-      path.join(__dirname, 'tests', 'expressions', '22-in_expression_obj_error.js:29:13\n'));
+  runTest({
+    spec: 'expressions',
+    test: '22-in_expression_obj_error',
+    error: 'Invalid type supplied to right-hand side of "in" operator: expected an object but got "number"',
+    line: 29,
+    column: 13
   });
 });

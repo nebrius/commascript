@@ -23,151 +23,155 @@ THE SOFTWARE.
 */
 
 /*global
-describe,
-it,
-expect,
-runs,
-waitsFor
+describe
 */
 
-var path = require('path'),
-    exec = require('child_process').exec,
-    commascriptBinary = path.join(__dirname, '..', 'bin', 'commascript.js');
-
-function runTest(source, expectedStdout, expectedStderr) {
-  var finished = false,
-      output;
-  runs(function () {
-    exec('node ' + commascriptBinary + ' ' + source, {
-      cwd: __dirname
-    }, function (error, stdout, stderr) {
-      finished = true;
-      output = {
-        stdout: stdout.replace('\n\r', '\n'),
-        stderr: stderr.replace('\n\r', '\n'),
-        error: error
-      };
-    });
-  });
-  waitsFor(function () {
-    return finished;
-  });
-  runs(function () {
-    expect(output.stdout).toEqual(expectedStdout);
-    expect(output.stderr).toEqual(expectedStderr);
-    expect(output.error).toBeNull();
-  });
-}
+var runTest = require('./test_utils').runTest;
 
 describe('Branch Tests', function() {
 
-  it('01-if_statement_conditional_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '01-if_statement_conditional_error.js'), '',
-      'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '01-if_statement_conditional_error.js:29:4\n'));
+  runTest({
+    spec: 'branches',
+    test: '01-if_statement_conditional_error',
+    error: 'Undeclared symbol "x"',
+    line: 29,
+    column: 4
   });
 
-  it('02-if_statement_body_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '02-if_statement_body_error.js'), '',
-      'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '02-if_statement_body_error.js:30:2\n'));
+  runTest({
+    spec: 'branches',
+    test: '02-if_statement_body_error',
+    error: 'Undeclared symbol "x"',
+    line: 30,
+    column: 2
   });
 
-  it('03-if_statement_alternate_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '03-if_statement_alternate_error.js'), '',
-      'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '03-if_statement_alternate_error.js:32:2\n'));
+  runTest({
+    spec: 'branches',
+    test: '03-if_statement_alternate_error',
+    error: 'Undeclared symbol "x"',
+    line: 32,
+    column: 2
   });
 
-  it('04-for_loop', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '04-for_loop.js'), '', '');
+  runTest({
+    spec: 'branches',
+    test: '04-for_loop'
   });
 
-  it('05-for_loop_init_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '05-for_loop_init_error.js'), '',
-      'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '05-for_loop_init_error.js:29:5\n'));
+  runTest({
+    spec: 'branches',
+    test: '05-for_loop_init_error',
+    error: 'Undeclared symbol "x"',
+    line: 29,
+    column: 5
   });
 
-  it('06-for_loop_conditional_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '06-for_loop_conditional_error.js'), '',
-      'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '06-for_loop_conditional_error.js:29:6\n'));
+  runTest({
+    spec: 'branches',
+    test: '06-for_loop_conditional_error',
+    error: 'Undeclared symbol "x"',
+    line: 29,
+    column: 6
   });
 
-  it('07-for_loop_iteration_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '07-for_loop_iteration_error.js'), '',
-      'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '07-for_loop_iteration_error.js:29:7\n'));
+  runTest({
+    spec: 'branches',
+    test: '07-for_loop_iteration_error',
+    error: 'Undeclared symbol "x"',
+    line: 29,
+    column: 7
   });
 
-  it('08-for_loop_body_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '08-for_loop_body_error.js'), '',
-      'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '08-for_loop_body_error.js:30:2\n'));
+  runTest({
+    spec: 'branches',
+    test: '08-for_loop_body_error',
+    error: 'Undeclared symbol "x"',
+    line: 30,
+    column: 2
   });
 
-  it('09-for_in_loop', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '09-for_in_loop.js'), '', '');
+  runTest({
+    spec: 'branches',
+    test: '09-for_in_loop'
   });
 
-  it('10-for_in_loop_body_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '10-for_in_loop_body_error.js'), '',
-      'Invalid right-hand side type in assignment: expected "string" but got "number" ' +
-      path.join(__dirname, 'tests', 'branches', '10-for_in_loop_body_error.js:28:6\n'));
+  runTest({
+    spec: 'branches',
+    test: '10-for_in_loop_body_error',
+    error: 'Invalid right-hand side type in assignment: expected "string" but got "number"',
+    line: 28,
+    column: 6
   });
 
-  it('11-for_in_loop_init_redefinition_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '11-for_in_loop_init_redefinition_error.js'), '',
-      'Redefinition of variable "y" ' +
-      path.join(__dirname, 'tests', 'branches', '11-for_in_loop_init_redefinition_error.js:29:9\n'));
+  runTest({
+    spec: 'branches',
+    test: '11-for_in_loop_init_redefinition_error',
+    error: 'Redefinition of variable "y"',
+    line: 29,
+    column: 9
   });
 
-  it('12-for_in_loop_init_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '12-for_in_loop_init_error.js'), '',
-      'For loop iteration variables must be of type string ' +
-      path.join(__dirname, 'tests', 'branches', '12-for_in_loop_init_error.js:29:0\n'));
+  runTest({
+    spec: 'branches',
+    test: '12-for_in_loop_init_error',
+    error: 'For loop iteration variables must be of type string',
+    line: 29,
+    column: 0
   });
 
-  it('13-do_while_loop', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '13-do_while_loop.js'), '', '');
+  runTest({
+    spec: 'branches',
+    test: '13-do_while_loop'
   });
 
-  it('14-do_while_loop_condition_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '14-do_while_loop_condition_error.js'), '',
-      'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '14-do_while_loop_condition_error.js:31:8\n'));
+  runTest({
+    spec: 'branches',
+    test: '14-do_while_loop_condition_error',
+    error: 'Undeclared symbol "x"',
+    line: 31,
+    column: 8
   });
 
-  it('15-do_while_loop_body_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '15-do_while_loop_body_error.js'), '',
-      'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '15-do_while_loop_body_error.js:30:2\n'));
+  runTest({
+    spec: 'branches',
+    test: '15-do_while_loop_body_error',
+    error: 'Undeclared symbol "x"',
+    line: 30,
+    column: 2
   });
 
-  it('16-while_loop', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '16-while_loop.js'), '', '');
+  runTest({
+    spec: 'branches',
+    test: '16-while_loop'
   });
 
-  it('17-while_loop_condition_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '17-while_loop_condition_error.js'), '',
-      'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '17-while_loop_condition_error.js:29:6\n'));
+  runTest({
+    spec: 'branches',
+    test: '17-while_loop_condition_error',
+    error: 'Undeclared symbol "x"',
+    line: 29,
+    column: 6
   });
 
-  it('18-while_loop_body_error', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '18-while_loop_body_error.js'), '',
-      'Undeclared symbol "x" ' +
-      path.join(__dirname, 'tests', 'branches', '18-while_loop_body_error.js:30:2\n'));
+  runTest({
+    spec: 'branches',
+    test: '18-while_loop_body_error',
+    error: 'Undeclared symbol "x"',
+    line: 30,
+    column: 2
   });
 
-  it('19-switch_statement', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '19-switch_statement.js'), '', '');
+  runTest({
+    spec: 'branches',
+    test: '19-switch_statement'
   });
 
-  it('20-switch_statement_with_invalid_case_type', function() {
-    runTest(path.join(__dirname, 'tests', 'branches', '20-switch_statement_with_invalid_case_type.js'), '',
-      'Mismatched case in switch: case type "string" must match the switch expression type "number" ' +
-      path.join(__dirname, 'tests', 'branches', '20-switch_statement_with_invalid_case_type.js:32:2\n'));
+  runTest({
+    spec: 'branches',
+    test: '20-switch_statement_with_invalid_case_type',
+    error: 'Mismatched case in switch: case type "string" must match the switch expression type "number"',
+    line: 32,
+    column: 2
   });
 });

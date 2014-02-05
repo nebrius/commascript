@@ -24,130 +24,128 @@ THE SOFTWARE.
 
 /*global
 describe,
-it,
-expect,
-runs,
-waitsFor
+it
 */
 
 var path = require('path'),
-    exec = require('child_process').exec,
-    commascriptBinary = path.join(__dirname, '..', 'bin', 'commascript.js');
-
-function runTest(source, expectedStdout, expectedStderr) {
-  var finished = false,
-      output;
-  runs(function () {
-    exec('node ' + commascriptBinary + ' ' + source, {
-      cwd: __dirname
-    }, function (error, stdout, stderr) {
-      finished = true;
-      output = {
-        stdout: stdout.replace('\n\r', '\n'),
-        stderr: stderr.replace('\n\r', '\n'),
-        error: error
-      };
-    });
-  });
-  waitsFor(function () {
-    return finished;
-  });
-  runs(function () {
-    expect(output.stdout).toEqual(expectedStdout);
-    expect(output.stderr).toEqual(expectedStderr);
-    expect(output.error).toBeNull();
-  });
-}
+    runTest = require('./test_utils').runTest;
 
 describe('Function Tests', function() {
 
-  it('01-void_function', function() {
-    runTest(path.join(__dirname, 'tests', 'functions', '01-void_function.js'), '', '');
+  runTest({
+    spec: 'functions',
+    test: '01-void_function'
   });
 
-  it('02-void_function_definition', function() {
-    runTest(path.join(__dirname, 'tests', 'functions', '02-void_function_definition.js'), '', '');
+  runTest({
+    spec: 'functions',
+    test: '02-void_function_definition'
   });
 
-  it('03-void_function_with_arguments', function() {
-    runTest(path.join(__dirname, 'tests', 'functions', '03-void_function_with_arguments.js'), '', '');
+  runTest({
+    spec: 'functions',
+    test: '03-void_function_with_arguments'
   });
 
-  it('04-void_function_with_arguments_mismatch', function() {
-    runTest(path.join(__dirname, 'tests', 'functions', '04-void_function_with_arguments_mismatch.js'), '',
-      'Mismatched number of arguments ' +
-      path.join(__dirname, 'tests', 'functions', '04-void_function_with_arguments_mismatch.js:31:34\n'));
+  runTest({
+    spec: 'functions',
+    test: '04-void_function_with_arguments_mismatch',
+    error: 'Mismatched number of arguments',
+    line: 31,
+    column: 34
   });
 
-  it('05-void_function_definition_with_arguments', function() {
-    runTest(path.join(__dirname, 'tests', 'functions', '05-void_function_definition_with_arguments.js'), '', '');
+  runTest({
+    spec: 'functions',
+    test: '05-void_function_definition_with_arguments'
   });
 
-  it('06-void_function_definition_with_arguments_mismatch', function() {
-    runTest(path.join(__dirname, 'tests', 'functions', '06-void_function_definition_with_arguments_mismatch.js'), '',
-      'Mismatched number of arguments ' +
-      path.join(__dirname, 'tests', 'functions', '06-void_function_definition_with_arguments_mismatch.js:31:13\n'));
+  runTest({
+    spec: 'functions',
+    test: '06-void_function_definition_with_arguments_mismatch',
+    error: 'Mismatched number of arguments',
+    line: 31,
+    column: 13
   });
 
-  it('07-void_function_definition_without_type', function() {
-    runTest(path.join(__dirname, 'tests', 'functions', '07-void_function_definition_without_type.js'), '',
-      'Type "foo" is not defined ' +
-      path.join(__dirname, 'tests', 'functions', '07-void_function_definition_without_type.js:27:9\n'));
+  runTest({
+    spec: 'functions',
+    test: '07-void_function_definition_without_type',
+    error: 'Type "foo" is not defined',
+    line: 27,
+    column: 9
   });
 
-  it('08-function_with_primitive_return', function () {
-    runTest(path.join(__dirname, 'tests', 'functions', '08-function_with_primitive_return.js'), '', '');
+  runTest({
+    spec: 'functions',
+    test: '08-function_with_primitive_return'
   });
 
-  it('09-function_with_primitive_return_error', function () {
-    runTest(path.join(__dirname, 'tests', 'functions', '09-function_with_primitive_return_error.js'), '',
-      'Mismatched return type ' +
-      path.join(__dirname, 'tests', 'functions', '09-function_with_primitive_return_error.js:32:2\n'));
+  runTest({
+    spec: 'functions',
+    test: '09-function_with_primitive_return_error',
+    error: 'Mismatched return type',
+    line: 32,
+    column: 2
   });
 
-  it('10-function_with_multiple_returns', function () {
-    runTest(path.join(__dirname, 'tests', 'functions', '10-function_with_multiple_returns.js'), '', '');
+  runTest({
+    spec: 'functions',
+    test: '10-function_with_multiple_returns'
   });
 
-  it('11-function_with_multiple_returns_error', function () {
-    runTest(path.join(__dirname, 'tests', 'functions', '11-function_with_multiple_returns_error.js'), '',
-      'Mismatched return type ' +
-      path.join(__dirname, 'tests', 'functions', '11-function_with_multiple_returns_error.js:33:4\n'));
+  runTest({
+    spec: 'functions',
+    test: '11-function_with_multiple_returns_error',
+    error: 'Mismatched return type',
+    line: 33,
+    column: 4
   });
 
-  it('12-function_with_missing_return_path', function () {
-    runTest(path.join(__dirname, 'tests', 'functions', '12-function_with_missing_return_path.js'), '',
-      'Not all code paths return a value ' +
-      path.join(__dirname, 'tests', 'functions', '12-function_with_missing_return_path.js:31:0\n'));
+  runTest({
+    spec: 'functions',
+    test: '12-function_with_missing_return_path',
+    error: 'Not all code paths return a value',
+    line: 31,
+    column: 0
   });
 
-  it('13-function_with_switch', function () {
-    runTest(path.join(__dirname, 'tests', 'functions', '13-function_with_switch.js'), '', '');
+  runTest({
+    spec: 'functions',
+    test: '13-function_with_switch'
   });
 
-  it('14-function_with_switch_returns', function () {
-    runTest(path.join(__dirname, 'tests', 'functions', '14-function_with_switch_returns.js'), '', '');
+  runTest({
+    spec: 'functions',
+    test: '14-function_with_switch_returns'
   });
 
-  it('15-function_with_switch_missing_return_path', function () {
-    runTest(path.join(__dirname, 'tests', 'functions', '15-function_with_switch_missing_return_path.js'), '',
-      'Not all code paths return a value ' +
-      path.join(__dirname, 'tests', 'functions', '15-function_with_switch_missing_return_path.js:31:0\n'));
+  runTest({
+    spec: 'functions',
+    test: '15-function_with_switch_missing_return_path',
+    error: 'Not all code paths return a value',
+    line: 31,
+    column: 0
   });
 
-  it('16-function_with_switch_fallthrough', function () {
-    runTest(path.join(__dirname, 'tests', 'functions', '16-function_with_switch_fallthrough.js'), '', '');
+  runTest({
+    spec: 'functions',
+    test: '16-function_with_switch_fallthrough'
   });
 
-  it('17-function_with_switch_fallthrough_error', function () {
-    runTest(path.join(__dirname, 'tests', 'functions', '17-function_with_switch_fallthrough_error.js'), '',
-      'Mismatched return type ' +
-      path.join(__dirname, 'tests', 'functions', '17-function_with_switch_fallthrough_error.js:37:6\n'));
+  runTest({
+    spec: 'functions',
+    test: '17-function_with_switch_fallthrough_error',
+    error: 'Mismatched return type',
+    line: 37,
+    column: 6
   });
 
-  it('18-function_with_switch_missing_default', function () {
-    runTest(path.join(__dirname, 'tests', 'functions', '18-function_with_switch_missing_default.js'), '',
-      'Not all code paths return a value ' +
-      path.join(__dirname, 'tests', 'functions', '18-function_with_switch_missing_default.js:31:0\n'));
+  runTest({
+    spec: 'functions',
+    test: '18-function_with_switch_missing_default',
+    error: 'Not all code paths return a value',
+    line: 31,
+    column: 0
   });
 });
