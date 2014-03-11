@@ -1,7 +1,7 @@
 CommaScript
 ===========
 
-CommaScript is a backwards compatible dialect of JavaScript that provides localized static typing in
+CommaScript is a backwards compatible dialect of JavaScript that provides localized, implicit static typing in
 JavaScript while still feeling like JavaScript.
 
 **WARNING: This is a work in progress! The current version of the software is PRE-ALPHA**
@@ -19,15 +19,15 @@ as [TypeScript](http://www.typescriptlang.org/) and [Dart](http://www.dartlang.o
 Both languages are great languages, but they suffer from one fatal flaw: they aren't
 JavaScript!
 
-Mozilla has another attempt at statically typed JavaScript called [asm.js](http://asmjs.org/),
-which is a proper subset of JavaScript, meaning it will runs in all JavaScript
+Mozilla has another attempt at statically typed JavaScript called [asm.js](http://asmjs.org/)
+which is a proper subset of JavaScript, meaning it will run in all JavaScript
 engines, even the ones that don't support asm.js. The primary flaw with asm.js is
 that it looks a lot like assembly, and isn't meant to be programmed in directly.
 
 CommaScript aims to have the backwards compatibility of asm.js combined with the
 expressiveness of TypeScript and Dart. Specifically, CommaScript has the
 following goals
-* 100% JavaScript compliant
+* 100% JavaScript compliant syntactically
 * Compiled and uncompiled CommaScript code is semantically identical
 	* As a result, uncompiled CommaScript code runs the same as compiled code
 * CommaScript code should still feel like JavaScript as much as possible
@@ -50,6 +50,8 @@ commascript foo.js
 Any type errors are output to the terminal.
 
 ## Examples
+
+For detailed specification information, view the [Formal Grammar](grammar.md)
 
 CommaScript code is localized to the current scope and must be enabled with a
 using directive, just like strict mode:
@@ -203,9 +205,11 @@ str = foo(10, ('cast(foo)', {
 foo('hello', 'world');
 ```
 
+Coming soon: implicit declarations of functions!
+
 ### Array
 
-Coming Soon! Arrays will be homogeneous, with a pre-defined type
+Coming soon: Arrays will be homogeneous, with a pre-defined type
 
 ## Future Goals
 
