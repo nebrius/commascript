@@ -74,4 +74,4 @@ Specifying a key-value pairs other than the ones listed above is considered a sy
 
 ### Expression Semantics
 
-Comming soon!
+Coming soon!
