@@ -27,15 +27,16 @@ that it looks a lot like assembly, and isn't meant to be programmed in directly.
 CommaScript aims to have the backwards compatibility of asm.js combined with the
 expressiveness of TypeScript and Dart. Specifically, CommaScript has the
 following goals
-* 100% JavaScript compliant syntactically
+* 100% JavaScript compliant syntax
 * Compiled and uncompiled CommaScript code is semantically identical
-	* As a result, uncompiled CommaScript code runs the same as compiled code
+    * As a result, uncompiled CommaScript code runs the same as compiled code
 * CommaScript code should still feel like JavaScript as much as possible
+    * The type system should be an aid to developers, not get in their way
 
 ## Compilation
 
-CommaScript code can be run through a compiler that will verify the type correctness
-of the code and strip out the type annotations. To install the compiler:
+CommaScript code can be run through an analyzer that will verify the type correctness
+of the code. To install the compiler:
 
 ```
 npm install commascript
@@ -51,7 +52,7 @@ Any type errors are output to the terminal.
 
 ## Examples
 
-For detailed specification information, view the [Formal Grammar](grammar.md)
+For detailed specification information, view the [Formal Specification](grammar.md)
 
 CommaScript code is localized to the current scope and must be enabled with a
 using directive, just like strict mode:
@@ -90,34 +91,13 @@ Note that undefined values are not allowed in CommaScript.
 
 ### Objects
 
-Object's are a little more complicated, and introduce a special syntax that uses
-the comma operator (hence the name CommaScript). Before using an object, an
-"interface" for the class must be defined, as such:
+When working with object literals, it's usually just as easy as working with
+primitives:
 
 ```JavaScript
-'use commascript';
-
-('define(object, foo)', {
-	properties: {
-		'bar': 'string',
-		'baz': 'number'
-	}
-});
-```
-
-Once defined, objects can be created:
-
-```JavaScript
-var obj = ('cast(foo)', null);
-```
-
-Notice how the "cast" operation is used to indicate what type of object the null
-value represents. We can now assign an instance of the object to the variable:
-
-```JavaScript
-obj = {
-	'bar': 'hello world',
-	'baz': 10
+var obj = {
+    'bar': 'hello world',
+    'baz': 10
 };
 ```
 
@@ -128,30 +108,56 @@ obj.bar = 'goodbye';
 obj.baz = 20;
 ```
 
-Objects and their properties are strictly typed, meaning that if you try to assign
-the wrong type of value to a property, or try to assign to a property that wasn't
-declared, a compile time error is generated:
+Objects and their properties are strictly typed, meaning that a compile time
+error is generated if you try to assign the wrong type of value to a property:
 
 ```JavaScript
-// This will generate a compile error
 obj.bar = false;
-
-// So will this
-obj.fake = 10;
 ```
 
-An object's prototype can also be specified to allow inheritance:
+If we try and access a non-existent error, perhaps because we mistyped a property
+name, then CommaScript will also generate an error:
 
 ```JavaScript
-('define(object, foo2)', {
-	properties: {
-		bar2: 'number'
-	}
-	prototype: 'foo'
+obj.bax = 10;
+```
+
+What if we want to declare an object and give it an initial value of null? This is
+where things get a little more complicated, and introduce a special syntax that uses
+the comma operator (hence the name CommaScript). Before creating a null object, an
+"interface" for the class must be defined, as such:
+
+```JavaScript
+'use commascript';
+
+('define(object, foo)', {
+    properties: {
+        'bar': 'string',
+        'baz': 'number'
+    }
 });
 ```
 
-Coming soon: the ability to specify objects using function + prototypes!
+Once defined, the null value can be created:
+
+```JavaScript
+var obj = ('cast(foo)', null);
+```
+
+Notice how the "cast" operation is used to indicate what type of object the null
+value represents. We can later assign an instance of the object to the variable:
+
+```JavaScript
+obj = {
+    'bar': 'hello world',
+    'baz': 10
+};
+```
+
+### Objects with prototypes
+
+Coming soon: constructor functions and prototypes will be statically typed
+similar to how object literals are typed
 
 ### Functions
 
@@ -159,11 +165,11 @@ Functions are declared similarly to objects:
 
 ```JavaScript
 ('define(function, myfunctype)', {
-	returnType: 'string',
-	argumentTypes: [
-		'number',
-		'foo'
-	]
+    returnType: 'string',
+    argumentTypes: [
+        'number',
+        'foo'
+    ]
 });
 ```
 
@@ -171,8 +177,8 @@ Once defined, functions can be assigned to a variable and used
 
 ```JavaScript
 var myfunc = ('cast(myfunctype)', function (num, obj) {
-	// Do stuff
-	return 'hi';
+    // Do stuff
+    return 'hi';
 }
 ```
 
@@ -180,8 +186,8 @@ Function definitions can also be used, as long as the function name matches the 
 
 ```JavaScript
 function myfunctype(num, obj) {
-	// Do stuff
-	return 'hi';
+    // Do stuff
+    return 'hi';
 }
 ```
 
@@ -190,15 +196,15 @@ The return type and arguments are checked for type correctness, like everything 
 ```JavaScript
 // This will work fine
 foo(10, ('cast(foo)', {
-	bar: 'Hello',
-	baz: 0
+    bar: 'Hello',
+    baz: 0
 }));
 
 // As will this
 var str = '';
 str = foo(10, ('cast(foo)', {
-	bar: 'Hello',
-	baz: 0
+    bar: 'Hello',
+    baz: 0
 }));
 
 // But not this
@@ -219,7 +225,7 @@ goals for the project:
 native code, or to asm.js
 * Implement CommaScript definitions for a few well known libraries and APIs, such
 as node.js and the browser DOM
-	* These definitions will most likely be proper subsets of the full APIs
+    * These definitions will most likely be proper subsets of the full APIs
 * Implement customized versions of CommonJS and RequireJS that can perform validation
 of source files when they are require()'d
 
