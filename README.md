@@ -36,13 +36,13 @@ following goals
 ## Compilation
 
 CommaScript code can be run through an analyzer that will verify the type correctness
-of the code. To install the compiler:
+of the code. To install the analyzer:
 
 ```
 npm install commascript
 ```
 
-To run the compiler on foo.js
+To run the analyzer on foo.js
 
 ```
 commascript foo.js
