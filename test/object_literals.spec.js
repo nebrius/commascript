@@ -58,4 +58,25 @@ describe('Object Tests', function() {
     line: 39,
     column: 0
   });
+
+  runTest({
+    spec: 'object-literals',
+    test: '05-inferred_literal'
+  });
+
+  runTest({
+    spec: 'object-literals',
+    test: '06-inferred_literal_infer_type_error',
+    error: 'Inferred type has mismatched type for "baz"',
+    line: 31,
+    column: 6
+  });
+
+  runTest({
+    spec: 'object-literals',
+    test: '07-inferred_literal_property_type_error',
+    error: 'Invalid right-hand side type in assignment: expected "string" but got "number"',
+    line: 31,
+    column: 10
+  });
 });
