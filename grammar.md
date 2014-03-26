@@ -44,7 +44,7 @@ Here we have the primary rules for a commascript declaration that can be either 
     <em>CSPropertyNameAndValueList</em> , <em>CSPropertyAssignment</em>
 
 <em>CSPropertyAssignment</em> :
-    <em>PropertyName</em> : <em>CSAssignmentExpression</em>
+    <em>PropertyName</em> : <em>AssignmentExpression</em>
 </pre>
 Define expressions are just object literals with a few extra restrictions. Specifically, empty objects and get/set properties are not allowed. The ```CSDefineExpression``` is a proper subset of the ```ObjectLiteral``` rule from clause 11.1.5. There are additional semantic requirements for ```CSDefineExpression``` defined below.
 

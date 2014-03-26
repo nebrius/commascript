@@ -1,22 +1,22 @@
-Make API definition mechanism very generic, and use for built-in types
-* Built-in prototype functions and properties should use this, e.g. "number" will have an API definition
-* Types are now generic strings in a lookup table, that is pre-populated with primitives
-* Objects, functions, and arrays will require an inheritence-based mechanism
-* So yeah, along those lines, implement support for inheritence
-
-Add mechanisms for defining API interface, but leaving interior untyped
-* Should be separate file
-* Necessary for using libraries not written in commascript
-* Tool to create it from JSDoc
-
 Create macro/preprocess/loader/whatever construct
 * CommonJS and RequireJS, where return value varies, type system instrospects a little further
 
-Compilation Phase
-* Validates code
-* Strips out type annotations (do minifiers already do this?), OR:
-* Sends it through LLVM connected to asm.js/emscripten
-
 Integrate with other products
 * Custom/forked version of RequireJS that runs compilation before evaling script
-	* Ability to enable/disable?
+    * Ability to enable/disable in dev/prod?
+
+Make type table scoped
+
+Functions:
+* Functions can either be constructors or functions, but not both
+    * ```new``` must be used with a constructor, and must not be used with a function
+    * constructors must not return a value
+    * Determine whether or not something is a constructor based on whether or not it's prototype is changed
+    * functions must not have properties attached to it
+    * constructors may have properties attached to it
+    * Need to do a quick look-ahead to determine if something is a function or a constructor
+* Functions are generic by default
+    * Return type and argument types are set to '@generic'
+    * When parsing function body, attempt to infer the type
+    * If values are not inferred from the body, infer from what it's being called with and set to
+    * If the return type cannot be inferred (i.e. generic return value is being discarded), ignore it

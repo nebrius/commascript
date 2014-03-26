@@ -164,7 +164,7 @@ similar to how object literals are typed
 Functions are declared similarly to objects:
 
 ```JavaScript
-('define(function, myfunctype)', {
+('define(function, myfunc)', {
     returnType: 'string',
     argumentTypes: [
         'number',
@@ -173,19 +173,10 @@ Functions are declared similarly to objects:
 });
 ```
 
-Once defined, functions can be assigned to a variable and used
+Once defined, functions can be created that have such that the function name matches the type name
 
 ```JavaScript
-var myfunc = ('cast(myfunctype)', function (num, obj) {
-    // Do stuff
-    return 'hi';
-}
-```
-
-Function definitions can also be used, as long as the function name matches the type name
-
-```JavaScript
-function myfunctype(num, obj) {
+function myfunc(num, obj) {
     // Do stuff
     return 'hi';
 }
@@ -195,17 +186,17 @@ The return type and arguments are checked for type correctness, like everything 
 
 ```JavaScript
 // This will work fine
-foo(10, ('cast(foo)', {
+foo(10, {
     bar: 'Hello',
     baz: 0
-}));
+});
 
 // As will this
 var str = '';
-str = foo(10, ('cast(foo)', {
+str = foo(10, {
     bar: 'Hello',
     baz: 0
-}));
+});
 
 // But not this
 foo('hello', 'world');
