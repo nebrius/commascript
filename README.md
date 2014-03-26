@@ -117,7 +117,7 @@ error is generated if you try to assign the wrong type of value to a property:
 obj.bar = false;
 ```
 
-If we try and access a non-existent error, perhaps because we mistyped a property
+If we try and access a non-existent property, perhaps because we mistyped its
 name, then CommaScript will also generate an error:
 
 ```JavaScript
