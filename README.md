@@ -6,7 +6,7 @@ JavaScript while still feeling like JavaScript.
 
 **WARNING: This is a work in progress! The current version of the software is ALPHA quality**
 
-**Update: I'm working on an overhaul of the type system. Check out the (non-functional) ```type_refactor``` branch**
+**Update: I'm working on an overhaul of the type system. Check out the (non-functional) ```type_refactor``` branch. The documentation below reflects the eventual goal of the ```type_refactor``` branch**
 
 ## Table of Contents
 * [Design Goals](#design-goals)
@@ -156,59 +156,101 @@ obj = {
 };
 ```
 
-### Objects with prototypes
-
-Coming soon: constructor functions and prototypes will be statically typed
-similar to how object literals are typed
-
 ### Functions
 
-Functions are declared similarly to objects:
+Functions are declared implicitly, just like objects:
 
 ```JavaScript
-('define(function, myfunc)', {
-    returnType: 'string',
-    argumentTypes: [
-        'number',
-        'foo'
-    ]
-});
-```
-
-Once defined, functions can be created that have such that the function name matches the type name
-
-```JavaScript
-function myfunc(num, obj) {
-    // Do stuff
-    return 'hi';
+function foo(a, b) {
+    return a * b;
 }
 ```
 
-The return type and arguments are checked for type correctness, like everything else
+CommaScript will infer the return type and the argument type(s), if any. In this example, the two arguments are being multiplied together, which means that the arguments must both be numbers. Two numbers multiplied together produces another number, so the return type must be a number.
+
+Functions that return undefined in JavaScript are considered by CommaScript to not have a value, akin to void in C/C++. Trying to assign the return value of a "void" function is an error in CommaScript.
+
+Functions are called as normal, but with type checking.
 
 ```JavaScript
 // This will work fine
-foo(10, {
-    bar: 'Hello',
-    baz: 0
-});
+foo(1, 2);
 
 // As will this
-var str = '';
-str = foo(10, {
-    bar: 'Hello',
-    baz: 0
-});
+var r = 0;
+r += foo(1, 2);
 
 // But not this
 foo('hello', 'world');
+
+// Or this
+var s = '';
+s = foo(1, 2);
 ```
 
-Coming soon: implicit declarations of functions!
+But what happens if the types cannot be inferred, such as with the example below?
+
+```JavaScript
+function foo(a, b) {
+    return a + b; // Everything can be added together, since everything can be converted to a string
+}
+
+There are two ways to handle this scenario. The first is to create an interface for the function and then define a function with the same name:
+
+```JavaScript
+('define(function, foo)', {
+    returnType: 'number',
+    argumentTypes: [
+        'number',
+        'number'
+    ]
+});
+
+function foo(a, b) {
+    return a + b;
+}
+```
+
+The other option is to leave the definition ambiguous. This introduces a new concept in CommaScript: generics. Generics in CommaScript work similarly to [generics in Java](http://en.wikipedia.org/wiki/Generics_in_Java) or [templates in C++](http://en.wikipedia.org/wiki/Template_%28C%2B%2B%29). The type of the arguments and/or return type remain unspecified until they are invoked:
+
+```JavaScript
+function foo(a, b) {
+    return a + b;
+}
+
+var x = foo(1, 2); // Arguments and x are set to type "number"
+var y = foo(1, '2'); // First argument is set to type "number", second argument and y are set to type "string"
+```
 
 ### Array
 
-Coming soon: Arrays will be homogeneous, with a pre-defined type
+Arrays are considerably restricted compared to normal JavaScript arrays. Every element in a CommaScript array must be of a homogeneous type:
+
+```JavaScript
+var foo = [1, 2, 3]; // Creates an array of numbers
+
+// Then we can do
+foo.push(4);
+
+// We can also do
+foo[4] = 5;
+
+// But not
+foo[5] = 'hello world';
+
+// Or
+foo.bar = 'baz';
+```
+
+If you want to create an empty array, you can create an interface for the array:
+
+```JavaScript
+('define(array, intarray)', 'int');
+
+var foo = ('cast('intarray'), []);
+
+foo.push(0);
+```
 
 ## Future Goals
 
