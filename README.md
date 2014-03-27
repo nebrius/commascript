@@ -56,20 +56,11 @@ Any type errors are output to the terminal.
 
 For detailed specification information, view the [Formal Specification](grammar.md)
 
-CommaScript code is localized to the current scope and must be enabled with a
-using directive, just like strict mode:
-
-```JavaScript
-'use commascript';
-```
-
 ### Primitives
 
 To create a variable typed as a primitive, simply give that variable an initial value:
 
 ```JavaScript
-'use commascript';
-
 var x = 0;
 ```
 
@@ -124,38 +115,6 @@ name, then CommaScript will also generate an error:
 obj.bax = 10;
 ```
 
-What if we want to declare an object and give it an initial value of null? This is
-where things get a little more complicated, and introduce a special syntax that uses
-the comma operator (hence the name CommaScript). Before creating a null object, an
-"interface" for the class must be defined, as such:
-
-```JavaScript
-'use commascript';
-
-('define(object, foo)', {
-    properties: {
-        'bar': 'string',
-        'baz': 'number'
-    }
-});
-```
-
-Once defined, the null value can be created:
-
-```JavaScript
-var obj = ('cast(foo)', null);
-```
-
-Notice how the "cast" operation is used to indicate what type of object the null
-value represents. We can later assign an instance of the object to the variable:
-
-```JavaScript
-obj = {
-    'bar': 'hello world',
-    'baz': 10
-};
-```
-
 ### Functions
 
 Functions are declared implicitly, just like objects:
@@ -195,34 +154,55 @@ function foo(a, b) {
     return a + b; // Everything can be added together, since everything can be converted to a string
 }
 
-There are two ways to handle this scenario. The first is to create an interface for the function and then define a function with the same name:
-
-```JavaScript
-('define(function, foo)', {
-    returnType: 'number',
-    argumentTypes: [
-        'number',
-        'number'
-    ]
-});
-
-function foo(a, b) {
-    return a + b;
-}
-```
-
-The other option is to leave the definition ambiguous. This introduces a new concept in CommaScript: generics. Generics in CommaScript work similarly to [generics in Java](http://en.wikipedia.org/wiki/Generics_in_Java) or [templates in C++](http://en.wikipedia.org/wiki/Template_%28C%2B%2B%29). The type of the arguments and/or return type remain unspecified until they are invoked:
+All you have to do is leave the definition ambiguous. This introduces a new concept in CommaScript: generics. Generics in CommaScript work similarly to [generics in Java](http://en.wikipedia.org/wiki/Generics_in_Java) or [templates in C++](http://en.wikipedia.org/wiki/Template_%28C%2B%2B%29). The type of the arguments and/or return type are determined by how the function is invoked:
 
 ```JavaScript
 function foo(a, b) {
     return a + b;
 }
 
-var x = foo(1, 2); // Arguments and x are set to type "number"
-var y = foo(1, '2'); // First argument is set to type "number", second argument and y are set to type "string"
+ // Arguments and x are set to type "number"
+var x = foo(1, 2);
+
+// First argument is set to type "number", second argument and y are set to type "string"
+var y = foo(1, '2');
+
+// x and y are still statically typed
+x = 'hello'; // Generates an error
+y = false; // Generates an error
 ```
 
-### Array
+### Constructors
+
+Instantiable objects (things you create with ```new```) are supported in CommaScript. What differentiates a constructor from a regular function is that a constructor must have at least one property declared on its prototype.
+
+```JavaScript
+function foo(arg) {
+    this.arg = arg;
+}
+foo.prototype.getArg = function() {
+    return this.arg;
+}
+
+// Then we can create an object
+var a = new foo(10);
+
+// And access its methods
+var b = 5 + a.getArg();
+
+// But only if they exist
+var c = a.fail; // Generates an error
+
+// And the types are correct
+var d = false && a.getArg(); // Generates an error
+
+// The call to the object constructor must also be typed correctly
+var e = new foo(); // Generates an error
+```
+
+Important note: in CommaScript, object constructors MUST be invoked using the ```new``` operator, and function calls MUST NOT be called using the ```new``` operator. Doing so will generate an error.
+
+### Arrays
 
 Arrays are considerably restricted compared to normal JavaScript arrays. Every element in a CommaScript array must be of a homogeneous type:
 
@@ -242,15 +222,198 @@ foo[5] = 'hello world';
 foo.bar = 'baz';
 ```
 
-If you want to create an empty array, you can create an interface for the array:
+## Interfaces
+
+There are some instances where the above syntax is not flexible enough. This is where we introduce the concept of interfaces in CommaScript. An interface specifies a _named_ type that can be used in a number of circumstances.
+
+An interface is defined using a special syntax that uses the comma operator (also called the sequence operator). In case you were wondering, this is where CommaScript gets its name. An interface definition has the following structure:
 
 ```JavaScript
-('define(array, intarray)', 'int');
-
-var foo = ('cast('intarray'), []);
-
-foo.push(0);
+('define(object|function|array, typename), definition);
 ```
+
+Complementing interface definitions are cast statements:
+
+```JavaScript
+('cast(typename)', value)
+```
+
+As a motivating example, what if we want to declare an object and give it an initial value of ```null```? Since we cannot infer the object type from ```null```, we create an named object type and then cast ```null``` to that type.
+
+```JavaScript
+'use commascript';
+
+('define(object, MyObject)', {
+    properties: {
+        'bar': 'string',
+        'baz': 'number'
+    }
+});
+
+var obj = ('cast(MyObject)', null);
+```
+
+We can later assign an instance of the object to the variable:
+
+```JavaScript
+obj = {
+    'bar': 'hello world',
+    'baz': 10
+};
+```
+
+Remember back to the case where function definitions are ambiguous. What if you don't want your function to be generic? You can create an named function type and then define a function with the same name:
+
+```JavaScript
+('define(function, MyFunction)', {
+    returnType: 'number',
+    argumentTypes: [
+        'number',
+        'number'
+    ]
+});
+
+var foo = ('cast(MyFunction)', function (a, b) {
+    return a + b;
+});
+
+// Then you can do
+var x = 5 + foo(1, 2);
+
+// But not
+var y = '';
+y = foo(1, '2');
+```
+
+What do you do if you want to create an empty array? In this case the array type cannot be inferred, so you created a named array type:
+
+```JavaScript
+('define(array, MyArray)', 'number');
+
+var foo = ('cast(MyArray)', []);
+
+foo.push(10);
+```
+
+## Scoping
+
+CommaScript code is localized to the current _block_ and must be enabled with a
+using directive, just like strict mode:
+
+```JavaScript
+'use commascript';
+```
+
+This means that you can mix and match CommaScript code with non-CommaScript code:
+
+```JavaScript
+function foo() {
+    var x = true;
+    x = 10;
+    if (x) {
+        return true;
+    }
+    return 'hello';
+}
+
+function bar() {
+    'use commascript';
+    var x = 10;
+    return x && false; // Generates an error
+}
+
+foo(); // Generates no errors
+bar();
+```
+
+You can also localize CommaScript to non-function blocks:
+
+```JavaScript
+if (strict) {
+    'use commascript';
+    var x = 10;
+    x = 'fail'; // Generates an error
+} else {
+    var x = 10;
+    x = 'fail'; // Does NOT generate an error
+}
+```
+
+Once a block is declared as being CommaScript, all inner blocks are also CommaScript:
+
+```JavaScript
+function foo() {
+    'use commascript';
+    function bar() {
+        // This is also CommaScript code
+    }
+    bar();
+}
+```
+
+So how do you call a CommaScript function from non-CommaScript code? Create a CommaScript block that contains the function and create named types for the function and arguments, if any. It is up to the programmer to ensure that CommaScript code is being called correctly:
+
+```JavaScript
+
+{
+    'use commascript';
+
+    ('define(object, MyCommaScriptObject)', {
+        properties: {
+            foo: 'string',
+            bar: 'string'
+        }
+    });
+
+    ('define(function, MyCommaScriptFunction)', {
+        returnType: 'string',
+        argumentTypes: [
+            'number',
+            'MyCommaScriptObject'
+        ]
+    });
+
+    var myFunction = ('cast(MyCommaScriptFunction)', function(num, obj) {
+        // Do stuff
+        return 'hello';
+    });
+}
+
+myFunction(10, {
+    foo: 'foo',
+    bar: 'bar'
+});
+```
+
+Conversely, how do you call a non-CommaScript function from CommaScript code? Just create a named type for the non-CommaScript function. It is up to the programmer to ensure that the non-CommaScript function conforms to the named type.
+
+```JavaScript
+'use commascript';
+
+('define(object, console)', {
+    properties: {
+        log: ('define(function), {
+            arguments: [
+                'string'
+            ]
+        }),
+        warn: ('define(function), {
+            arguments: [
+                'string'
+            ]
+        }),
+        error: ('define(function), {
+            arguments: [
+                'string'
+            ]
+        })
+    }
+});
+
+console.log('hi');
+```
+
+This latest example introduces a new tricks: unnamed type definitions in the form of the console methods. Any define or cast operation that takes a named type can also take an inlined unnamed type definition. When creating a named type for an external, non-CommaScript object/function, it is not necessary to create a 100% complete definition for it. Indeed this would be impossible for most external objects because they do not conform to CommaScript interface restrictions. It is advisable to only define what you need to use.
 
 ## Future Goals
 
@@ -269,7 +432,7 @@ License
 
 The MIT License (MIT)
 
-Copyright (c) 2013 Bryan Hughes bryan@theoreticalideations.com (http://theoreticalideations.com)
+Copyright (c) 2013-2014 Bryan Hughes bryan@theoreticalideations.com (https://theoreticalideations.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -3,7 +3,7 @@ CommaScript Formal Specification
 
 This document describes formal specification for commascript.
 
-Note: this specification is a work in progress.
+Note: this specification is a work in progress and is currently out of date compared to the README.
 
 ## Grammar
 

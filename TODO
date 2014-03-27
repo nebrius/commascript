@@ -20,3 +20,10 @@ Functions:
     * When parsing function body, attempt to infer the type
     * If values are not inferred from the body, infer from what it's being called with and set to
     * If the return type cannot be inferred (i.e. generic return value is being discarded), ignore it
+
+Scoping/Data Flow:
+* Traverse tree using built-in walker until you find a CommaScript block, then switch over to using .getType()
+    * Can remove state.isContextCommascript() calls
+    * Named types are stored in inner-most block AST node, not in type
+    * Allows for multiple passes over tree
+* Need to do multi-pass analysis to determine function generics, especially when objects are arguments
