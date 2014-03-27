@@ -20,6 +20,7 @@ JavaScript while still feeling like JavaScript.
 * [Interfaces](#interfaces)
 * [Scoping](#scoping)
 * [Future Goals](#future-goals)
+* [License](#license)
 
 ## Design Goals
 
