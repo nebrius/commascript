@@ -12,6 +12,13 @@ JavaScript while still feeling like JavaScript.
 * [Design Goals](#design-goals)
 * [Compilation](#compilation)
 * [Examples](#examples)
+   * [Primitives](#primitives)
+   * [Objects](#objects)
+   * [Functions](#functions)
+   * [Constructors](#constructors)
+   * [Arrays](#arrays)
+* [Interfaces](#interfaces)
+* [Scoping](#scoping)
 * [Future Goals](#future-goals)
 
 ## Design Goals
@@ -153,6 +160,7 @@ But what happens if the types cannot be inferred, such as with the example below
 function foo(a, b) {
     return a + b; // Everything can be added together, since everything can be converted to a string
 }
+```
 
 All you have to do is leave the definition ambiguous. This introduces a new concept in CommaScript: generics. Generics in CommaScript work similarly to [generics in Java](http://en.wikipedia.org/wiki/Generics_in_Java) or [templates in C++](http://en.wikipedia.org/wiki/Template_%28C%2B%2B%29). The type of the arguments and/or return type are determined by how the function is invoked:
 
@@ -229,7 +237,7 @@ There are some instances where the above syntax is not flexible enough. This is 
 An interface is defined using a special syntax that uses the comma operator (also called the sequence operator). In case you were wondering, this is where CommaScript gets its name. An interface definition has the following structure:
 
 ```JavaScript
-('define(object|function|array, typename), definition);
+('define(object|function|array, typename)', definition);
 ```
 
 Complementing interface definitions are cast statements:
@@ -288,7 +296,9 @@ y = foo(1, '2');
 What do you do if you want to create an empty array? In this case the array type cannot be inferred, so you created a named array type:
 
 ```JavaScript
-('define(array, MyArray)', 'number');
+('define(array, MyArray)', {
+   elementType: 'number'
+});
 
 var foo = ('cast(MyArray)', []);
 
