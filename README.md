@@ -224,7 +224,7 @@ foo.bar = 'baz';
 
 ## Interfaces
 
-There are some instances where the above syntax is not flexible enough. This is where we introduce the concept of interfaces in CommaScript. An interface specifies a _named_ type that can be used in a number of circumstances.
+There are some instances where the above syntax is not flexible enough. This is where we introduce the concept of interfaces in CommaScript. An interface specifies a _named_ or _unnamed_ type that can be used in a number of circumstances.
 
 An interface is defined using a special syntax that uses the comma operator (also called the sequence operator). In case you were wondering, this is where CommaScript gets its name. An interface definition has the following structure:
 
@@ -284,6 +284,33 @@ var x = 5 + foo(1, 2);
 var y = '';
 y = foo(1, '2');
 ```
+
+We can also specify a constructor interface:
+
+```JavaScript
+('define(constructor, MyConstructor)', {
+    argumentTypes: [
+        'string'
+    ],
+    properties: {
+        getArg: ('define(function)', {
+            returnType: 'string'
+        })
+    }
+});
+
+var foo = ('cast(MyConstructor)', function (arg) {
+    this.arg = arg;
+}
+foo.prototype.getArg = function() {
+    return this.arg;
+}
+
+// Then we can create an object
+var a = new foo('Hello');
+```
+
+A new feature is introduced inside the interface definition, an unnamed type. An unnamed type definition is an interface definition that is used inside of a comma declaration. Any define or cast operation that takes a named type can also take an inlined unnamed type definition.
 
 What do you do if you want to create an empty array? In this case the array type cannot be inferred, so you created a named array type:
 
@@ -390,20 +417,20 @@ Conversely, how do you call a non-CommaScript function from CommaScript code? Ju
 ```JavaScript
 'use commascript';
 
-('define(object, console)', {
+('extern(object, console)', {
     properties: {
         log: ('define(function), {
-            arguments: [
+            argumentTypes: [
                 'string'
             ]
         }),
         warn: ('define(function), {
-            arguments: [
+            argumentTypes: [
                 'string'
             ]
         }),
         error: ('define(function), {
-            arguments: [
+            argumentTypes: [
                 'string'
             ]
         })
@@ -413,7 +440,9 @@ Conversely, how do you call a non-CommaScript function from CommaScript code? Ju
 console.log('hi');
 ```
 
-This latest example introduces a new tricks: unnamed type definitions in the form of the console methods. Any define or cast operation that takes a named type can also take an inlined unnamed type definition. When creating a named type for an external, non-CommaScript object/function, it is not necessary to create a 100% complete definition for it. Indeed this would be impossible for most external objects because they do not conform to CommaScript interface restrictions. It is advisable to only define what you need to use.
+This latest example introduces a new trick: extern instance definitions. An extern definition has the same syntax as an object type definition, with the difference being that externs cannot be used in cast definitions and do not require an instantiation. Think of it like ```extern``` in C/C++.
+
+When creating an extern type, it is not necessary to create a 100% complete definition for it. Indeed this would be impossible for most external objects because they do not conform to CommaScript interface restrictions. It is advisable to only define what you need to use from the extern object/function.
 
 ## Future Goals
 
