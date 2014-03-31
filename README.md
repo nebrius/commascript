@@ -335,8 +335,7 @@ foo.push(10);
 
 ## Scoping
 
-CommaScript code is localized to the current _block_ and must be enabled with a
-using directive, just like strict mode:
+CommaScript code is localized to the current _block_ and must be enabled with a using directive, just like strict mode:
 
 ```JavaScript
 'use commascript';
@@ -422,6 +421,23 @@ myFunction(10, {
     bar: 'bar'
 });
 ```
+
+You can also declare commascript just inside of a function, which causes the function to be treated as a generic function:
+
+```JavaScript
+function myFunction(num, obj) {
+    'use commascript';
+    // Do stuff
+    return 'hello';
+}
+
+myFunction(10, {
+    foo: 'foo',
+    bar: 'bar'
+});
+```
+
+If you want the function to have stricter type checking, the use the former method way of declaring commascript code.
 
 Conversely, how do you call a non-CommaScript function from CommaScript code? Just create a named type for the non-CommaScript function. It is up to the programmer to ensure that the non-CommaScript function conforms to the named type.
 

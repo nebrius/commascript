@@ -1,5 +1,6 @@
 node_modules
 lib-cov
+.idea
 *.seed
 *.log
 *.csv
