@@ -38,7 +38,7 @@ describe('Primitive Tests', function() {
   runTest({
     spec: 'primitives',
     test: '02-boolean_typeerror',
-    error: 'Invalid right-hand side type in assignment: expected "boolean" but got "number"',
+    error: 'Cannot cast "boolean" as "number"',
     line: 28,
     column: 6
   });
@@ -51,7 +51,7 @@ describe('Primitive Tests', function() {
   runTest({
     spec: 'primitives',
     test: '04-number_typeerror',
-    error: 'Invalid right-hand side type in assignment: expected "number" but got "string"',
+    error: 'Cannot cast "number" as "string"',
     line: 28,
     column: 6
   });
@@ -74,7 +74,7 @@ describe('Primitive Tests', function() {
   runTest({
     spec: 'primitives',
     test: '08-string_typeerror',
-    error: 'Invalid right-hand side type in assignment: expected "string" but got "number"',
+    error: 'Cannot cast "string" as "number"',
     line: 28,
     column: 6
   });

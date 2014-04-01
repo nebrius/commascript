@@ -22,36 +22,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js'),
-    state = require('../state');
+/*global
+describe
+*/
 
-uglify.AST_Var.prototype.ruleName = 'AST_Var';
+var runTest = require('./test_utils').runTest;
 
-uglify.AST_Var.prototype.beginsCommaScript = function beginsCommaScript() {
-  return false;
-};
+describe('Primitive Tests', function() {
 
-uglify.AST_Var.prototype.analyze = function analyze() {
-  var definitions = this.definitions,
-      definition,
-      name,
-      type,
-      i, len;
+  runTest({
+    spec: 'scope',
+    test: '01-global_scope',
+    error: 'Cannot cast "boolean" as "number"',
+    line: 28,
+    column: 4
+  });
 
-  for (i = 0, len = definitions.length; i < len; i++) {
-    definition = definitions[i];
-    type = definition.value && definition.value.getType({
-      operation: 'normal'
-    });
+  runTest({
+    spec: 'scope',
+    test: '02-global_scope_no_cs'
+  });
 
-    // Validate and store the type
-    name = definition.name.name;
-    if (state.lookupType(name)) {
-      state.handleError(definition, 'Redefinition of variable "' + name + '"');
-    }
-    state.addType(name, type);
-  }
-  return {
-    result: 'normal'
-  };
-};
+  runTest({
+    spec: 'scope',
+    test: '03-function_scope',
+    error: '',
+    line: 28,
+    column: 6
+  });
+
+  runTest({
+    spec: 'scope',
+    test: '04-block_scope',
+    error: 'Cannot cast "boolean" as "number"',
+    line: 28,
+    column: 6
+  });
+});

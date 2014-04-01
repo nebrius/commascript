@@ -22,36 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var uglify = require('uglify-js'),
-    state = require('../state');
+'use commascript';
 
-uglify.AST_Var.prototype.ruleName = 'AST_Var';
-
-uglify.AST_Var.prototype.beginsCommaScript = function beginsCommaScript() {
-  return false;
-};
-
-uglify.AST_Var.prototype.analyze = function analyze() {
-  var definitions = this.definitions,
-      definition,
-      name,
-      type,
-      i, len;
-
-  for (i = 0, len = definitions.length; i < len; i++) {
-    definition = definitions[i];
-    type = definition.value && definition.value.getType({
-      operation: 'normal'
-    });
-
-    // Validate and store the type
-    name = definition.name.name;
-    if (state.lookupType(name)) {
-      state.handleError(definition, 'Redefinition of variable "' + name + '"');
-    }
-    state.addType(name, type);
-  }
-  return {
-    result: 'normal'
-  };
-};
+var x = true;
+x = 10;
