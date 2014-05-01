@@ -6,6 +6,7 @@
     "type": "git",
     "url": "https://gitlab.theoreticalideations.com/nebrius/commascript"
   },
+  "homepage": "https://gitlab.theoreticalideations.com/nebrius/commascript",
   "keywords": [
     "Static Typing",
     "JavaScript"
