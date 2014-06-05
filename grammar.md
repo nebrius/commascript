@@ -54,9 +54,9 @@ Define expressions are just object literals with a few extra restrictions. Speci
 </pre>
 Cast expressions are pretty basic: you can only cast ```null``` values to an object type. This is the only type of casting that requires an explicit cast operation because all other types of casts can be inferred.
 
-## Additional Semantics
+## Semantics
 
-### Declarations
+### CommaScript Declarations
 
 There are additional restrictions on the _CSDefineExpression_ production declared above.
 
