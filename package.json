@@ -12,7 +12,7 @@
     "JavaScript"
   ],
   "dependencies": {
-    "uglify-js": "2.3.x",
+    "esprima": "1.2.x",
     "commander": "1.1.x",
     "transport-logger": "0.1.x",
     "wrench": "1.5.x"
