@@ -4,7 +4,7 @@
   "description": "CommaScript is a backwards compatible dialect of JavaScript that provides localized static typing in JavaScript while still feeling like JavaScript.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bryan-m-hughes/commascript"
+    "url": "https://github.com/bryan-m-hughes/commascript.git"
   },
   "homepage": "https://github.com/bryan-m-hughes/commascript",
   "keywords": [
