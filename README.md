@@ -133,9 +133,12 @@ function foo(a, b) {
 }
 ```
 
-CommaScript will infer the return type and the argument type(s), if any. In this example, the two arguments are being multiplied together, which means that the arguments must both be numbers. Two numbers multiplied together produces another number, so the return type must be a number.
+CommaScript will infer the return type and the argument type(s), if any. In this example, the two arguments are being
+multiplied together, which means that the arguments must both be numbers. Two numbers multiplied together produces another
+number, so the return type must be a number.
 
-Functions that return undefined in JavaScript are considered by CommaScript to not have a value, akin to void in C/C++. Trying to assign the return value of a "void" function is an error in CommaScript.
+Functions that return undefined in JavaScript are considered by CommaScript to not have a value, akin to void in
+C/C++/Java. Trying to assign the return value of a "void" function is an error in CommaScript.
 
 Functions are called as normal, but with type checking.
 
@@ -163,7 +166,10 @@ function foo(a, b) {
 }
 ```
 
-All you have to do is leave the definition ambiguous. This introduces a new concept in CommaScript: generics. Generics in CommaScript work similarly to [generics in Java](http://en.wikipedia.org/wiki/Generics_in_Java) or [templates in C++](http://en.wikipedia.org/wiki/Template_%28C%2B%2B%29). The type of the arguments and/or return type are determined by how the function is invoked:
+All you have to do is leave the definition ambiguous. This introduces a new concept in CommaScript: generics. Generics in
+CommaScript work similarly to [generics in Java](http://en.wikipedia.org/wiki/Generics_in_Java) or
+[templates in C++](http://en.wikipedia.org/wiki/Template_%28C%2B%2B%29). The type of the arguments and/or return type are
+determined by how the function is invoked:
 
 ```JavaScript
 function foo(a, b) {
@@ -183,7 +189,9 @@ y = false; // Generates an error
 
 ### Constructors
 
-Instantiable objects (things you create with ```new```) are supported in CommaScript. What differentiates a constructor from a regular function is that a constructor must have at least one property declared on its prototype.
+Instantiable objects (things you create with ```new```) are supported in CommaScript. What differentiates a constructor
+from a regular function is that a constructor is used with the ```new``` operator, while functions are not. Also, you
+cannot reference a functions prototype, but you can reference a constructors prototype.
 
 ```JavaScript
 function foo(arg) {
@@ -209,8 +217,6 @@ var d = false && a.getArg(); // Generates an error
 var e = new foo(); // Generates an error
 ```
 
-Important note: in CommaScript, object constructors MUST be invoked using the ```new``` operator, and function calls MUST NOT be called using the ```new``` operator. Doing so will generate an error.
-
 ### Arrays
 
 Arrays are considerably restricted compared to normal JavaScript arrays. Every element in a CommaScript array must be of a homogeneous type:
@@ -233,12 +239,14 @@ foo.bar = 'baz';
 
 ## Interfaces
 
-There are some instances where the above syntax is not flexible enough. This is where we introduce the concept of interfaces in CommaScript. An interface specifies a _named_ or _unnamed_ type that can be used in a number of circumstances.
+There are some instances where the above syntax is not flexible enough. This is where we introduce the concept of
+interfaces in CommaScript. An interface specifies a _named_ or _unnamed_ type that can be used in a number of circumstances.
 
-An interface is defined using a special syntax that uses the comma operator (also called the sequence operator). In case you were wondering, this is where CommaScript gets its name. An interface definition has the following structure:
+An interface is defined using a special syntax that uses the comma operator (also called the sequence operator). In
+case you were wondering, this is where CommaScript gets its name. An interface definition has the following structure:
 
 ```JavaScript
-('define(object|function|array, typename)', definition);
+('define(object|function|array[, typename])', definition[, value]);
 ```
 
 Complementing interface definitions are cast statements:
@@ -247,7 +255,8 @@ Complementing interface definitions are cast statements:
 ('cast(typename)', value)
 ```
 
-As a motivating example, what if we want to declare an object and give it an initial value of ```null```? Since we cannot infer the object type from ```null```, we create an named object type and then cast ```null``` to that type.
+As a motivating example, what if we want to declare an object and give it an initial value of ```null```? Since we cannot
+infer the object type from ```null```, we create an named object type and then cast ```null``` to that type.
 
 ```JavaScript
 'use commascript';
@@ -271,7 +280,8 @@ obj = {
 };
 ```
 
-Remember back to the case where function definitions are ambiguous. What if you don't want your function to be generic? You can create an named function type and then define a function with the same name:
+Remember back to the case where function definitions are ambiguous. What if you don't want your function to be generic?
+You can create an named function type and then define a function with the same name:
 
 ```JavaScript
 ('define(function, MyFunction)', {
@@ -319,9 +329,12 @@ foo.prototype.getArg = function() {
 var a = new foo('Hello');
 ```
 
-A new feature is introduced inside the interface definition, an unnamed type. An unnamed type definition is an interface definition that is used inside of a comma declaration. Any define or cast operation that takes a named type can also take an inlined unnamed type definition.
+A new feature is introduced inside the interface definition, an unnamed type. An unnamed type definition is an interface
+definition that is used inside of a comma declaration. Any define or cast operation that takes a named type can also take
+an inlined, unnamed type definition.
 
-What do you do if you want to create an empty array? In this case the array type cannot be inferred, so you created a named array type:
+What do you do if you want to create an empty array? In this case the array type cannot be inferred, so you created a
+named array type:
 
 ```JavaScript
 ('define(array, MyArray)', {
