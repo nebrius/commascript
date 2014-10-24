@@ -28,15 +28,15 @@ var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 
 gulp.task('default', ['clean'], function() {
-  return gulp.src('lib/**/*')
+  return gulp.src('src/**/*')
     .pipe(sourcemaps.init())
       .pipe(traceur({
         modules: 'commonjs'
       }))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('lib'));
 });
 
 gulp.task('clean', function(cb) {
-  del(['dist'], cb);
+  del(['lib'], cb);
 });
