@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import state from './state';
+import { handleError, handleInternalError } from './state';
 
 class Type {
   constructor(options) {
@@ -61,7 +61,7 @@ export class ObjectType extends Type {
 export class ArrayType extends Type {
   constructor() {
     if (!options || !options.elementType) {
-    state.handleInternalError('Invalid options passed to ArrayType constructor.');
+    handleInternalError('Invalid options passed to ArrayType constructor.');
   }
   super(options.name || 'anonymous array');
   this.elementType = options.elementType;
@@ -71,7 +71,7 @@ export class ArrayType extends Type {
 export class FunctionType extends Type {
   constructor(options) {
     if (!options || !options.node) {
-      state.handleInternalError('Invalid options passed to FunctionType constructor.');
+      handleInternalError('Invalid options passed to FunctionType constructor.');
     }
     super(options.name || 'anonymous function');
     this.node = options.node;
@@ -80,7 +80,7 @@ export class FunctionType extends Type {
   }
   applyPattern(options) {
     if (!options || !options.argumentTypes || !options.returnType) {
-      state.handleInternalError('Invalid options passed to FunctionType constructor.');
+      handleInternalError('Invalid options passed to FunctionType constructor.');
     }
     // TODO: This is called by call expressions to solidify types. Analayzes function at this point in time.
   }
@@ -89,7 +89,7 @@ export class FunctionType extends Type {
 export class ConstructorType extends Type {
   constructor(options) {
     if (!options || !options.name || !options.instantiatedType) {
-      state.handleInternalError('Invalid options passed to ConstructorType constructor.');
+      handleInternalError('Invalid options passed to ConstructorType constructor.');
     }
     super(options.name);
     this.argumentTypes = options.argumentTypes || [];
@@ -132,14 +132,14 @@ export function isConstructor(type) {
 export function compareTypes(type1, type2, options) {
 
   if (!options || !options.node) {
-    state.handleInternalError('Invalid options passed to compareTypes.');
+    handleInternalError('Invalid options passed to compareTypes.');
   }
   if (type1 == type2) {
     return true;
   }
 
-  function handleError(errorMessage) {
-    state.handleError(options.node, 'Cannot cast "' + type1.name + '" (declared at ' + type1.declarationLocation +
+  function handleCompareError(errorMessage) {
+    handleError(options.node, 'Cannot cast "' + type1.name + '" (declared at ' + type1.declarationLocation +
       ') as "' + type2.name + '" (declared at ' + type2.declarationLocation + ')' +
       (errorMessage ? ': ' + errorMessage : ''));
   }
@@ -151,7 +151,7 @@ export function compareTypes(type1, type2, options) {
     ) {
       return true;
     } else {
-      handleError();
+      handleCompareError();
       return false;
     }
   }
@@ -162,16 +162,16 @@ export function compareTypes(type1, type2, options) {
       return false;
     }
     if (Object.keys(type1.properties).length != Object.keys(type2.properties).length) {
-      handleError('Objects do not contain the same number of properties');
+      handleCompareError('Objects do not contain the same number of properties');
       return false;
     }
     for (p in type1.properties) {
       if (!type2.properties[p]) {
-        handleError('Object type is missing property "' + p + '"');
+        handleCompareError('Object type is missing property "' + p + '"');
         return false;
       }
       if (!compareTypes(type1.properties[p], type2.properties[p], options)) {
-        handleError('Property "' + p + '" type mismatch');
+        handleCompareError('Property "' + p + '" type mismatch');
         return false;
       }
     }
@@ -185,12 +185,12 @@ export function compareTypes(type1, type2, options) {
       return false;
     }
     if (type1.argumentTypes.length != type2.argumentTypes.length) {
-      handleError('Functions do not contain the same number of arguments');
+      handleCompareError('Functions do not contain the same number of arguments');
       return false;
     }
     for (i = 0; i < type1.argumentTypes.length; i++) {
       if (!compareTypes(type1.argumentTypes[i], type2.argumentTypes[i], options)) {
-        handleError('Argument "' + i + '" type mismatch');
+        handleCompareError('Argument "' + i + '" type mismatch');
         return false;
       }
     }
@@ -202,12 +202,12 @@ export function compareTypes(type1, type2, options) {
       return false;
     }
     if (type1.argumentTypes.length != type2.argumentTypes.length) {
-      handleError('Constructors do not contain the same number of arguments');
+      handleCompareError('Constructors do not contain the same number of arguments');
       return false;
     }
     for (i = 0; i < type1.argumentTypes.length; i++) {
       if (!compareTypes(type1.argumentTypes[i], type2.argumentTypes[i], options)) {
-        handleError('Argument "' + i + '" type mismatch');
+        handleCompareError('Argument "' + i + '" type mismatch');
         return false;
       }
     }

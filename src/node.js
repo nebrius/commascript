@@ -22,36 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var state = require('./state');
+import { handleInternalError } from './state';
+
 var processors = {};
 
-module.exports = {
-  isCommaScriptDirective: isCommaScriptDirective,
-  registerNodeProcessor: registerNodeProcessor,
-  processNode: processNode,
-  processBlock: processBlock,
-  processProgram: processProgram,
-};
-
-function isCommaScriptDirective(node) {
+export function isCommaScriptDirective(node) {
   return node.type == 'ExpressionStatement' &&
     node.expression.type == 'Literal' &&
     node.expression.value == 'use commascript';
 }
 
-function registerNodeProcessor(name, processor) {
-  processor[name] = processor;
+export function registerNodeProcessor(processor) {
+  processor[processor.name] = processor;
 }
 
-function processNode(node) {
+export function processNode(node) {
   var processor = processors[node.type];
   if (!processor) {
-    state.handleInternalError('No processor for rule type ' + node.type);
+    handleInternalError('No processor for rule type ' + node.type);
   }
   return processor.process(node);
 }
 
-function processBlock(nodes) {
+export function processBlock(nodes) {
   if (nodes) {
     for (var i = 0, len = nodes.length; i < len; i++) {
       var result = nodes[i].analyze();
@@ -65,10 +58,10 @@ function processBlock(nodes) {
   };
 }
 
-function processProgram(node) {
+export function processProgram(node) {
   var processor = processors[node.type];
   if (!processor) {
-    state.handleInternalError('No processor for rule type ' + node.type);
+    handleInternalError('No processor for rule type ' + node.type);
   }
   processor.walk(node);
 }

@@ -22,50 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import fs from 'fs';
-import path from 'path';
-import wrench from 'wrench';
-import esprima from 'esprima';
-import state from './state';
-import node from './node';
+import { registerNodeProcessor } from '../node';
 
-// Load the rule processors
-wrench.readdirSyncRecursive(path.join(__dirname, 'rules')).forEach(function (file) {
-  if (/\.js$/.test(file)) {
-    require(path.join(__dirname, 'rules', file));
+registerNodeProcessor({
+
+  name: 'BinaryExpression',
+
+  getType(node) {
+
   }
+
 });
-
-export function validate(files, logger) {
-  for (var i = 0, len = files.length; i < len; i++) {
-    validateFile(files[i], logger);
-  }
-}
-
-function validateFile(file, logger) {
-
-  // Read the file
-  var source;
-  try {
-    source = fs.readFileSync(file).toString();
-  } catch(e) {
-    logger.error('Could not read file "' + file + '": ' + e);
-    process.exit(1);
-  }
-
-  // Parse the source
-  var ast;
-  try {
-    ast = esprima.parse(source, {
-      loc: true
-    });
-  } catch(e) {
-    logger.error(e.message + ' ' + file + ':' + e.lineNumber + ':' + e.col);
-    process.exit(1);
-  }
-  state.setFilename(file);
-
-  // Validate the file
-  debugger;
-  node.processProgram(ast);
-}

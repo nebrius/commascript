@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var commascript = require('./commascript'),
-    fs = require('fs'),
-    path = require('path'),
-    Logger = require('transport-logger');
+import commascript from './commascript';
+import fs from 'fs';
+import path from 'path';
+import Logger from 'transport-logger';
 
 function printHelp() {
   console.log('\nCommaScript validator, version \n\n' +
@@ -37,17 +37,14 @@ function printHelp() {
     '  -h, --help      Show this help menu\n');
 }
 
-module.exports = function (argv) {
-  var pkg = require('../package.json'),
-      files = [],
-      i, len,
-      logLevel = 'info',
-      flagRegex = /^-/,
-      arg;
+export function run(argv) {
+  var files = [];
+  var logLevel = 'info';
+  var flagRegex = /^-/;
 
   // Validate the options
-  for (i = 2, len = argv.length; i < len; i++) {
-    arg = argv[i];
+  for (var i = 2, len = argv.length; i < len; i++) {
+    var arg = argv[i];
     if (flagRegex.test(arg)) {
       if (argv[i] === '-s' || argv[i] === '--silent') {
         logLevel = 'none';
@@ -57,7 +54,7 @@ module.exports = function (argv) {
         printHelp();
         process.exit(0);
       } else if (argv[i] === '-V' || argv[i] === '--version') {
-        console.log(pkg.version);
+        console.log(require('../package.json').version);
         process.exit(0);
       } else {
         console.error('Invalid flag "' + arg + '"');

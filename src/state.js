@@ -23,43 +23,37 @@ THE SOFTWARE.
 */
 
 var stack = [];
+var currentFile = '';
 
-module.exports = {
-  currentFile: '',
-  handleError: handleError,
-  handleInternalError: handleInternalError,
-  enterContext: enterContext,
-  exitContext: exitContext,
-  getCurrentContext: getCurrentContext,
-  lookupNamedType: lookupNamedType,
-  addNamedType: addNamedType
-};
-
-function handleError(node, message) {
-  console.error(message + ' ' + exports.currentFile + ':' + node.start.line + ':' + node.start.col);
+export function getCurrentFile() {
+  return currentFile;
 }
 
-function handleInternalError(message) {
+export function handleError(node, message) {
+  console.error(message + ' ' + currentFile + ':' + node.start.line + ':' + node.start.col);
+}
+
+export function handleInternalError(message) {
   throw new Error('Internal Error: ' + message +
     ' This is a bug. Please report it to the project author');
 }
 
-function enterContext(config) {
+export function enterContext(config) {
   stack.push({
     symbolTable: {},
     expectedReturnType: config.expectedReturnType
   });
 }
 
-function exitContext() {
+export function exitContext() {
   stack.pop();
 }
 
-function getCurrentContext() {
+export function getCurrentContext() {
   return stack[stack.length - 1];
 }
 
-function lookupNamedType(name) {
+export function lookupNamedType(name) {
   for (var i = stack.length - 1; i >= 0; i--) {
     var type = stack[i].symbolTable[name];
     if (type) {
@@ -68,6 +62,6 @@ function lookupNamedType(name) {
   }
 }
 
-function addNamedType(name, type) {
+export function addNamedType(name, type) {
   getCurrentContext().symbolTable[name] = type;
 }
