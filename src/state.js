@@ -29,6 +29,10 @@ export function getCurrentFile() {
   return currentFile;
 }
 
+export function setCurrentFile(file) {
+  currentFile = file;
+}
+
 export function handleError(node, message) {
   console.error(message + ' ' + currentFile + ':' + node.start.line + ':' + node.start.col);
 }

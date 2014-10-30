@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import commascript from './commascript';
+import { validate } from './commascript';
 import fs from 'fs';
 import path from 'path';
 import Logger from 'transport-logger';
@@ -70,7 +70,7 @@ export function run(argv) {
   }
 
   // Invoke the validator with the proper logger
-  commascript.validate(files, new Logger({
+  validate(files, new Logger({
     minLevel: logLevel,
     colorize: true,
     prependLevel: true

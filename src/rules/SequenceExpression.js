@@ -30,6 +30,10 @@ registerNodeProcessor({
 
   getType(node) {
 
+  },
+
+  walk(node) {
+
   }
 
 });

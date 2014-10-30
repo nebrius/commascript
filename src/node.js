@@ -33,7 +33,7 @@ export function isCommaScriptDirective(node) {
 }
 
 export function registerNodeProcessor(processor) {
-  processor[processor.name] = processor;
+  processors[processor.name] = processor;
 }
 
 export function processNode(node) {

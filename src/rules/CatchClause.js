@@ -30,6 +30,10 @@ registerNodeProcessor({
 
   process(node) {
 
+  },
+
+  walk(node) {
+
   }
 
 });

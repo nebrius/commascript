@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { registerNodeProcessor } from '../node';
+import { registerNodeProcessor, isCommaScriptDirective } from '../node';
 
 registerNodeProcessor({
 
@@ -30,6 +30,10 @@ registerNodeProcessor({
 
   process(node) {
 
+  },
+
+  walk(node) {
+    
   }
 
 });
