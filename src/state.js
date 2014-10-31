@@ -23,7 +23,17 @@ THE SOFTWARE.
 */
 
 var stack = [];
+var state = [];
 var currentFile = '';
+
+export function handleError(node, message) {
+  console.error(message + ' ' + currentFile + ':' + node.start.line + ':' + node.start.col);
+}
+
+export function handleInternalError(message) {
+  throw new Error('Internal Error: ' + message +
+    ' This is a bug. Please report it to the project author');
+}
 
 export function getCurrentFile() {
   return currentFile;
@@ -33,13 +43,27 @@ export function setCurrentFile(file) {
   currentFile = file;
 }
 
-export function handleError(node, message) {
-  console.error(message + ' ' + currentFile + ':' + node.start.line + ':' + node.start.col);
+export var states = {
+  SCANNING: 'SCANNING',
+  PARSING_STATEMENT: 'PARSING_STATEMENT',
+  PARSING_EXPRESSION: 'PARSING_EXPRESSION',
+  DECLARING: 'DECLARING'
+};
+
+export function getState() {
+  return state[state.length - 1];
 }
 
-export function handleInternalError(message) {
-  throw new Error('Internal Error: ' + message +
-    ' This is a bug. Please report it to the project author');
+export function enterState(newState) {
+  state.push(newState);
+}
+
+export function exitState() {
+  state.pop();
+}
+
+export function getCurrentContext() {
+  return stack[stack.length - 1];
 }
 
 export function enterContext(config) {
@@ -51,10 +75,6 @@ export function enterContext(config) {
 
 export function exitContext() {
   stack.pop();
-}
-
-export function getCurrentContext() {
-  return stack[stack.length - 1];
 }
 
 export function lookupNamedType(name) {

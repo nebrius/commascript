@@ -28,11 +28,11 @@ registerNodeProcessor({
 
   name: 'FunctionDeclaration',
 
-  process(node) {
+  parseStatement(node) {
 
   },
 
-  walk(node) {
+  scan(node) {
 
   }
 

@@ -34,6 +34,10 @@ registerNodeProcessor({
 
   walk(node) {
 
+  },
+
+  declare(node) {
+
   }
 
 });

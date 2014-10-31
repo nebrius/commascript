@@ -28,11 +28,11 @@ registerNodeProcessor({
 
   name: 'DebuggerStatement',
 
-  process(node) {
+  parseStatement(node) {
 
   },
 
-  walk(node) {
+  scan(node) {
 
   }
 

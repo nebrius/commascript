@@ -28,11 +28,15 @@ registerNodeProcessor({
 
   name: 'MemberExpression',
 
-  getType(node) {
+  parseExpression(node) {
 
   },
 
-  walk(node) {
+  scan(node) {
+
+  },
+
+  declare(node) {
 
   }
 

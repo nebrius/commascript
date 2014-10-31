@@ -28,11 +28,11 @@ registerNodeProcessor({
 
   name: 'EmptyStatement',
 
-  process(node) {
+  parseStatement(node) {
 
   },
 
-  walk(node) {
+  scan(node) {
 
   }
 

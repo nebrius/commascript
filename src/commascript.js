@@ -26,8 +26,8 @@ import fs from 'fs';
 import path from 'path';
 import wrench from 'wrench';
 import esprima from 'esprima';
-import { setCurrentFile } from './state';
-import { processProgram } from './node';
+import { setCurrentFile, enterState, exitState, states } from './state';
+import { processNode } from './node';
 
 // Load the rule processors
 wrench.readdirSyncRecursive(path.join(__dirname, 'rules')).forEach(function (file) {
@@ -66,6 +66,8 @@ function validateFile(file, logger) {
   setCurrentFile(file);
 
   // Validate the file
+  enterState(states.SCANNING);
   debugger;
-  processProgram(ast);
+  processNode(ast);
+  exitState();
 }

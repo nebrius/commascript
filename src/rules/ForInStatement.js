@@ -28,11 +28,11 @@ registerNodeProcessor({
 
   name: 'ForInStatement',
 
-  process(node) {
+  parseStatement(node) {
 
   },
 
-  walk(node) {
+  scan(node) {
 
   }
 

@@ -28,11 +28,11 @@ registerNodeProcessor({
 
   name: 'IfStatement',
 
-  process(node) {
+  parseStatement(node) {
 
   },
 
-  walk(node) {
+  scan(node) {
 
   }
 

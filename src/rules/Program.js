@@ -22,18 +22,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { registerNodeProcessor, isCommaScriptDirective } from '../node';
+import { registerNodeProcessor, isCommaScriptDirective, processBlock } from '../node';
+import { enterContext, exitContext, enterState, exitState, states } from '../state';
 
 registerNodeProcessor({
 
   name: 'Program',
 
-  process(node) {
-
+  parseStatement(node) {
+    processBlock(node);
   },
 
-  walk(node) {
-    
+  scan(node) {
+    if (isCommaScriptDirective(node.body[0])) {
+      enterState(states.PARSING_STATEMENT);
+      enterContext({
+        expectedReturnType: null
+      });
+
+      processBlock(node.body);
+
+      exitContext();
+      exitState();
+    } else {
+      processBlock(node.body);
+    }
   }
 
 });

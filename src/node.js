@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { handleInternalError } from './state';
+import { handleInternalError, getState, states } from './state';
 
 var processors = {};
 
@@ -41,27 +41,41 @@ export function processNode(node) {
   if (!processor) {
     handleInternalError('No processor for rule type ' + node.type);
   }
-  return processor.process(node);
+  switch (getState()) {
+    case states.SCANNING:
+      return processor.scan(node);
+    case states.PARSING_STATEMENT:
+      return processor.parseStatement(node);
+    case states.PARSING_EXPRESSION:
+      return processor.parseExpression(node);
+    case states.DECLARING:
+      return processor.declare(node);
+    default:
+      handleInternalError('Unknown or invalid state ' + getState() + ' in processNode');
+  }
 }
 
 export function processBlock(nodes) {
   if (nodes) {
-    for (var i = 0, len = nodes.length; i < len; i++) {
-      var result = nodes[i].analyze();
-      if (result.result == 'return' || result.result == 'throw' || result.result == 'break' || result.result == 'continue') {
-        return result;
-      }
+    switch(getState()) {
+      case states.SCANNING:
+        for (var i = 0, len = nodes.length; i < len; i++) {
+          processNode(nodes[i].analyze());
+        }
+        break;
+      case states.PARSING_STATEMENT:
+        for (var i = 0, len = nodes.length; i < len; i++) {
+          var result = processNode(nodes[i]);
+          if (result.result == 'return' || result.result == 'throw' || result.result == 'break' || result.result == 'continue') {
+            return result;
+          }
+        }
+        break;
+    default:
+      handleInternalError('Unknown or invalid state ' + getState() + ' in processBlock');
     }
   }
   return {
     result: 'normal'
   };
-}
-
-export function processProgram(node) {
-  var processor = processors[node.type];
-  if (!processor) {
-    handleInternalError('No processor for rule type ' + node.type);
-  }
-  processor.walk(node);
 }
