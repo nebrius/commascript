@@ -23,21 +23,36 @@ THE SOFTWARE.
 */
 
 import { registerNodeProcessor } from '../node';
+import { BooleanType, NumberType, StringType, NullType, RegExpType } from '../type';
+import { handleInternalError } from '../state';
 
 registerNodeProcessor({
 
   name: 'Literal',
 
   parseExpression(node) {
-
+    var valueType = typeof node.value;
+    if (valueType == 'boolean') {
+      return new BooleanType();
+    } else if (valueType == 'number') {
+      return new NumberType();
+    } else if (valueType == 'string') {
+      return new StringType();
+    } else if (node.value === null) {
+      return new NullType();
+    } else if (node.value instanceof RegExp) {
+      return new RegExpType();
+    } else {
+      handleInternalError('Unsupported literal type ' + (typeof node.value));
+    }
   },
 
   scan(node) {
-
+    // Do nothing
   },
 
   declare(node) {
-
+    throw new Error('Not Implemented');
   }
 
 });

@@ -29,15 +29,15 @@ registerNodeProcessor({
   name: 'NewExpression',
 
   parseExpression(node) {
-
+    throw new Error('Not Implemented');
   },
 
   scan(node) {
-
+    throw new Error('Not Implemented');
   },
 
   declare(node) {
-
+    throw new Error('Not Implemented');
   }
 
 });

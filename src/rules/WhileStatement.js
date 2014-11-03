@@ -26,17 +26,13 @@ import { registerNodeProcessor } from '../node';
 
 registerNodeProcessor({
 
-  name: 'Property',
+  name: 'WhileStatement',
 
-  parseExpression(node) {
+  parseStatement(node) {
     throw new Error('Not Implemented');
   },
 
   scan(node) {
-    throw new Error('Not Implemented');
-  },
-
-  declare(node) {
     throw new Error('Not Implemented');
   }
 

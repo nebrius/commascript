@@ -29,11 +29,11 @@ registerNodeProcessor({
   name: 'SwitchStatement',
 
   parseStatement(node) {
-
+    throw new Error('Not Implemented');
   },
 
   scan(node) {
-
+    throw new Error('Not Implemented');
   }
 
 });

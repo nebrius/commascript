@@ -22,18 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { registerNodeProcessor } from '../node';
+import { registerNodeProcessor, processNode } from '../node';
+import { enterState, exitState, states } from '../state';
 
 registerNodeProcessor({
 
   name: 'ExpressionStatement',
 
   parseStatement(node) {
-
+    enterState(states.PARSING_EXPRESSION);
+    processNode(node.expression);
+    exitState();
+    return {
+      result: 'normal'
+    };
   },
 
   scan(node) {
-
+    processNode(node.expression);
   }
 
 });

@@ -58,6 +58,18 @@ export class ObjectType extends Type {
   }
 }
 
+export class RegExpType extends Type {
+  constructor() {
+    super({ name: 'regexp' });
+  }
+}
+
+export class NullType extends Type {
+  constructor() {
+    super({ name: 'null' });
+  }
+}
+
 export class ArrayType extends Type {
   constructor() {
     if (!options || !options.elementType) {

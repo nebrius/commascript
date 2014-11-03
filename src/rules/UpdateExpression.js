@@ -26,7 +26,7 @@ import { registerNodeProcessor } from '../node';
 
 registerNodeProcessor({
 
-  name: 'Property',
+  name: 'UpdateExpression',
 
   parseExpression(node) {
     throw new Error('Not Implemented');

@@ -27,7 +27,7 @@ var traceur = require('gulp-traceur');
 var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 
-gulp.task('default', ['clean'], function() {
+gulp.task('default', ['traceur-runtime'], function() {
   return gulp.src('src/**/*')
     .pipe(sourcemaps.init())
       .pipe(traceur({
@@ -36,6 +36,11 @@ gulp.task('default', ['clean'], function() {
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('lib'));
 });
+
+gulp.task('traceur-runtime', ['clean'], function() {
+  return gulp.src('node_modules/gulp-traceur/node_modules/traceur/bin/traceur-runtime.js')
+    .pipe(gulp.dest('lib'));
+})
 
 gulp.task('clean', function(cb) {
   del(['lib'], cb);

@@ -29,11 +29,11 @@ registerNodeProcessor({
   name: 'ForStatement',
 
   parseStatement(node) {
-
+    throw new Error('Not Implemented');
   },
 
   scan(node) {
-
+    throw new Error('Not Implemented');
   }
 
 });

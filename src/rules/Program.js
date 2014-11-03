@@ -47,6 +47,9 @@ registerNodeProcessor({
     } else {
       processBlock(node.body);
     }
+    return {
+      result: 'normal'
+    };
   }
 
 });

@@ -29,15 +29,15 @@ registerNodeProcessor({
   name: 'CallExpression',
 
   getType(node) {
-
+    throw new Error('Not Implemented');
   },
 
   walk(node) {
-
+    throw new Error('Not Implemented');
   },
 
   declare(node) {
-
+    throw new Error('Not Implemented');
   }
 
 });

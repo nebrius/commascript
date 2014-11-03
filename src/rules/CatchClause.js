@@ -29,15 +29,15 @@ registerNodeProcessor({
   name: 'CatchClause',
 
   process(node) {
-
+    throw new Error('Not Implemented');
   },
 
   walk(node) {
-
+    throw new Error('Not Implemented');
   },
 
   declare(node) {
-
+    throw new Error('Not Implemented');
   }
 
 });
