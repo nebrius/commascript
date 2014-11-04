@@ -129,6 +129,14 @@ export function isObject(type) {
   return type instanceof ObjectType;
 }
 
+export function isRegExp(type) {
+  return type instanceof RegExpType;
+}
+
+export function isNull(type) {
+  return type instanceof NullType;
+}
+
 export function isArray(type) {
   return type instanceof ArrayType;
 }

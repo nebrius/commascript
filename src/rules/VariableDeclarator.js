@@ -22,14 +22,44 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { registerNodeProcessor } from '../node';
+import { registerNodeProcessor, processNode } from '../node';
+import { addNamedType, enterState, exitState, states, handleError, handleInternalError } from '../state';
+import { isNull } from '../type';
 
 registerNodeProcessor({
 
   name: 'VariableDeclarator',
 
   parseStatement(node) {
-    throw new Error('Not Implemented');
+    // Handle node.id here, since Patterns aren't *quite* full rules
+    switch(node.id.type) {
+      case 'Identifier':
+        if (!node.init) {
+          handleError(node, 'Variable declarations must have an initializer');
+        } else {
+          enterState(states.PARSING_EXPRESSION);
+          var type = processNode(node.init);
+          if (isNull(type)) {
+            handleError(node, 'Cannot initialize variables to "null" because it is ambiguous.' +
+              ' Try casting null to a named type?');
+          } else {
+            addNamedType(node.id.name, type);
+          }
+          exitState();
+        }
+        break;
+      case 'ObjectPattern':
+        throw new Error('Not Implemented');
+        break;
+      case 'ArrayPattern':
+        throw new Error('Not Implemented');
+        break;
+      default:
+        handleInternalError('Unknown pattern type ' + node.type);
+    }
+    return {
+      result: 'normal'
+    };
   },
 
   scan(node) {
