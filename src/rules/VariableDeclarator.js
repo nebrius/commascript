@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 import { registerNodeProcessor, processNode } from '../node';
 import { addNamedType, enterState, exitState, states, handleError, handleInternalError } from '../state';
-import { isNull } from '../type';
+import { NullType } from '../type';
 
 registerNodeProcessor({
 
@@ -39,10 +39,13 @@ registerNodeProcessor({
         } else {
           enterState(states.PARSING_EXPRESSION);
           var type = processNode(node.init);
-          if (isNull(type)) {
+          if (type instanceof NullType) {
             handleError(node, 'Cannot initialize variables to "null" because it is ambiguous.' +
               ' Try casting null to a named type?');
           } else {
+            if (!type.declarationLocation) {
+              type.declarationLocation = node.loc.start;
+            }
             addNamedType(node.id.name, type);
           }
           exitState();

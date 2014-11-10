@@ -22,79 +22,83 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { handleError, handleInternalError } from './state';
+import { handleError, handleInternalError, getRelativeCurrentFile } from './state';
 
 class Type {
   constructor(options) {
     this.name = options.name;
+    this.node = options.node;
     this.declarationLocation = options.declarationLocation;
   }
 }
 
 export class BooleanType extends Type {
-  constructor() {
-    super({ name: 'boolean' });
+  constructor(options) {
+    options.name = 'boolean';
+    super(options);
   }
 }
 
 export class NumberType extends Type {
-  constructor() {
-    super({ name: 'number' });
+  constructor(options) {
+    options.name = 'number';
+    super(options);
   }
 }
 
 export class StringType extends Type {
-  constructor() {
-    super({ name: 'string' });
+  constructor(options) {
+    options.name = 'string';
+    super(options);
+  }
+}
+
+export class RegExpType extends Type {
+  constructor(options) {
+    options.name = 'regexp'
+    super(options);
+  }
+}
+
+export class NullType extends Type {
+  constructor(options) {
+    options.name = 'null';
+    super(options);
   }
 }
 
 export class ObjectType extends Type {
   constructor(options) {
-    options = options || {};
-    super(options.name || 'anonymous object');
+    options.name = options.name || 'anonymous object';
+    super(options);
     this.properties = options.properties || {};
     this.proto = options.proto || null;
   }
 }
 
-export class RegExpType extends Type {
-  constructor() {
-    super({ name: 'regexp' });
-  }
-}
-
-export class NullType extends Type {
-  constructor() {
-    super({ name: 'null' });
-  }
-}
-
 export class ArrayType extends Type {
-  constructor() {
+  constructor(options) {
+    options.name = options.name || 'anonymous array';
+    super(options);
     if (!options || !options.elementType) {
-    handleInternalError('Invalid options passed to ArrayType constructor.');
-  }
-  super(options.name || 'anonymous array');
-  this.elementType = options.elementType;
+      handleInternalError('Invalid options passed to ArrayType constructor.');
+    }
+    this.elementType = options.elementType;
   }
 }
 
 export class FunctionType extends Type {
   constructor(options) {
-    if (!options || !options.node) {
-      handleInternalError('Invalid options passed to FunctionType constructor.');
-    }
-    super(options.name || 'anonymous function');
-    this.node = options.node;
+    options.name = options.name || 'anonymous function';
+    super(options);
     this.argumentTypes = options.arguments || [];
     this.returnType = options.returnType || null;
   }
-  applyPattern(options) {
-    if (!options || !options.argumentTypes || !options.returnType) {
-      handleInternalError('Invalid options passed to FunctionType constructor.');
-    }
-    // TODO: This is called by call expressions to solidify types. Analayzes function at this point in time.
+  applyCall(options) {
+    throw new Error('Not Implemented');
+  }
+  applyCast(options) {
+    throw new Error('Not Implemented');
   }
 }
 
@@ -109,44 +113,16 @@ export class ConstructorType extends Type {
   }
 }
 
-export function isBoolean(type) {
-  return type instanceof BooleanType;
-}
-
-export function isNumber(type) {
-  return type instanceof NumberType;
-}
-
-export function isString(type) {
-  return type instanceof StringType;
+export class InvalidType extends Type {
+  constructor(options) {
+    options.name = 'Invalid Type';
+    super(options)
+  }
 }
 
 export function isPrimitive(type) {
-  return isBoolean(type) || isNumber(type) || isString(type);
-}
-
-export function isObject(type) {
-  return type instanceof ObjectType;
-}
-
-export function isRegExp(type) {
-  return type instanceof RegExpType;
-}
-
-export function isNull(type) {
-  return type instanceof NullType;
-}
-
-export function isArray(type) {
-  return type instanceof ArrayType;
-}
-
-export function isFunction(type) {
-  return type instanceof FunctionType;
-}
-
-export function isConstructor(type) {
-  return type instanceof ConstructorType;
+  return type instanceof BooleanType ||
+    type instanceof NumberType || type instanceof StringType;
 }
 
 export function compareTypes(type1, type2, options) {
@@ -159,15 +135,15 @@ export function compareTypes(type1, type2, options) {
   }
 
   function handleCompareError(errorMessage) {
-    handleError(options.node, 'Cannot cast "' + type1.name + '" (declared at ' + type1.declarationLocation +
-      ') as "' + type2.name + '" (declared at ' + type2.declarationLocation + ')' +
+    handleError(options.node, 'Cannot cast "' +
+      type1.name + '" as "' + type2.name + '"' +
       (errorMessage ? ': ' + errorMessage : ''));
   }
 
   if (isPrimitive(type1) && isPrimitive(type2)) {
-    if ((isBoolean(type1) && isBoolean(type2)) ||
-      (isNumber(type1) && isNumber(type2)) ||
-      (isString(type1) && isString(type2))
+    if ((type1 instanceof BooleanType && type2 instanceof BooleanType) ||
+      (type1 instanceof NumberType && type2 instanceof NumberType) ||
+      (type1 instanceof StringType && type2 instanceof StringType)
     ) {
       return true;
     } else {
@@ -177,7 +153,7 @@ export function compareTypes(type1, type2, options) {
   }
 
   var p;
-  if (isObject(type1) && isObject(type2)) {
+  if (type1 instanceof ObjectType && type2 instanceof ObjectType) {
     if (!compareTypes(type1.proto, type2.proto, options)) {
       return false;
     }
@@ -200,7 +176,7 @@ export function compareTypes(type1, type2, options) {
 
   // TODO: Need to rethink in terms of partial definitions
   var i;
-  if (isFunction(type1) && isFunction(type2)) {
+  if (type1 instanceof FunctionType && type2 instanceof FunctionType) {
     if (!compareTypes(type1.returnType, type2.returnType, options)) {
       return false;
     }
@@ -217,7 +193,7 @@ export function compareTypes(type1, type2, options) {
     return true;
   }
 
-  if (isConstructor(type1) && isConstructor(type2)) {
+  if (type1 instanceof ConstructorType && type2 instanceof ConstructorType) {
     if (!compareTypes(type1.instantiatedType, type2.instantiatedType, options)) {
       return false;
     }

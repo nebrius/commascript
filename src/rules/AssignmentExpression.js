@@ -22,18 +22,56 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { registerNodeProcessor } from '../node';
+import { registerNodeProcessor, processNode } from '../node';
+import { NumberType, StringType, InvalidType, compareTypes } from '../type';
 
 registerNodeProcessor({
 
   name: 'AssignmentExpression',
 
   parseExpression(node) {
-    throw new Error('Not Implemented');
+    debugger;
+    switch(node.left.type) {
+      case 'Identifier':
+        var leftType = processNode(node.left);
+        var rightType = processNode(node.right);
+        if (leftType instanceof InvalidType || rightType instanceof InvalidType) {
+          return leftType;
+        }
+        if (node.operator == '=') {
+          compareTypes(leftType, processNode(node.right), {
+            node: node.right
+          });
+          return leftType;
+        } else {
+          var intermediateType = processNode({
+            type: 'BinaryExpression',
+            operator: node.operator,
+            left: node.left,
+            right: node.right
+          });
+          if (intermediateType instanceof InvalidType) {
+            return intermediateType;
+          }
+          compareTypes(leftType, intermediateType, {
+            node: node.right
+          });
+          return leftType;
+        }
+      case 'ObjectPattern':
+        throw new Error('Not Implemented');
+        break;
+      case 'ArrayPattern':
+        throw new Error('Not Implemented');
+        break;
+      default:
+        handleInternalError('Unknown pattern type ' + node.type);
+    }
   },
 
   scan(node) {
-    throw new Error('Not Implemented');
+    processNode(node.left);
+    processNode(node.right);
   },
 
   declare(node) {

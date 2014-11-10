@@ -22,17 +22,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+var path = require('path');
+
 var stack = [];
 var state = [];
 var currentFile = '';
 
 export function handleError(node, message) {
-  console.error(message + ' ' + currentFile + ':' + node.start.line + ':' + node.start.col);
+  console.error(message + ' ' + getCurrentFile() + ':' + node.loc.start.line + ':' + node.loc.start.column);
 }
 
 export function handleInternalError(message) {
   throw new Error('Internal Error: ' + message +
     ' This is a bug. Please report it to the project author');
+}
+
+export function getRelativeCurrentFile() {
+  return getCurrentFile().replace(process.cwd() + path.sep, '')
 }
 
 export function getCurrentFile() {
