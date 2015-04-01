@@ -12,10 +12,16 @@
     "JavaScript"
   ],
   "dependencies": {
-    "esprima": "git://github.com/ariya/esprima.git",
-    "transport-logger": "0.1.x",
-    "wrench": "1.5.x",
-    "yargs": "^1.3.2"
+    "esprima": "^2.1.0",
+    "transport-logger": "^1.0.0",
+    "wrench": "^1.5.8",
+    "yargs": "^3.6.0"
+  },
+  "devDependencies": {
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-babel": "^4.0.0",
+    "gulp-sourcemaps": "^1.3.0"
   },
   "engine": "node >= 0.10.0",
   "bin": "bin/commascript.js",
@@ -25,11 +31,5 @@
   "scripts": {
     "test": "node test/bootstrap.js",
     "install": "echo \"WARNING: This software is PRE-ALPHA and will most likely crash\""
-  },
-  "devDependencies": {
-    "del": "^0.1.3",
-    "gulp": "^3.8.9",
-    "gulp-sourcemaps": "^1.2.4",
-    "gulp-traceur": "^0.13.0"
   }
 }

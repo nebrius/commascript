@@ -23,24 +23,19 @@ THE SOFTWARE.
 */
 
 var gulp = require('gulp');
-var traceur = require('gulp-traceur');
+var babel = require('gulp-babel');
 var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 
-gulp.task('default', ['traceur-runtime'], function() {
+gulp.task('default', function() {
   return gulp.src('src/**/*')
     .pipe(sourcemaps.init())
-      .pipe(traceur({
-        modules: 'commonjs'
+      .pipe(babel({
+        modules: 'common'
       }))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('lib'));
 });
-
-gulp.task('traceur-runtime', ['clean'], function() {
-  return gulp.src('node_modules/gulp-traceur/node_modules/traceur/bin/traceur-runtime.js')
-    .pipe(gulp.dest('lib'));
-})
 
 gulp.task('clean', function(cb) {
   del(['lib'], cb);
