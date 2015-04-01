@@ -75,4 +75,4 @@ export function run(argv) {
     colorize: true,
     prependLevel: true
   }));
-};
+}
