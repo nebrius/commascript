@@ -457,17 +457,17 @@ Conversely, how do you call a non-CommaScript function from CommaScript code? Ju
 
 ('extern(object, console)', {
     properties: {
-        log: ('define(function), {
+        log: ('define(function)', {
             argumentTypes: [
                 'string'
             ]
         }),
-        warn: ('define(function), {
+        warn: ('define(function)', {
             argumentTypes: [
                 'string'
             ]
         }),
-        error: ('define(function), {
+        error: ('define(function)', {
             argumentTypes: [
                 'string'
             ]
