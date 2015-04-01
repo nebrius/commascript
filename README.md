@@ -6,8 +6,6 @@ JavaScript while still feeling like JavaScript.
 
 **WARNING: This is a work in progress! The current version of the software is ALPHA quality**
 
-**Update: I'm working on an overhaul of the type system. Check out the (non-functional) ```type_refactor``` branch. The documentation below reflects the eventual goal of the ```type_refactor``` branch**
-
 ## Table of Contents
 * [Design Goals](#design-goals)
 * [Compilation](#compilation)
