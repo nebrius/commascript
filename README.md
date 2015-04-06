@@ -95,8 +95,8 @@ primitives:
 
 ```JavaScript
 var obj = {
-    'bar': 'hello world',
-    'baz': 10
+  'bar': 'hello world',
+  'baz': 10
 };
 ```
 
@@ -127,7 +127,7 @@ Functions are declared implicitly, just like objects:
 
 ```JavaScript
 function foo(a, b) {
-    return a * b;
+  return a * b;
 }
 ```
 
@@ -160,7 +160,7 @@ But what happens if the types cannot be inferred, such as with the example below
 
 ```JavaScript
 function foo(a, b) {
-    return a + b; // Everything can be added together, since everything can be converted to a string
+  return a + b; // Everything can be added together, since everything can be converted to a string
 }
 ```
 
@@ -171,7 +171,7 @@ determined by how the function is invoked:
 
 ```JavaScript
 function foo(a, b) {
-    return a + b;
+  return a + b;
 }
 
  // Arguments and x are set to type "number"
@@ -193,10 +193,10 @@ cannot reference a functions prototype, but you can reference a constructors pro
 
 ```JavaScript
 function foo(arg) {
-    this.arg = arg;
+  this.arg = arg;
 }
 foo.prototype.getArg = function() {
-    return this.arg;
+  return this.arg;
 }
 
 // Then we can create an object
@@ -260,10 +260,10 @@ infer the object type from ```null```, we create an named object type and then c
 'use commascript';
 
 ('define(object, MyObject)', {
-    properties: {
-        'bar': 'string',
-        'baz': 'number'
-    }
+  properties: {
+    'bar': 'string',
+    'baz': 'number'
+  }
 });
 
 var obj = ('cast(MyObject)', null);
@@ -273,8 +273,8 @@ We can later assign an instance of the object to the variable:
 
 ```JavaScript
 obj = {
-    'bar': 'hello world',
-    'baz': 10
+  'bar': 'hello world',
+  'baz': 10
 };
 ```
 
@@ -283,11 +283,11 @@ You can create an named function type and then define a function with the same n
 
 ```JavaScript
 ('define(function, MyFunction)', {
-    returnType: 'number',
-    argumentTypes: [
-        'number',
-        'number'
-    ]
+  returnType: 'number',
+  argumentTypes: [
+    'number',
+    'number'
+  ]
 });
 
 var foo = ('cast(MyFunction)', function (a, b) {
@@ -306,21 +306,21 @@ We can also specify a constructor interface:
 
 ```JavaScript
 ('define(constructor, MyConstructor)', {
-    argumentTypes: [
-        'string'
-    ],
-    properties: {
-        getArg: ('define(function)', {
-            returnType: 'string'
-        })
-    }
+  argumentTypes: [
+    'string'
+  ],
+  properties: {
+    getArg: ('define(function)', {
+        returnType: 'string'
+    })
+  }
 });
 
 var foo = ('cast(MyConstructor)', function (arg) {
-    this.arg = arg;
+  this.arg = arg;
 }
 foo.prototype.getArg = function() {
-    return this.arg;
+  return this.arg;
 }
 
 // Then we can create an object
@@ -356,18 +356,18 @@ This means that you can mix and match CommaScript code with non-CommaScript code
 
 ```JavaScript
 function foo() {
-    var x = true;
-    x = 10;
-    if (x) {
-        return true;
-    }
-    return 'hello';
+  var x = true;
+  x = 10;
+  if (x) {
+    return true;
+  }
+  return 'hello';
 }
 
 function bar() {
-    'use commascript';
-    var x = 10;
-    return x && false; // Generates an error
+  'use commascript';
+  var x = 10;
+  return x && false; // Generates an error
 }
 
 foo(); // Generates no errors
@@ -378,12 +378,12 @@ You can also localize CommaScript to non-function blocks:
 
 ```JavaScript
 if (strict) {
-    'use commascript';
-    var x = 10;
-    x = 'fail'; // Generates an error
+  'use commascript';
+  var x = 10;
+  x = 'fail'; // Generates an error
 } else {
-    var x = 10;
-    x = 'fail'; // Does NOT generate an error
+  var x = 10;
+  x = 'fail'; // Does NOT generate an error
 }
 ```
 
@@ -391,11 +391,11 @@ Once a block is declared as being CommaScript, all inner blocks are also CommaSc
 
 ```JavaScript
 function foo() {
-    'use commascript';
-    function bar() {
-        // This is also CommaScript code
-    }
-    bar();
+  'use commascript';
+  function bar() {
+    // This is also CommaScript code
+  }
+  bar();
 }
 ```
 
@@ -404,32 +404,32 @@ So how do you call a CommaScript function from non-CommaScript code? Create a Co
 ```JavaScript
 
 {
-    'use commascript';
+  'use commascript';
 
-    ('define(object, MyCommaScriptObject)', {
-        properties: {
-            foo: 'string',
-            bar: 'string'
-        }
-    });
+  ('define(object, MyCommaScriptObject)', {
+    properties: {
+      foo: 'string',
+      bar: 'string'
+    }
+  });
 
-    ('define(function, MyCommaScriptFunction)', {
-        returnType: 'string',
-        argumentTypes: [
-            'number',
-            'MyCommaScriptObject'
-        ]
-    });
+  ('define(function, MyCommaScriptFunction)', {
+    returnType: 'string',
+    argumentTypes: [
+      'number',
+      'MyCommaScriptObject'
+    ]
+  });
 
-    var myFunction = ('cast(MyCommaScriptFunction)', function(num, obj) {
-        // Do stuff
-        return 'hello';
-    });
+  var myFunction = ('cast(MyCommaScriptFunction)', function(num, obj) {
+    // Do stuff
+    return 'hello';
+  });
 }
 
 myFunction(10, {
-    foo: 'foo',
-    bar: 'bar'
+  foo: 'foo',
+  bar: 'bar'
 });
 ```
 
@@ -437,14 +437,14 @@ You can also declare commascript just inside of a function, which causes the fun
 
 ```JavaScript
 function myFunction(num, obj) {
-    'use commascript';
-    // Do stuff
-    return 'hello';
+  'use commascript';
+  // Do stuff
+  return 'hello';
 }
 
 myFunction(10, {
-    foo: 'foo',
-    bar: 'bar'
+  foo: 'foo',
+  bar: 'bar'
 });
 ```
 
@@ -456,23 +456,23 @@ Conversely, how do you call a non-CommaScript function from CommaScript code? Ju
 'use commascript';
 
 ('extern(object, console)', {
-    properties: {
-        log: ('define(function), {
-            argumentTypes: [
-                'string'
-            ]
-        }),
-        warn: ('define(function), {
-            argumentTypes: [
-                'string'
-            ]
-        }),
-        error: ('define(function), {
-            argumentTypes: [
-                'string'
-            ]
-        })
-    }
+  properties: {
+    log: ('define(function), {
+      argumentTypes: [
+        'string'
+      ]
+    }),
+    warn: ('define(function), {
+      argumentTypes: [
+        'string'
+      ]
+    }),
+    error: ('define(function), {
+      argumentTypes: [
+        'string'
+      ]
+    })
+  }
 });
 
 console.log('hi');
