@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { registerNodeProcessor } from '../node';
+import { registerNodeProcessor, processBlock } from '../node.js';
 
 registerNodeProcessor({
 
@@ -33,7 +33,7 @@ registerNodeProcessor({
   },
 
   scan(node) {
-    throw new Error('Not Implemented');
+    return processBlock(node.expressions);
   },
 
   declare(node) {

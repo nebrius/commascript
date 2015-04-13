@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { registerNodeProcessor, processNode } from '../node';
-import { NumberType, StringType, InvalidType, compareTypes } from '../type';
+import { registerNodeProcessor, processNode } from '../node.js';
+import { NumberType, StringType, InvalidType, compareTypes } from '../type.js';
 
 registerNodeProcessor({
 

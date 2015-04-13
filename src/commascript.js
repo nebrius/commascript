@@ -26,8 +26,8 @@ import fs from 'fs';
 import path from 'path';
 import wrench from 'wrench';
 import esprima from 'esprima';
-import { setCurrentFile, enterState, exitState, states } from './state';
-import { processNode } from './node';
+import { setCurrentFile, enterState, exitState, states } from './state.js';
+import { processNode } from './node.js';
 
 // Load the rule processors
 wrench.readdirSyncRecursive(path.join(__dirname, 'rules')).forEach((file) => {

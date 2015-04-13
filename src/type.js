@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { handleError, handleInternalError, getRelativeCurrentFile } from './state';
+import { handleError, handleInternalError, getRelativeCurrentFile } from './state.js';
 
 class Type {
   constructor(options) {

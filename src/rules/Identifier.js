@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { registerNodeProcessor } from '../node';
-import { lookupNamedType, handleError } from '../state';
-import { NumberType, InvalidType } from '../type';
+import { registerNodeProcessor } from '../node.js';
+import { lookupNamedType, handleError } from '../state.js';
+import { NumberType, InvalidType } from '../type.js';
 
 registerNodeProcessor({
 

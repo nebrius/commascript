@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { handleInternalError, getState, states } from './state';
+import { handleInternalError, getState, states } from './state.js';
 
 var processors = {};
 

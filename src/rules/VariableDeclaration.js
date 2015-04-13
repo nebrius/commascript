@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { registerNodeProcessor, processBlock } from '../node';
+import { registerNodeProcessor, processBlock } from '../node.js';
 
 registerNodeProcessor({
 

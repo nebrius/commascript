@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { registerNodeProcessor, isCommaScriptDirective, processBlock } from '../node';
-import { enterContext, exitContext, enterState, exitState, states } from '../state';
+import { registerNodeProcessor, isCommaScriptDirective, processBlock } from '../node.js';
+import { enterContext, exitContext, enterState, exitState, states } from '../state.js';
 
 registerNodeProcessor({
 

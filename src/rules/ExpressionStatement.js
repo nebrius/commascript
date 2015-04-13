@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { registerNodeProcessor, processNode } from '../node';
-import { enterState, exitState, states } from '../state';
+import { registerNodeProcessor, processNode } from '../node.js';
+import { enterState, exitState, states } from '../state.js';
 
 registerNodeProcessor({
 
