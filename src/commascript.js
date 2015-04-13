@@ -30,7 +30,7 @@ import { setCurrentFile, enterState, exitState, states } from './state';
 import { processNode } from './node';
 
 // Load the rule processors
-wrench.readdirSyncRecursive(path.join(__dirname, 'rules')).forEach(function (file) {
+wrench.readdirSyncRecursive(path.join(__dirname, 'rules')).forEach((file) => {
   if (/\.js$/.test(file)) {
     require(path.join(__dirname, 'rules', file));
   }

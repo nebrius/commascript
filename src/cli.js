@@ -22,7 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { validate } from './commascript';
+import { validate } from './commascript.js';
+import { getErrors } from './state.js';
 import fs from 'fs';
 import path from 'path';
 import Logger from 'transport-logger';
@@ -32,8 +33,9 @@ function printHelp() {
     'Usage: commascript [options] [sources]\n\n' +
     'Options:\n\n' +
     '  -s, --silent    No output except for results\n' +
-    '  -v, --verbose     Verbose logging\n' +
+    '  -v, --verbose   Verbose logging\n' +
     '  -V, --version   The current version of CommaScript\n' +
+    '  -j, --json      Output errors in JSON format' +
     '  -h, --help      Show this help menu\n');
 }
 
@@ -45,6 +47,7 @@ export function run(argv) {
   // Validate the options
   for (var i = 2, len = argv.length; i < len; i++) {
     var arg = argv[i];
+    var outputJson = false;
     if (flagRegex.test(arg)) {
       if (argv[i] === '-s' || argv[i] === '--silent') {
         logLevel = 'none';
@@ -56,6 +59,8 @@ export function run(argv) {
       } else if (argv[i] === '-V' || argv[i] === '--version') {
         console.log(require('../package.json').version);
         process.exit(0);
+      } else if(argv[i] === 'j' || argv[i] === '--json') {
+        outputJson = true;
       } else {
         console.error('Invalid flag "' + arg + '"');
         process.exit(1);
@@ -69,10 +74,23 @@ export function run(argv) {
     }
   }
 
+  if (outputJson) {
+    logLevel = 'error';
+  }
+
   // Invoke the validator with the proper logger
   validate(files, new Logger({
     minLevel: logLevel,
     colorize: true,
     prependLevel: true
   }));
+
+  // Print the errors
+  if (outputJson) {
+    console.log(getErrors());
+  } else {
+    getErrors().forEach((error) => {
+      console.error(error.message + ' ' + error.file + ':' + error.line + ':' + error.column);
+    });
+  }
 }

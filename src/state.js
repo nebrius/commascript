@@ -27,9 +27,19 @@ var path = require('path');
 var stack = [];
 var state = [];
 var currentFile = '';
+var errors = [];
 
 export function handleError(node, message) {
-  console.error(message + ' ' + getCurrentFile() + ':' + node.loc.start.line + ':' + node.loc.start.column);
+  errors.push({
+    file: getCurrentFile(),
+    line: node.loc.start.line,
+    column: node.loc.start.column,
+    message: message
+  });
+}
+
+export function getErrors() {
+  return errors;
 }
 
 export function handleInternalError(message) {
