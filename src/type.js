@@ -24,6 +24,10 @@ THE SOFTWARE.
 
 import { handleError, handleInternalError, getRelativeCurrentFile } from './state.js';
 
+// Note: this is a non-type that is used to represent the case where we couldn't
+// determine the type because of an error
+export class ErrorType {}
+
 class Type {
   constructor(options) {
     this.name = options.name;

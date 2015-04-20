@@ -24,13 +24,13 @@ THE SOFTWARE.
 
 import { registerNodeProcessor, processNode } from '../node.js';
 import { NumberType, StringType, InvalidType, compareTypes } from '../type.js';
+import { handleInternalError } from '../state.js';
 
 registerNodeProcessor({
 
   name: 'AssignmentExpression',
 
   parseExpression(node) {
-    debugger;
     switch(node.left.type) {
       case 'Identifier':
         var leftType = processNode(node.left);

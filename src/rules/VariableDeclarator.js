@@ -41,7 +41,7 @@ registerNodeProcessor({
           var type = processNode(node.init);
           if (type instanceof NullType) {
             handleError(node, 'Cannot initialize variables to "null" because it is ambiguous.' +
-              ' Try casting null to a named type?');
+              ' Try casting null to a named type.');
           } else {
             if (!type.declarationLocation) {
               type.declarationLocation = node.loc.start;
