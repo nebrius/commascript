@@ -23,8 +23,8 @@ THE SOFTWARE.
 */
 
 import { registerNodeProcessor, processBlock } from '../node.js';
-import { enterState, exitState, states, addNamedType } from '../state.js';
-import { ErrorType } from '../type.js'
+import { enterState, exitState, states, addNamedType, lookupNamedType, handleError } from '../state.js';
+import { ErrorType, ObjectType } from '../type.js'
 
 var operationRegex = /^\s*(.*?)\s*\((.*)\)$/;
 
@@ -77,22 +77,24 @@ function handleExpression(node) {
           commaOperationParameters.length);
         return new ErrorType();
       }
-      var definitionType;
+      if (lookupNamedType(commaOperationParameters[1])) {
+        handleError(commaOperation, 'Attempt to redefine already defined type');
+        return new ErrorType();
+      }
       switch(commaOperationParameters[0]) {
         case 'object':
-          definitionType = parseObjectDefinition(commaBody);
+          parseObjectDefinition(commaOperationParameters[1], commaBody);
           break;
         case 'function':
-          definitionType = parseFunctionDefinition(commaBody);
+          parseFunctionDefinition(commaOperationParameters[1], commaBody);
           break;
         case 'constructor':
-          definitionType = parseConstructorDefinition(commaBody);
+          parseConstructorDefinition(commaOperationParameters[1], commaBody);
           break;
         default:
           handleError(commaOperation, 'Unknown definition type "' + commaOperationParameters[0] + '"');
           return new ErrorType();
       }
-      addNamedType(commaOperationParameters[1], definitionType);
       break;
     case 'cast':
       throw new Error('Not Implemented');
@@ -108,8 +110,51 @@ function handleExpression(node) {
   exitState();
 }
 
-function parseObjectDefinition(commaBody) {
-  throw new Error('Not Implemented');
+function parseObjectDefinition(name, commaBody) {
+  if (commaBody.type != 'ObjectExpression') {
+    handleError(commaBody, 'Expected an object');
+    return new ErrorType();
+  }
+  var properties = {};
+  for (var i = 0; i < commaBody.properties.length; i++) {
+    var definitionProp = commaBody.properties[i];
+    if (definitionProp.kind != 'init') {
+      handleError(definitionProp, 'Getters and setters are not supported in comma definitions');
+      return new ErrorType();
+    }
+    if (definitionProp.key.name != 'properties') {
+      handleError(definitionProp.key, 'Unknown definition property "' + definitionProp.key + '"');
+      return new ErrorType();
+    }
+    if (definitionProp.value.type != 'ObjectExpression') {
+      handleError(definitionProp.value, 'Expected an object');
+      return new ErrorType();
+    }
+    for (var j = 0; j < definitionProp.value.properties.length; j++) {
+      var typeProp = definitionProp.value.properties[j];
+      if (typeProp.kind != 'init') {
+        handleError(typeProp, 'Getters and setters are not supported in comma definitions');
+        return new ErrorType();
+      }
+      if (typeProp.value.type != 'Literal' || typeof typeProp.value.value != 'string') {
+        handleError(typeProp.value, 'Expected a named type');
+        return new ErrorType();
+      }
+      if (properties[typeProp.key.value]) {
+        handleError(typeProp.key, 'Duplicate property definition "' + typeProp.key.value + '"');
+      }
+      var propType = lookupNamedType(typeProp.value.value);
+      if (!propType) {
+        handleError(typeProp.value, 'Unknown type "' + typeProp.value.value + '"');
+        return new ErrorType();
+      }
+      properties[typeProp.key.value] = propType;
+    }
+  }
+  addNamedType(name, new ObjectType({
+    name: name,
+    properties: properties
+  }));
 }
 
 function parseFunctionDefinition(commaBody) {

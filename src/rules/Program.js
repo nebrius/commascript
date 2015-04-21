@@ -23,7 +23,8 @@ THE SOFTWARE.
 */
 
 import { registerNodeProcessor, isCommaScriptDirective, processBlock } from '../node.js';
-import { enterContext, exitContext, enterState, exitState, states } from '../state.js';
+import { enterContext, exitContext, enterState, exitState, states, addNamedType } from '../state.js';
+import { StringType, NumberType, BooleanType, RegExpType } from '../type.js'
 
 registerNodeProcessor({
 
@@ -39,6 +40,11 @@ registerNodeProcessor({
       enterContext({
         expectedReturnType: null
       });
+
+      addNamedType('string', new StringType({}));
+      addNamedType('number', new NumberType({}));
+      addNamedType('boolean', new BooleanType({}));
+      addNamedType('regexp', new RegExpType({}));
 
       processBlock(node.body);
 

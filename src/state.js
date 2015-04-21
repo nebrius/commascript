@@ -30,12 +30,14 @@ var currentFile = '';
 var errors = [];
 
 export function handleError(node, message) {
-  errors.push({
+  var x;
+  errors.push(x = {
     file: getCurrentFile(),
     line: node.loc.start.line,
     column: node.loc.start.column,
     message: message
   });
+  console.log(x);
 }
 
 export function getErrors() {

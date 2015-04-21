@@ -59,7 +59,7 @@ export class StringType extends Type {
 
 export class RegExpType extends Type {
   constructor(options) {
-    options.name = 'regexp'
+    options.name = 'regexp';
     super(options);
   }
 }
@@ -76,7 +76,6 @@ export class ObjectType extends Type {
     options.name = options.name || 'anonymous object';
     super(options);
     this.properties = options.properties || {};
-    this.proto = options.proto || null;
   }
 }
 

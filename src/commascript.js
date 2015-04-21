@@ -65,8 +65,6 @@ function validateFile(file, logger) {
   }
   setCurrentFile(file);
 
-  // TODO: set filename on all nodes
-
   // Validate the file
   enterState(states.SCANNING);
   debugger;
