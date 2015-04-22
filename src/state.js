@@ -22,23 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-var path = require('path');
+import path from 'path';
 
 var stack = [];
 var state = [];
-var currentFile = '';
-
-export function getRelativeCurrentFile() {
-  return getCurrentFile().replace(process.cwd() + path.sep, '')
-}
-
-export function getCurrentFile() {
-  return currentFile;
-}
-
-export function setCurrentFile(file) {
-  currentFile = file;
-}
 
 export var states = {
   SCANNING: 'SCANNING',

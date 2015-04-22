@@ -27,7 +27,7 @@ import path from 'path';
 import wrench from 'wrench';
 import esprima from 'esprima';
 import traverse from 'ast-traverse';
-import { setCurrentFile, enterState, exitState, states } from './state.js';
+import { enterState, exitState, states } from './state.js';
 import { processNode } from './node.js';
 
 // Load the rule processors
