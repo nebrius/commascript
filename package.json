@@ -12,7 +12,8 @@
     "JavaScript"
   ],
   "dependencies": {
-    "esprima": "^2.1.0",
+    "ast-traverse": "^0.1.1",
+    "esprima": "^2.2.0",
     "transport-logger": "^1.0.0",
     "wrench": "^1.5.8",
     "yargs": "^3.6.0"

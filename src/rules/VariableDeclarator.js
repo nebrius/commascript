@@ -23,7 +23,8 @@ THE SOFTWARE.
 */
 
 import { registerNodeProcessor, processNode } from '../node.js';
-import { addNamedType, enterState, exitState, states, handleError, handleInternalError } from '../state.js';
+import { addNamedType, enterState, exitState, states } from '../state.js';
+import { handleError, handleInternalError } from '../error.js';
 import { NullType } from '../type.js';
 
 registerNodeProcessor({

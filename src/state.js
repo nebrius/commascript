@@ -27,27 +27,6 @@ var path = require('path');
 var stack = [];
 var state = [];
 var currentFile = '';
-var errors = [];
-
-export function handleError(node, message) {
-  var x;
-  errors.push(x = {
-    file: getCurrentFile(),
-    line: node.loc.start.line,
-    column: node.loc.start.column,
-    message: message
-  });
-  console.log(x);
-}
-
-export function getErrors() {
-  return errors;
-}
-
-export function handleInternalError(message) {
-  throw new Error('Internal Error: ' + message +
-    ' This is a bug. Please report it to the project author');
-}
 
 export function getRelativeCurrentFile() {
   return getCurrentFile().replace(process.cwd() + path.sep, '')

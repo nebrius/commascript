@@ -26,6 +26,7 @@ import fs from 'fs';
 import path from 'path';
 import wrench from 'wrench';
 import esprima from 'esprima';
+import traverse from 'ast-traverse';
 import { setCurrentFile, enterState, exitState, states } from './state.js';
 import { processNode } from './node.js';
 
@@ -63,7 +64,11 @@ function validateFile(file, logger) {
     logger.error(e.message + ' ' + file + ':' + e.lineNumber + ':' + e.col);
     process.exit(1);
   }
-  setCurrentFile(file);
+  traverse(ast, {
+    pre: function(node) {
+      node.loc.filename = file;
+    }
+  });
 
   // Validate the file
   enterState(states.SCANNING);

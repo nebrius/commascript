@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2013-2014 Bryan Hughes <bryan@theoreticalideations.com> (http://theoreticalideations.com)
+Copyright (c) 2013-2014 Bryan Hughes <bryan@theoreticalideations.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,9 @@ THE SOFTWARE.
 */
 
 import { registerNodeProcessor, processBlock } from '../node.js';
-import { enterState, exitState, states, addNamedType, lookupNamedType, handleError } from '../state.js';
-import { ErrorType, ObjectType } from '../type.js'
+import { enterState, exitState, states, addNamedType, lookupNamedType } from '../state.js';
+import { handleError } from '../error.js';
+import { InvalidType, ObjectType } from '../type.js'
 
 var operationRegex = /^\s*(.*?)\s*\((.*)\)$/;
 
@@ -51,7 +52,7 @@ function handleExpression(node) {
 
   if (node.expressions.length != 2) {
     handleError(node, 'Invalid comma definition');
-    return new ErrorType();
+    return new InvalidType();
   }
 
   var commaOperation = node.expressions[0];
@@ -59,13 +60,13 @@ function handleExpression(node) {
 
   if (commaOperation.type != 'Literal' || typeof commaOperation.value != 'string') {
     handleError(commaOperation, 'Expected a string');
-    return new ErrorType();
+    return new InvalidType();
   }
 
   var parsedCommaOperation = operationRegex.exec(commaOperation.value);
   if (!parsedCommaOperation) {
     handleError(commaOperation, 'Invalid comma operation syntax');
-    return new ErrorType();
+    return new InvalidType();
   }
   var commaOperationType = parsedCommaOperation[1];
   var commaOperationParameters = parsedCommaOperation[2].split(',').map(param => param.trim());
@@ -75,11 +76,11 @@ function handleExpression(node) {
       if (commaOperationParameters.length != 2) {
         handleError(commaOperation, 'Expected two arguments to "define", received ' +
           commaOperationParameters.length);
-        return new ErrorType();
+        return new InvalidType();
       }
       if (lookupNamedType(commaOperationParameters[1])) {
         handleError(commaOperation, 'Attempt to redefine already defined type');
-        return new ErrorType();
+        return new InvalidType();
       }
       switch(commaOperationParameters[0]) {
         case 'object':
@@ -93,7 +94,7 @@ function handleExpression(node) {
           break;
         default:
           handleError(commaOperation, 'Unknown definition type "' + commaOperationParameters[0] + '"');
-          return new ErrorType();
+          return new InvalidType();
       }
       break;
     case 'cast':
@@ -104,7 +105,7 @@ function handleExpression(node) {
       break;
     default:
       handleError(commaOperation, 'Unknown comma operation type "' + commaOperationType, '"');
-      return new ErrorType();
+      return new InvalidType();
   }
 
   exitState();
@@ -113,32 +114,32 @@ function handleExpression(node) {
 function parseObjectDefinition(name, commaBody) {
   if (commaBody.type != 'ObjectExpression') {
     handleError(commaBody, 'Expected an object');
-    return new ErrorType();
+    return new InvalidType();
   }
   var properties = {};
   for (var i = 0; i < commaBody.properties.length; i++) {
     var definitionProp = commaBody.properties[i];
     if (definitionProp.kind != 'init') {
       handleError(definitionProp, 'Getters and setters are not supported in comma definitions');
-      return new ErrorType();
+      return new InvalidType();
     }
     if (definitionProp.key.name != 'properties') {
       handleError(definitionProp.key, 'Unknown definition property "' + definitionProp.key + '"');
-      return new ErrorType();
+      return new InvalidType();
     }
     if (definitionProp.value.type != 'ObjectExpression') {
       handleError(definitionProp.value, 'Expected an object');
-      return new ErrorType();
+      return new InvalidType();
     }
     for (var j = 0; j < definitionProp.value.properties.length; j++) {
       var typeProp = definitionProp.value.properties[j];
       if (typeProp.kind != 'init') {
         handleError(typeProp, 'Getters and setters are not supported in comma definitions');
-        return new ErrorType();
+        return new InvalidType();
       }
       if (typeProp.value.type != 'Literal' || typeof typeProp.value.value != 'string') {
         handleError(typeProp.value, 'Expected a named type');
-        return new ErrorType();
+        return new InvalidType();
       }
       if (properties[typeProp.key.value]) {
         handleError(typeProp.key, 'Duplicate property definition "' + typeProp.key.value + '"');
@@ -146,14 +147,15 @@ function parseObjectDefinition(name, commaBody) {
       var propType = lookupNamedType(typeProp.value.value);
       if (!propType) {
         handleError(typeProp.value, 'Unknown type "' + typeProp.value.value + '"');
-        return new ErrorType();
+        return new InvalidType();
       }
       properties[typeProp.key.value] = propType;
     }
   }
   addNamedType(name, new ObjectType({
     name: name,
-    properties: properties
+    properties: properties,
+    node: commaBody
   }));
 }
 

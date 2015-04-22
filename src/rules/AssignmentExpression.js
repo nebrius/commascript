@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 import { registerNodeProcessor, processNode } from '../node.js';
 import { NumberType, StringType, InvalidType, compareTypes } from '../type.js';
-import { handleInternalError } from '../state.js';
+import { handleInternalError } from '../error.js';
 
 registerNodeProcessor({
 

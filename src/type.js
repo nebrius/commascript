@@ -22,17 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { handleError, handleInternalError, getRelativeCurrentFile } from './state.js';
-
-// Note: this is a non-type that is used to represent the case where we couldn't
-// determine the type because of an error
-export class ErrorType {}
+import { handleError, handleInternalError } from './error.js';
 
 class Type {
   constructor(options) {
     this.name = options.name;
     this.node = options.node;
-    this.declarationLocation = options.declarationLocation;
+  }
+}
+
+// Note: this is a non-type that is used to represent the case where we couldn't
+// determine the type because of an error
+export class InvalidType extends Type {
+  constructor(options) {
+    options.name = 'invalid';
+    super(options)
   }
 }
 
@@ -113,13 +117,6 @@ export class ConstructorType extends Type {
     super(options.name);
     this.argumentTypes = options.argumentTypes || [];
     this.instantiatedType = options.instantiatedType;
-  }
-}
-
-export class InvalidType extends Type {
-  constructor(options) {
-    options.name = 'Invalid Type';
-    super(options)
   }
 }
 

@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2013-2014 Bryan Hughes <bryan@theoreticalideations.com> (http://theoreticalideations.com)
+Copyright (c) 2013 Bryan Hughes <bryan@theoreticalideations.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,43 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-import { registerNodeProcessor } from '../node.js';
-import { lookupNamedType } from '../state.js';
-import { handleError } from '../error.js';
-import { NumberType, InvalidType } from '../type.js';
+var errors = [];
 
-registerNodeProcessor({
+export function handleError(node, message) {
+  errors.push({
+    file: node.loc.filename,
+    line: node.loc.start.line,
+    column: node.loc.start.column,
+    message: message
+  });
+}
 
-  name: 'Identifier',
+export function getErrors() {
+  return errors;
+}
 
-  parseExpression(node) {
-    if (node.name == 'undefined') {
-      handleError(node, 'Undefined values are not allowed');
-      return new InvalidType({
-        node: node
-      });
-    }
-    if (node.name == 'NaN' || node.name == 'Infinity') {
-      return new NumberType({
-        node: node
-      });
-    }
-    var type = lookupNamedType(node.name);
-    if (!type) {
-      handleError(node, '"' + node.name + '" is not defined');
-      return new InvalidType({
-        node: node
-      });
-    }
-    return type;
-  },
-
-  scan(node) {
-    // Do nothing
-  },
-
-  declare(node) {
-    throw new Error('Not Implemented');
-  }
-
-});
+export function handleInternalError(message) {
+  throw new Error('Internal Error: ' + message +
+    ' This is a bug. Please report it to the project author');
+}

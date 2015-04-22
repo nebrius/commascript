@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 import { registerNodeProcessor } from '../node.js';
 import { BooleanType, NumberType, StringType, NullType, RegExpType } from '../type.js';
-import { handleInternalError } from '../state.js';
+import { handleInternalError } from '../error.js';
 
 registerNodeProcessor({
 

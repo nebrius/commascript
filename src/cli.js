@@ -23,7 +23,7 @@ THE SOFTWARE.
 */
 
 import { validate } from './commascript.js';
-import { getErrors } from './state.js';
+import { getErrors } from './error.js';
 import fs from 'fs';
 import path from 'path';
 import Logger from 'transport-logger';
