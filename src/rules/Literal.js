@@ -33,25 +33,15 @@ registerNodeProcessor({
   parseExpression(node) {
     var valueType = typeof node.value;
     if (valueType == 'boolean') {
-      return new BooleanType({
-        node: node
-      });
+      return new BooleanType({ node: node });
     } else if (valueType == 'number') {
-      return new NumberType({
-        node: node
-      });
+      return new NumberType({ node: node });
     } else if (valueType == 'string') {
-      return new StringType({
-        node: node
-      });
+      return new StringType({ node: node });
     } else if (node.value === null) {
-      return new NullType({
-        node: node
-      });
+      return new NullType({ node: node });
     } else if (node.value instanceof RegExp) {
-      return new RegExpType({
-        node: node
-      });
+      return new RegExpType({ node: node });
     } else {
       handleInternalError('Unsupported literal type ' + (typeof node.value));
     }

@@ -52,7 +52,7 @@ function handleExpression(node) {
 
   if (node.expressions.length != 2) {
     handleError(node, 'Invalid comma definition');
-    return new InvalidType();
+    return new InvalidType({ node: node });
   }
 
   var commaOperation = node.expressions[0];
@@ -60,13 +60,13 @@ function handleExpression(node) {
 
   if (commaOperation.type != 'Literal' || typeof commaOperation.value != 'string') {
     handleError(commaOperation, 'Expected a string');
-    return new InvalidType();
+    return new InvalidType({ node: commaOperation });
   }
 
   var parsedCommaOperation = operationRegex.exec(commaOperation.value);
   if (!parsedCommaOperation) {
     handleError(commaOperation, 'Invalid comma operation syntax');
-    return new InvalidType();
+    return new InvalidType({ node: commaOperation });
   }
   var commaOperationType = parsedCommaOperation[1];
   var commaOperationParameters = parsedCommaOperation[2].split(',').map(param => param.trim());
@@ -76,11 +76,11 @@ function handleExpression(node) {
       if (commaOperationParameters.length != 2) {
         handleError(commaOperation, 'Expected two arguments to "define", received ' +
           commaOperationParameters.length);
-        return new InvalidType();
+        return new InvalidType({ node: commaOperation });
       }
       if (lookupNamedType(commaOperationParameters[1])) {
         handleError(commaOperation, 'Attempt to redefine already defined type');
-        return new InvalidType();
+        return new InvalidType({ node: commaOperation });
       }
       switch(commaOperationParameters[0]) {
         case 'object':
@@ -94,7 +94,7 @@ function handleExpression(node) {
           break;
         default:
           handleError(commaOperation, 'Unknown definition type "' + commaOperationParameters[0] + '"');
-          return new InvalidType();
+          return new InvalidType({ node: commaOperation });
       }
       break;
     case 'cast':
@@ -105,7 +105,7 @@ function handleExpression(node) {
       break;
     default:
       handleError(commaOperation, 'Unknown comma operation type "' + commaOperationType, '"');
-      return new InvalidType();
+      return new InvalidType({ node: commaOperation });
   }
 
   exitState();
@@ -114,32 +114,32 @@ function handleExpression(node) {
 function parseObjectDefinition(name, commaBody) {
   if (commaBody.type != 'ObjectExpression') {
     handleError(commaBody, 'Expected an object');
-    return new InvalidType();
+    return new InvalidType({ node: commaBody });
   }
   var properties = {};
   for (var i = 0; i < commaBody.properties.length; i++) {
     var definitionProp = commaBody.properties[i];
     if (definitionProp.kind != 'init') {
       handleError(definitionProp, 'Getters and setters are not supported in comma definitions');
-      return new InvalidType();
+      return new InvalidType({ node: definitionProp });
     }
     if (definitionProp.key.name != 'properties') {
       handleError(definitionProp.key, 'Unknown definition property "' + definitionProp.key + '"');
-      return new InvalidType();
+      return new InvalidType({ node: definitionProp.key });
     }
     if (definitionProp.value.type != 'ObjectExpression') {
       handleError(definitionProp.value, 'Expected an object');
-      return new InvalidType();
+      return new InvalidType({ node: definitionProp.value });
     }
     for (var j = 0; j < definitionProp.value.properties.length; j++) {
       var typeProp = definitionProp.value.properties[j];
       if (typeProp.kind != 'init') {
         handleError(typeProp, 'Getters and setters are not supported in comma definitions');
-        return new InvalidType();
+        return new InvalidType({ node: typeProp });
       }
       if (typeProp.value.type != 'Literal' || typeof typeProp.value.value != 'string') {
         handleError(typeProp.value, 'Expected a named type');
-        return new InvalidType();
+        return new InvalidType({ node: typeProp.value });
       }
       if (properties[typeProp.key.value]) {
         handleError(typeProp.key, 'Duplicate property definition "' + typeProp.key.value + '"');
@@ -147,7 +147,7 @@ function parseObjectDefinition(name, commaBody) {
       var propType = lookupNamedType(typeProp.value.value);
       if (!propType) {
         handleError(typeProp.value, 'Unknown type "' + typeProp.value.value + '"');
-        return new InvalidType();
+        return new InvalidType({ node: typeProp.value });
       }
       properties[typeProp.key.value] = propType;
     }

@@ -41,10 +41,10 @@ registerNodeProcessor({
         expectedReturnType: null
       });
 
-      addNamedType('string', new StringType({}));
-      addNamedType('number', new NumberType({}));
-      addNamedType('boolean', new BooleanType({}));
-      addNamedType('regexp', new RegExpType({}));
+      addNamedType('string', new StringType({ node: node }));
+      addNamedType('number', new NumberType({ node: node }));
+      addNamedType('boolean', new BooleanType({ node: node }));
+      addNamedType('regexp', new RegExpType({ node: node }));
 
       processBlock(node.body);
 

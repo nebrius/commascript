@@ -34,21 +34,15 @@ registerNodeProcessor({
   parseExpression(node) {
     if (node.name == 'undefined') {
       handleError(node, 'Undefined values are not allowed');
-      return new InvalidType({
-        node: node
-      });
+      return new InvalidType({ node: node });
     }
     if (node.name == 'NaN' || node.name == 'Infinity') {
-      return new NumberType({
-        node: node
-      });
+      return new NumberType({ node: node });
     }
     var type = lookupNamedType(node.name);
     if (!type) {
       handleError(node, '"' + node.name + '" is not defined');
-      return new InvalidType({
-        node: node
-      });
+      return new InvalidType({ node: node });
     }
     return type;
   },
