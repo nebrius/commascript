@@ -4,7 +4,9 @@ CommaScript
 CommaScript is a backwards compatible dialect of JavaScript that provides localized, implicit static typing in
 JavaScript while still feeling like JavaScript.
 
-**WARNING: This is a work in progress! The current version of the software is ALPHA quality**
+**WARNING:** This is a work in progress! The current version of the software is ALPHA quality
+
+**Note:** This hasn't been updated in some time. I hope to be able to come back to it and give it the eS6 treatment someday, but other projects have me preoccupied.
 
 ## Table of Contents
 * [Design Goals](#design-goals)
